@@ -8,9 +8,13 @@ public class MainFrame extends JFrame {
 	public static final int YMAX = 520;
 	
 	public MainFrame(){
-		this.setSize(XMAX, YMAX);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
+		add(new ViewPanel());
+		setSize(XMAX, YMAX);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+		addMouseListener(Controller.getMouseAdapter());
+		addKeyListener(Controller.getKeyAdapter());
+		requestFocus();
 	}
 
 	public static void main(String[] args) {
