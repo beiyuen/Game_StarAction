@@ -1,7 +1,10 @@
 package star_action;
 
+import static constants.MathConstants.*;
+
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
 
 public class ViewPanel extends JPanel {
 	public static Timer timer;
@@ -14,15 +17,15 @@ public class ViewPanel extends JPanel {
 
 		timer = new Timer(DELAY, e -> {
 				switch(gameStatus){
-					case 0:
+					case GAMESTATUS_OPENING:
 						break;
-					case 1:
+					case GAMESTATUS_PLAYING:
 						break;
-					case 2:
+					case GAMESTATUS_DIE:
 						break;
-					case 3:
+					case GAMESTATUS_ENDING:
 						break;
-					case 4:
+					case GAMESTATUS_STAGECHANGE:
 						break;
 				}
 				repaint();
