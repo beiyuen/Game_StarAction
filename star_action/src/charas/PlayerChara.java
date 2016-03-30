@@ -1,20 +1,19 @@
 package charas;
-import java.awt.*;
-import java.util.*;
+import static constants.MathConstants.*;
 
-import main.*;
+import java.awt.Graphics;
 
 // 操作キャラ
-public class PlayerChara extends Chara {
+public class PlayerChara extends AbstractChara {
 	private static final long serialVersionUID = 1L;
-	
+
 	public boolean right = false, left = false, up = false,dash = false;
 	public int death, kill;
 	int yoko = 3,tate = 2; //画像の分割数
 	int i,imgkind,kabe;//i,imgkind:画像用,kabe:敵用
 
 	public PlayerChara(int w, int h) {
-		img = getToolkit().createImage("src/image/otamesi.png");
+		image = getToolkit().createImage("src/image/otamesi.png");
 		width = w;
 		height = h;
 		init();
@@ -22,16 +21,15 @@ public class PlayerChara extends Chara {
 
 	//初期化
 	public void init() {
-		xPosition = 3*SIZE;
-		yPosition = 8*SIZE;
+		xPosition = 3*BLOCK_SIZE;
+		yPosition = 8*BLOCK_SIZE;
 		xSpeed=0;
 		ySpeed = 0;
 		ground = false;
 		i=0;
 		imgkind = 0;
-		Mario.clcount=0;
 	}
-	
+
 	//落下時、敵接触時など
 	void death(){
 		init();
@@ -42,11 +40,9 @@ public class PlayerChara extends Chara {
 	}
 
 	//衝突処理を追加
-	public void sim(){
-		super.sim();
-		Iterator<Chara> iterator;
-		Iterator<Needle> niterator;
-		//NPCが使うMarioのイテレータと同期させる
+	public void calcAcceleration(){
+		super.calcAcceleration();
+		//敵との当たり判定を計算
 		for (iterator = Mario.iterator = Mario.s.enemy.iterator(); iterator.hasNext();) {
 			if (iterator.next().hit(this))
 				death();
@@ -56,7 +52,7 @@ public class PlayerChara extends Chara {
 				death();
 		}
 	}
-	
+
 	// 操作およびhit時の挙動
 	void xsim(double a) {
 		if (right){
@@ -78,8 +74,8 @@ public class PlayerChara extends Chara {
 		else if(left){
 			i ++;
 		imgkind=(i%18)/6+3; //3,4,5番目の画像
-		}			
-	
+		}
+
 
 		//スクロール 各オブジェクトを動かすことで処理
 		if(Mario.s.scroll()){//s.num=4(ボス戦)ではスクロールできない
@@ -87,7 +83,7 @@ public class PlayerChara extends Chara {
 			this.xPosition -= xSpeed;
 			for (Block b : Mario.s.block)
 				b.xPosition -= xSpeed;
-			for (Chara e : Mario.s.enemy){
+			for (AbstractChara e : Mario.s.enemy){
 				e.xPosition -= xSpeed;
 				if(e instanceof NPCshoot)
 					for(Shot s: NPCshoot.bullet)
@@ -97,21 +93,22 @@ public class PlayerChara extends Chara {
 				n.xPosition -= xSpeed;
 		}
 		}
-		
+
 		//後退スクロール不可
-		
+
 			if (xPosition + xSpeed - width / 2 < 0) {
 				xPosition = width / 2;
 				xSpeed = 0;
-			
+
 	}
 
-		super.xsim(a);
+		super.calcXAcceleration(a);
 	}
 
-	//ジャンプ操作と画像の変更
-	void ysim() {
-		super.ysim();
+	 //ジャンプ操作と画像の変更
+	public void calcYAcceleration() {
+		super.calcYAcceleration();
+		// 接地しているときのジャンプ処理
 		if (up == true && ground) {
 			jump();
 			if(imgkind<3)
@@ -121,16 +118,16 @@ public class PlayerChara extends Chara {
 			ground = false;
 		}
 	}
-	
+
 	//描画 分割後の画像幅を示すpwidthを設定
 	public void draw(Graphics g){
 		double sx, sy;
-		int pwidth = img.getWidth(null)/yoko;
-		int pheight = img.getHeight(null)/tate;
+		int pwidth = image.getWidth(null)/yoko;
+		int pheight = image.getHeight(null)/tate;
         sx = (imgkind % yoko) * pwidth;
         sy = (imgkind / yoko) * pheight;
-        
-		g.drawImage(img,(int)(xPosition- width / 2),(int)(yPosition- height / 2),
+
+		g.drawImage(image,(int)(xPosition- width / 2),(int)(yPosition- height / 2),
 				(int)(xPosition+width/2),(int)(yPosition+height/2),
 				(int)(sx),(int)(sy), (int)(sx+pwidth), (int)(sy+pheight),this);
 	}

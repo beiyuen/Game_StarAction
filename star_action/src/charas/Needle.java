@@ -26,7 +26,7 @@ public class Needle extends Enemy {
 
 
 	// 接触判定
-	public boolean hit(Chara c) {
+	public boolean hit(AbstractChara c) {
 		if (c instanceof PlayerChara
 				&& (Math.sqrt((xPosition-c.xPosition)*(xPosition-c.xPosition)+
 					(yPosition-c.yPosition)*(yPosition-c.yPosition))<=33)
@@ -41,12 +41,12 @@ public class Needle extends Enemy {
 
 	public void draw(Graphics g){
 		double sx, sy;
-		int pwidth = img.getWidth(null)/yoko;
-		int pheight = img.getHeight(null)/tate;
+		int pwidth = image.getWidth(null)/yoko;
+		int pheight = image.getHeight(null)/tate;
         sx = (imgkind % yoko) * pwidth;
         sy = (imgkind / yoko) * pheight;
 
-		g.drawImage(img,(int)(xPosition- width / 2),(int)(yPosition- height / 2),
+		g.drawImage(image,(int)(xPosition- width / 2),(int)(yPosition- height / 2),
 				(int)(xPosition+width/2),(int)(yPosition+height/2),
 				(int)(sx),(int)(sy), (int)(sx+pwidth), (int)(sy+pheight),this);
 	}

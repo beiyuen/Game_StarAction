@@ -9,9 +9,9 @@ import javax.swing.Timer;
 public class ViewPanel extends JPanel {
 	public static Timer timer;
 	private final static int DELAY = 30;
-	public int gameStatus;
-	
-	
+
+
+
 	public ViewPanel(){
 		super();
 
@@ -31,11 +31,11 @@ public class ViewPanel extends JPanel {
 				repaint();
 			}
 		);
-		
+
 	}
-	
+
 	public void run(){
 		timer.start();
 	}
-	
+
 }

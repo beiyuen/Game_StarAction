@@ -28,7 +28,7 @@ public class CharaConstants {
 	public static final int ENEMY_MOVE			=	105;
 	public static final int ENEMY_KING			=	106;
 
-
+	
 	private CharaConstants(){
 	}
 }
