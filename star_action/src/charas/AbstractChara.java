@@ -31,8 +31,8 @@ public abstract class AbstractChara extends JPanel {
 
 	// 接触判定
 	public boolean hit(AbstractChara c) {
-		return Math.abs(c.xPosition + c.xSpeed - xPosition) < c.width / 2 + width / 2
-				&& Math.abs(c.yPosition + c.ySpeed - yPosition) < c.height / 2 + height / 2;
+		return Math.abs(c.xPosition + c.xSpeed - xPosition - xSpeed) < c.width / 2 + width / 2
+				&& Math.abs(c.yPosition + c.ySpeed - yPosition -ySpeed) < c.height / 2 + height / 2;
 	}
 
 	// ジャンプ
@@ -52,7 +52,6 @@ public abstract class AbstractChara extends JPanel {
 		else if(hit == 10){
 			changeYSpeed();
 		}
-		move();
 	}
 
 	// x方向の速度計算  減速、衝突 aは加速度相当
@@ -111,6 +110,94 @@ public abstract class AbstractChara extends JPanel {
 	public void draw(Graphics g) {
 		g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2),
 				(int) width, (int) height, this);
+	}
+
+	/**
+	 * xPositionを取得します。
+	 * @return xPosition
+	 */
+	public double getxPosition() {
+	    return xPosition;
+	}
+
+	/**
+	 * xPositionを設定します。
+	 * @param xPosition xPosition
+	 */
+	public void setxPosition(double xPosition) {
+	    this.xPosition = xPosition;
+	}
+
+	/**
+	 * yPositionを取得します。
+	 * @return yPosition
+	 */
+	public double getyPosition() {
+	    return yPosition;
+	}
+
+	/**
+	 * yPositionを設定します。
+	 * @param yPosition yPosition
+	 */
+	public void setyPosition(double yPosition) {
+	    this.yPosition = yPosition;
+	}
+
+	/**
+	 * xSpeedを取得します。
+	 * @return xSpeed
+	 */
+	public double getxSpeed() {
+	    return xSpeed;
+	}
+
+	/**
+	 * xSpeedを設定します。
+	 * @param xSpeed xSpeed
+	 */
+	public void setxSpeed(double xSpeed) {
+	    this.xSpeed = xSpeed;
+	}
+
+	/**
+	 * ySpeedを取得します。
+	 * @return ySpeed
+	 */
+	public double getySpeed() {
+	    return ySpeed;
+	}
+
+	/**
+	 * ySpeedを設定します。
+	 * @param ySpeed ySpeed
+	 */
+	public void setySpeed(double ySpeed) {
+	    this.ySpeed = ySpeed;
+	}
+
+	/**
+	 * widthを取得します。
+	 * @return width
+	 */
+	public int getWidth() {
+	    return width;
+	}
+
+	/**
+	 * heightを取得します。
+	 * @return height
+	 */
+	public int getHeight() {
+	    return height;
+	}
+
+	/**
+	 * groundを取得します。
+	 * @return ground
+	 */
+	public boolean isGround() {
+	    return ground;
 	}
 
 }

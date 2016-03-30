@@ -32,6 +32,7 @@ public class Enemy extends AbstractChara {
 	public boolean hit(PlayerChara c) {
 		if (super.hit(c)
 				&& Math.sin((Math.atan2(c.yPosition-yPosition, c.xPosition-xPosition))) <= -1/Math.sqrt(2.0)) {
+			// ここから下を変える
 			death();
 			((PlayerChara)c).kill++;
 			if(((PlayerChara)c).up)
@@ -43,7 +44,7 @@ public class Enemy extends AbstractChara {
 		return super.hit(c);
 	}
 
-	public void calcAcceleration() {
+	/*public void calcAcceleration() {
 		int hit = isHitBlock();
 		if(hit == 1 || hit == 11){
 			changeXSpeed();
@@ -55,7 +56,7 @@ public class Enemy extends AbstractChara {
 		calcXAcceleration(0.7);
 		move();
 	}
-
+*/
 	// 移動定義
 	public void calcXAcceleration(double a) {
 		//ブロックにあたったら反転

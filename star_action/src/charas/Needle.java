@@ -5,7 +5,6 @@ import java.awt.Graphics;
 //当たると死ぬ針です
 //----------------------------------------------------
 
-import main.Mario;
 
 
 public class Needle extends Enemy {
@@ -21,7 +20,7 @@ public class Needle extends Enemy {
 	}
 
 	void death() {
-		Mario.iterator.remove();
+	//	Mario.iterator.remove();
 	}
 
 
@@ -31,7 +30,7 @@ public class Needle extends Enemy {
 				&& (Math.sqrt((xPosition-c.xPosition)*(xPosition-c.xPosition)+
 					(yPosition-c.yPosition)*(yPosition-c.yPosition))<=33)
 			){
-			c.death();
+			//c.death();
 		}
 		return false;
 	}
