@@ -40,21 +40,33 @@ public class Block extends AbstractChara {
 			c.xPosition = xPosition - (c.width / 2 + BLOCK_SIZE / 2) * Math.signum(c.xSpeed);
 			//if(c instanceof PlayerChara)
 			//	c.xSpeed = 0;
-
+			return true;
 		}
-		return x;
+		return false;
 	}
 
 	public boolean hity(AbstractChara c) {
 		boolean x = hit(c);
+		/*if(x){
+			if(Math.sin((Math.atan2(c.yPosition-yPosition, c.xPosition-xPosition))) <= -1/Math.sqrt(2.0)){
+				c.ground = true;
+				return true;
+			}
+		}*/
+		// 位置調整
 		if (x && Math.abs(c.yPosition - yPosition) >= c.height / 2 + height / 2) {
 			c.yPosition = yPosition - (c.height / 2 + BLOCK_SIZE / 2) * Math.signum(c.ySpeed);
-		//	c.ySpeed = 0;
+			
+			c.ySpeed = 0;
 			// 上にいた場合接地on
 			if (c.yPosition <= yPosition) {
 				c.ground = true;
 			}
+			//else {c.ground = false;}
+			//return true;
 		}
+		//c.ground = false;
+		//return false;
 		return x;
 	}
 

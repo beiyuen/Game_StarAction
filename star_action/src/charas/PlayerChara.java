@@ -48,6 +48,13 @@ public class PlayerChara extends AbstractChara {
 			if (n.hit(this)){}
 				//death();
 		}
+		int hit = isHitBlock();
+		if(hit == 1 || hit == 11){
+			changeXSpeed();
+		}
+		else if(hit == 10 || hit == 11){
+			changeYSpeed();
+		}
 	}
 
 	// 操作およびhit時の挙動
@@ -91,7 +98,7 @@ public class PlayerChara extends AbstractChara {
 	public void calcYAcceleration() {
 		super.calcYAcceleration();
 		// 接地しているときのジャンプ処理
-		if (up == true && ground) {
+		if (up && ground) {
 			jump();
 			if(imageKind<3)
 				imageKind = 0;
@@ -99,6 +106,7 @@ public class PlayerChara extends AbstractChara {
 				imageKind = 3;
 			ground = false;
 		}
+		
 	}
 
 	//描画 分割後の画像幅を示すpwidthを設定
@@ -123,7 +131,7 @@ public class PlayerChara extends AbstractChara {
 	@Override
 	public void changeYSpeed() {
 		// TODO 自動生成されたメソッド・スタブ
-
+		ySpeed = 0;
 	}
 
 }

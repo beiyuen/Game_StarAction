@@ -66,7 +66,7 @@ public class Enemy extends AbstractChara {
 
 		//ランダムで速度0になったときに加速
 		if (xSpeed == 0)
-			xSpeed++;
+			xSpeed = Math.random()*4;
 		
 	}
 

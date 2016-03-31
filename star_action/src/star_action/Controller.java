@@ -22,12 +22,18 @@ public class Controller {
 	
 	static class StarActionKeyAdapter extends KeyAdapter{
 		public void keyPressed(KeyEvent evt) {
-			if(evt.getKeyChar() == 'a'){
-				System.out.print("a");
+			switch (evt.getKeyCode()) {
+			case KeyEvent.VK_SHIFT:
+				Model.playerChara.up = true;
+				break;
 			}
 		}
 		public void keyReleased(KeyEvent evt) {
-			
+			switch (evt.getKeyCode()) {
+			case KeyEvent.VK_SHIFT:
+				Model.playerChara.up = false;
+				break;
+			}
 		}
 	}
 	

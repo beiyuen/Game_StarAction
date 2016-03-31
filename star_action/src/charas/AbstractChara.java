@@ -36,7 +36,7 @@ public abstract class AbstractChara extends JPanel {
 	}
 
 	// ジャンプ
-	void jump() {
+	public void jump() {
 		if (ground)
 			ySpeed -= 25 + Math.abs(xSpeed) / 5;
 	}
@@ -50,7 +50,6 @@ public abstract class AbstractChara extends JPanel {
 			changeXSpeed();
 		}
 		else if(hit == 10 || hit == 11){
-			changeYSpeed();
 			changeYSpeed();
 		}
 	}
@@ -68,14 +67,15 @@ public abstract class AbstractChara extends JPanel {
 	// y方向の速度計算  空中の挙動
 	public void calcYAcceleration() {
 		if(!ground) ySpeed += 2;
-
+		
 		//ブロックに接触できていなければgroundをfalseに
-	//	boolean g = true;
-	//	for (Block b : Model.getBlockList())
-	//		if (b.hity(this))
-	//			g = false;
-	//	if (g)
-	//		ground = false;
+		boolean g = true;
+		for (Block b : Model.getBlockList())
+			if (b.hity(this))
+				g = false;
+		if (g)
+			ground = false;
+		yPosition += ySpeed;
 	}
 
 	public int isHitBlock(){
@@ -87,13 +87,13 @@ public abstract class AbstractChara extends JPanel {
 				hitx = 1;
 			}
 			if(b.hity(this)){
-				onGround = true;
+				//onGround = true;
 				hity = 10;
 			}
 		}
-		if(onGround){
-			ground = true;
-		}
+		//if(onGround){
+		//	ground = true;
+		//}
 		return hitx + hity;
 	}
 
@@ -104,7 +104,7 @@ public abstract class AbstractChara extends JPanel {
 	// 移動処理
 	public void move(){
 		xPosition += xSpeed;
-		yPosition += ySpeed;
+	//	yPosition += ySpeed;
 	}
 
 	//描画
