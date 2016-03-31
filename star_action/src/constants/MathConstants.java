@@ -14,6 +14,7 @@ public class MathConstants {
 	public static final int GAMESTATUS_STAGECHANGE	= 	4;
 
 	public static final int BLOCK_SIZE				=	50;
+	public final static int DELAY 					=	30;
 
 	private MathConstants(){
 	}

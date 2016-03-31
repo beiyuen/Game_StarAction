@@ -2,28 +2,47 @@ package star_action;
 
 import static constants.MathConstants.*;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.border.BevelBorder;
 
+import charas.Block;
+import charas.Enemy;
+import charas.Needle;
+import charas.PlayerChara;
 
 public class ViewPanel extends JPanel {
-	public static Timer timer;
-	private final static int DELAY = 30;
+	public Timer timer;
+	public ArrayList<Block> blockList;
+	public ArrayList<Enemy> enemyList;
+	public ArrayList<Needle> needleList;
+	Image image = getToolkit().createImage("image/block.png");
+	
+	public PlayerChara playerChara = new PlayerChara(40, 50);
 
 
 
 	public ViewPanel(){
-		super();
-
+		//super();
+		blockList = Model.getBlockList();
+		enemyList = Model.getEnemyList();
+		needleList = Model.getNeedleList();
+		playerChara = Model.playerChara;
+		setBackground(Color.GREEN);
+		setBorder(new BevelBorder(BevelBorder.LOWERED));
 		timer = new Timer(DELAY, e -> {
-				switch(Model.gameStatus){
+				switch(Model.getGameStatus()){
 					case GAMESTATUS_OPENING:
 						break;
 					case GAMESTATUS_PLAYING:
 						Model.run();
-						
+						repaint();
+						//System.out.println("timer : run");
 						break;
 					case GAMESTATUS_DIE:
 						break;
@@ -35,31 +54,43 @@ public class ViewPanel extends JPanel {
 				repaint();
 			}
 		);
-
+		run();
+		setOpaque(false);
 	}
 
 	public void run(){
 		timer.start();
 	}
-	
+
 	// 描画
 		public void paintComponent(Graphics g) {
 			switch(Model.getGameStatus()){
-			case 0:
+			case GAMESTATUS_OPENING:
 				//open.draw(g);
 				break;
 				
-			case 1:	//各キャラ、ブロック、右上の画像を描画
-				Model.draw(g);
+			case GAMESTATUS_PLAYING:	//各キャラ、ブロック、右上の画像を描画
+				playerChara.draw(g);// draw関数が悪い?
+				for (Block block : blockList) {
+					block.draw(g);
+				}
+				for (Enemy enemy : enemyList) {
+					enemy.draw(g);
+				}
+				for (Needle needle : needleList) {
+					needle.draw(g);
+				}
+				break;
+
+			case GAMESTATUS_DIE:
+				break;
+
+			case GAMESTATUS_ENDING:
 				break;
 				
-			case 2:
-				break;
-				
-			case 3:
+			case GAMESTATUS_STAGECHANGE:
 				break;	
 			}
 		}
-
 
 }

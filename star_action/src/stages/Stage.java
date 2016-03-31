@@ -1,12 +1,22 @@
 package stages;
 
 import static constants.CharaConstants.*;
+
+import java.util.ArrayList;
+
+import charas.Block;
+import charas.Enemy;
+import charas.Needle;
 public class Stage {
 
 	public int currentStageNum; //現在のステージ数
 	public int currentClickableNum[];
 	int clickableNum[][] = {{10,10,10},{5,0,0},{0,0,0},{0,5,0},{6,0,0}}; //クリック可能回数
 	boolean scrollable[] = {true,true,false,true,false};
+	
+	public ArrayList<Block> blockList;
+	public ArrayList<Enemy> enemyList;
+	public ArrayList<Needle> needleList;
 
 	//各文字の定義
 	final int h = BLOCK_HARD;
@@ -49,15 +59,27 @@ public class Stage {
 
 
 
-	public Stage(int stage){
+	public Stage(int stage, ArrayList<Block> bl, ArrayList<Enemy> en, ArrayList<Needle> ne){
+		blockList = bl;
+		enemyList = en;
+		needleList = ne;
 		// enemy,block作成
 		for (int i = 0; i < map[stage].length; i++) {
 			for (int j = 0; j < map[stage][i].length; j++) {
 				switch (map[stage][i][j]) {
-
+					case h:	//ブロック
+					case n:
+						blockList.add(new Block(j, i));
+						break;
+					case u: // とげ
+						needleList.add(new Needle(j, i, 1));
+						break;
+					case e: // 敵
+						enemyList.add(new Enemy(j, i));
 				}
 			}
 		}
+		System.out.println("Stage loaded");
 		currentStageNum=stage;
 		currentClickableNum = clickableNum[currentStageNum];
 	}

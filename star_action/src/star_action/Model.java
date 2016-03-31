@@ -37,7 +37,7 @@ public class Model {
 	}
 
 	public void death(){
-		//setGameStatus(2);
+		setGameStatus(2);
 	}
 
 	private void setGameStatus(int i){
@@ -77,16 +77,7 @@ public class Model {
 	}
 	
 	public static void draw(Graphics g){
-		playerChara.draw(g);
-		for (Block block : blockList) {
-			block.draw(g);
-		}
-		for (Enemy enemy : enemyList) {
-			enemy.draw(g);
-		}
-		for (Needle needle : needleList) {
-			needle.draw(g);
-		}
+		
 	}
 
 }

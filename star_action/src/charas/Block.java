@@ -15,7 +15,7 @@ public class Block extends AbstractChara {
 		height = BLOCK_SIZE;
 		xPosition = x * BLOCK_SIZE + BLOCK_SIZE / 2;
 		yPosition = y * BLOCK_SIZE + BLOCK_SIZE / 2;
-		image = getToolkit().createImage("src/image/block.png");
+		image = getToolkit().createImage("image/block.png");
 	}
 	public Block(int x, int y, int w, int h) {
 		width = w;

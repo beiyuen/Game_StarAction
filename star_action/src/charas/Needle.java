@@ -15,7 +15,7 @@ public class Needle extends Enemy {
     public static int SIZE = 50;
 
 	 public Needle(int x, int y,int i) {
-		 super(x,y,50,"src/image/needle.png");
+		 super(x,y,50,"image/needle.png");
 		 imgkind = i;
 	}
 

@@ -49,7 +49,8 @@ public abstract class AbstractChara extends JPanel {
 		if(hit == 1 || hit == 11){
 			changeXSpeed();
 		}
-		else if(hit == 10){
+		else if(hit == 10 || hit == 11){
+			changeYSpeed();
 			changeYSpeed();
 		}
 	}

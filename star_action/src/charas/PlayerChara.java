@@ -15,7 +15,7 @@ public class PlayerChara extends AbstractChara {
 	int imageNum,imageKind,kabe;//i,imgkind:画像用,kabe:敵用
 
 	public PlayerChara(int w, int h) {
-		image = getToolkit().createImage("src/image/otamesi.png");
+		image = getToolkit().createImage("image/otamesi.png");
 		width = w;
 		height = h;
 		init();
@@ -30,6 +30,7 @@ public class PlayerChara extends AbstractChara {
 		ground = false;
 		imageNum=0;
 		imageKind = 0;
+	
 	}
 
 	//落下時、敵接触時など
@@ -108,7 +109,7 @@ public class PlayerChara extends AbstractChara {
         sx = (imageKind % yoko) * pwidth;
         sy = (imageKind / yoko) * pheight;
 
-		g.drawImage(image,(int)(xPosition- width / 2),(int)(yPosition- height / 2),
+        g.drawImage(image,(int)(xPosition- width / 2),(int)(yPosition- height / 2),
 				(int)(xPosition+width/2),(int)(yPosition+height/2),
 				(int)(sx),(int)(sy), (int)(sx+pwidth), (int)(sy+pheight),this);
 	}

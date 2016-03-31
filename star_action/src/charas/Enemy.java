@@ -9,7 +9,7 @@ public class Enemy extends AbstractChara {
 
 	//NPC自身のコンストラクタ
 	public Enemy(int x, int y){
-		super(x,y,30,30,"src/image/enemy2.png");
+		super(x,y,30,30,"image/enemy2.png");
 		xSpeed = (r.nextInt(5) - 2) * 2;
 	}
 
@@ -67,7 +67,7 @@ public class Enemy extends AbstractChara {
 		//ランダムで速度0になったときに加速
 		if (xSpeed == 0)
 			xSpeed++;
-		xPosition += xSpeed;
+		
 	}
 
 	@Override
