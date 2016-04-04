@@ -27,7 +27,9 @@ public class PlayerChara extends AbstractChara {
 		yPosition = 8*BLOCK_SIZE;
 		xSpeed=0;
 		ySpeed = 0;
-		ground = false;
+		hitRight = false;
+		hitLeft = false;
+		hitLeg = false;
 		imageNum=0;
 		imageKind = 0;
 	
@@ -38,7 +40,9 @@ public class PlayerChara extends AbstractChara {
 
 	//衝突処理を追加
 	public void calcAcceleration(){
-		super.calcAcceleration();
+	//	super.calcAcceleration();
+		
+		
 		//敵との当たり判定を計算
 		for (Enemy e : Model.getEnemyList()){
 			if (e.hit(this)){}
@@ -55,11 +59,14 @@ public class PlayerChara extends AbstractChara {
 		else if(hit == 10 || hit == 11){
 			changeYSpeed();
 		}
+		calcXAcceleration(0.7);
+		calcYAcceleration();
 	}
 
 	// 操作およびhit時の挙動
 	public void calcXAcceleration(double a) {
-		if (moveRight){
+		// 右を押していたとき
+		if (moveRight && !hitRight){
 			if(dash&& xSpeed <= 25){
 				xSpeed += 2;
 			}
@@ -69,7 +76,8 @@ public class PlayerChara extends AbstractChara {
 			imageNum ++;
 			imageKind = (imageNum % 18) / 6;//0,1,2番目の画像
 		}
-		else if (moveLeft){
+		// 左を押していたとき
+		else if (moveLeft && !hitLeft){
 			if(dash&& xSpeed >= -25){
 				xSpeed -= 2;
 			}
@@ -98,14 +106,15 @@ public class PlayerChara extends AbstractChara {
 	public void calcYAcceleration() {
 		super.calcYAcceleration();
 		// 接地しているときのジャンプ処理
-		if (up && ground) {
+		if (up && hitLeg) {
 			jump();
 			if(imageKind<3)
 				imageKind = 0;
 			else
 				imageKind = 3;
-			ground = false;
+			hitLeg = false;
 		}
+	//	System.out.println("hitLeg = " + hitLeg + ", ySeed = " + ySpeed);
 		
 	}
 

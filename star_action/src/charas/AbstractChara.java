@@ -2,6 +2,7 @@ package charas;
 
 import static constants.MathConstants.*;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -14,6 +15,7 @@ public abstract class AbstractChara extends JPanel {
 	double xSpeed, ySpeed; //スピード
 	int width, height; //縦横サイズ
 	Image image;  //画像
+	boolean hitRight = false, hitLeft = false, hitHead = false, hitLeg = false;
 	boolean ground = false;  //設置判定
 
 	AbstractChara(){}
@@ -31,13 +33,13 @@ public abstract class AbstractChara extends JPanel {
 
 	// 接触判定
 	public boolean hit(AbstractChara c) {
-		return Math.abs(c.xPosition + c.xSpeed - xPosition - xSpeed) < c.width / 2 + width / 2
-				&& Math.abs(c.yPosition + c.ySpeed - yPosition -ySpeed) < c.height / 2 + height / 2;
+		return Math.abs(c.xPosition - xPosition) <= c.width / 2 + width / 2
+				&& Math.abs(c.yPosition - yPosition) <= c.height / 2 + height / 2;
 	}
 
 	// ジャンプ
 	public void jump() {
-		if (ground)
+		if (hitLeg)
 			ySpeed -= 25 + Math.abs(xSpeed) / 5;
 	}
 
@@ -66,33 +68,51 @@ public abstract class AbstractChara extends JPanel {
 
 	// y方向の速度計算  空中の挙動
 	public void calcYAcceleration() {
-		if(!ground) ySpeed += 2;
-		
-		//ブロックに接触できていなければgroundをfalseに
-		boolean g = true;
+		if(!hitLeg) {
+			ySpeed += 2;
+		}
+
+		//ブロックに接触できていなければhitLegをfalseに
+		boolean g = false;
 		for (Block b : Model.getBlockList())
 			if (b.hity(this))
-				g = false;
-		if (g)
-			ground = false;
-		yPosition += ySpeed;
+				g = true;
+		if (!g){
+			hitLeg = false;
+		}
+
+		//yPosition += ySpeed;
 	}
 
 	public int isHitBlock(){
-		int hitx = 0;
-		int hity = 0;
-		boolean onGround = false;
+		int hitr = 0;
+		int hitl = 0;
+		int hith = 0;
+		int hitd = 0;
+		Dimension hx, hy;
+		boolean onhitLeg = false;
 		for (Block b : Model.getBlockList()){
-			if(b.hitx(this)){
-				hitx = 1;
+			hx = b.hitx(this);
+			hy = b.hity(this);
+			if(hx.width == 1){
+				hitl = 1;
 			}
-			if(b.hity(this)){
-				//onGround = true;
-				hity = 10;
+			if(hx.height == 1){
+				hitr = 1;
+			}
+			if(hy.width == 1){
+				hith = 1;
+			}
+			if(hy.height == 1){
+				hitd = 1;
 			}
 		}
-		//if(onGround){
-		//	ground = true;
+		hitLeft = hitl == 0 ? false:true;
+		hitRight = hitr == 0 ? false:true;
+		hitHead = hith == 0 ? false:true;
+		hitLeg = hitd == 0 ? false:true;
+		//if(onhitLeg){
+		//	hitLeg = true;
 		//}
 		return hitx + hity;
 	}
@@ -104,7 +124,7 @@ public abstract class AbstractChara extends JPanel {
 	// 移動処理
 	public void move(){
 		xPosition += xSpeed;
-	//	yPosition += ySpeed;
+		yPosition += ySpeed;
 	}
 
 	//描画
@@ -194,11 +214,11 @@ public abstract class AbstractChara extends JPanel {
 	}
 
 	/**
-	 * groundを取得します。
-	 * @return ground
+	 * hitLegを取得します。
+	 * @return hitLeg
 	 */
-	public boolean isGround() {
-	    return ground;
+	public boolean ishitLeg() {
+	    return hitLeg;
 	}
 
 }
