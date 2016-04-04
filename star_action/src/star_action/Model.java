@@ -11,6 +11,7 @@ import charas.Enemy;
 import charas.Needle;
 import charas.PlayerChara;
 import stages.Stage;
+import util.DebugShowText;
 
 public class Model {
 	public static ArrayList<Block> blockList = new ArrayList<Block>();
@@ -20,6 +21,7 @@ public class Model {
 	
 	public static Stage stage = new Stage(0, blockList, enemyList, needleList);
 	public static PlayerChara playerChara = new PlayerChara(40, 50);
+	public static DebugShowText debugShowText = new DebugShowText();
 	
 
 	public static ArrayList<Block> getBlockList() {
@@ -47,8 +49,9 @@ public class Model {
 	private static void scroll(){
 		if(stage.isScrollable()){//s.num=4(ボス戦)ではスクロールできない
 			double xSpeed =  playerChara.getxSpeed();
-			if (playerChara.getxPosition() + xSpeed + playerChara.getWidth() / 2 > GAME_WIDTH - 400) {
-				playerChara.setxPosition(xSpeed);
+			double xPosition = playerChara.getxPosition();
+			if (xPosition + xSpeed + playerChara.getWidth() / 2 > GAME_WIDTH - 400) {
+				playerChara.xPosition -= xSpeed;
 				for (Block b : blockList){
 					b.xPosition -= xSpeed;
 				}
@@ -74,10 +77,11 @@ public class Model {
 		}
 		playerChara.move();
 		scroll();
+		
+		debugShowText.run(playerChara.xPosition, playerChara.yPosition);
 	}
 	
 	public static void draw(Graphics g){
-		
 	}
 
 }

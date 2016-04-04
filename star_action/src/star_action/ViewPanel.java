@@ -15,6 +15,7 @@ import charas.Block;
 import charas.Enemy;
 import charas.Needle;
 import charas.PlayerChara;
+import util.DebugShowText;
 
 public class ViewPanel extends JPanel {
 	public Timer timer;
@@ -25,10 +26,11 @@ public class ViewPanel extends JPanel {
 	
 	public PlayerChara playerChara = new PlayerChara(40, 50);
 
-
+	public DebugShowText debugShowText;
 
 	public ViewPanel(){
 		//super();
+		debugShowText = Model.debugShowText;
 		blockList = Model.getBlockList();
 		enemyList = Model.getEnemyList();
 		needleList = Model.getNeedleList();
@@ -80,6 +82,7 @@ public class ViewPanel extends JPanel {
 				for (Needle needle : needleList) {
 					needle.draw(g);
 				}
+				debugShowText.draw(g);
 				break;
 
 			case GAMESTATUS_DIE:

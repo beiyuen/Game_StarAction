@@ -52,11 +52,12 @@ public class PlayerChara extends AbstractChara {
 			if (n.hit(this)){}
 				//death();
 		}
-		int hit = isHitBlock();
-		if(hit == 1 || hit == 11){
+		// ブロックとの当たり判定をし、hitRight, hitLeft, hitHead, hitLeg を変更
+		isHitBlock();
+		if(hitLeft || hitRight){
 			changeXSpeed();
 		}
-		else if(hit == 10 || hit == 11){
+		else if(hitHead || hitLeg){
 			changeYSpeed();
 		}
 		calcXAcceleration(0.7);
@@ -67,10 +68,10 @@ public class PlayerChara extends AbstractChara {
 	public void calcXAcceleration(double a) {
 		// 右を押していたとき
 		if (moveRight && !hitRight){
-			if(dash&& xSpeed <= 25){
+			if(dash&& xSpeed <= 16){
 				xSpeed += 2;
 			}
-			else if(dash==false && xSpeed <= 10){
+			else if(dash==false && xSpeed <= 6){
 				xSpeed += 1.5;
 			}
 			imageNum ++;
@@ -78,10 +79,10 @@ public class PlayerChara extends AbstractChara {
 		}
 		// 左を押していたとき
 		else if (moveLeft && !hitLeft){
-			if(dash&& xSpeed >= -25){
+			if(dash&& xSpeed >= -16){
 				xSpeed -= 2;
 			}
-			else if(dash==false && xSpeed >= -10){
+			else if(dash==false && xSpeed >= -6){
 				xSpeed -= 1.5;
 			}
 			imageNum ++;
@@ -97,9 +98,10 @@ public class PlayerChara extends AbstractChara {
 				xPosition = width / 2;
 				changeXSpeed();
 
-	}
+			}
 
 		super.calcXAcceleration(a);
+	
 	}
 
 	 //ジャンプ操作と画像の変更
@@ -114,6 +116,11 @@ public class PlayerChara extends AbstractChara {
 				imageKind = 3;
 			hitLeg = false;
 		}
+		else if(!up && hitLeg){
+			changeYSpeed();
+		}
+		
+	//	System.out.println("xSppd = " + xSpeed + ", ySpeed = " + ySpeed);
 	//	System.out.println("hitLeg = " + hitLeg + ", ySeed = " + ySpeed);
 		
 	}
@@ -130,6 +137,14 @@ public class PlayerChara extends AbstractChara {
 				(int)(xPosition+width/2),(int)(yPosition+height/2),
 				(int)(sx),(int)(sy), (int)(sx+pwidth), (int)(sy+pheight),this);
 	}
+	
+	// 移動処理
+	@Override
+	public void move(){
+			xPosition += xSpeed;
+			yPosition += ySpeed;
+		//	System.out.println("hitLeg :" + hitLeg + ", hitHead :" + hitHead +", hitLeft :" + hitLeft + ", hitRight :" + hitRight);
+		}
 
 	@Override
 	public void changeXSpeed() {

@@ -40,18 +40,18 @@ public abstract class AbstractChara extends JPanel {
 	// ジャンプ
 	public void jump() {
 		if (hitLeg)
-			ySpeed -= 25 + Math.abs(xSpeed) / 5;
+			ySpeed -= 20 + Math.abs(xSpeed) / 5;
 	}
 
 	// 呼び出され用
 	public void calcAcceleration() {
 		calcYAcceleration();
 		calcXAcceleration(0.7);
-		int hit = isHitBlock();
-		if(hit == 1 || hit == 11){
+		isHitBlock();
+		if(hitLeft || hitRight){
 			changeXSpeed();
 		}
-		else if(hit == 10 || hit == 11){
+		else if(hitHead || hitLeg){
 			changeYSpeed();
 		}
 	}
@@ -68,29 +68,29 @@ public abstract class AbstractChara extends JPanel {
 
 	// y方向の速度計算  空中の挙動
 	public void calcYAcceleration() {
-		if(!hitLeg) {
-			ySpeed += 2;
+		if(!hitLeg && ySpeed <= 18) {
+			ySpeed += 1.3;
+			
 		}
 
 		//ブロックに接触できていなければhitLegをfalseに
-		boolean g = false;
+		/*boolean g = false;
 		for (Block b : Model.getBlockList())
 			if (b.hity(this))
 				g = true;
 		if (!g){
 			hitLeg = false;
-		}
+		}*/
 
 		//yPosition += ySpeed;
 	}
 
-	public int isHitBlock(){
+	public void isHitBlock(){
 		int hitr = 0;
 		int hitl = 0;
 		int hith = 0;
 		int hitd = 0;
 		Dimension hx, hy;
-		boolean onhitLeg = false;
 		for (Block b : Model.getBlockList()){
 			hx = b.hitx(this);
 			hy = b.hity(this);
@@ -107,14 +107,14 @@ public abstract class AbstractChara extends JPanel {
 				hitd = 1;
 			}
 		}
-		hitLeft = hitl == 0 ? false:true;
-		hitRight = hitr == 0 ? false:true;
-		hitHead = hith == 0 ? false:true;
-		hitLeg = hitd == 0 ? false:true;
+		hitLeft 	= hitl == 1 ? true:false;
+		hitRight 	= hitr == 1 ? true:false;
+		hitHead 	= hith == 1 ? true:false;
+		hitLeg 		= hitd == 1 ? true:false;
 		//if(onhitLeg){
 		//	hitLeg = true;
 		//}
-		return hitx + hity;
+		//return hitx + hity;
 	}
 
 	// 速度変更
