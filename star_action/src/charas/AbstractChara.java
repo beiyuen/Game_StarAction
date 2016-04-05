@@ -215,5 +215,9 @@ public abstract class AbstractChara extends JPanel {
 	public boolean ishitLeg() {
 	    return hitLeg;
 	}
+	
+	public boolean isDeath(){
+		return death;
+	}
 
 }

@@ -54,7 +54,7 @@ public class Block extends AbstractChara {
 				hitl = 1;
 				isHitx = false;
 				c.xPosition = xPosition + (c.width / 2 + BLOCK_SIZE / 2);
-				System.out.println("hitLeft1");
+			//	System.out.println("hitLeft1");
 			}
 			
 			else if(prex > (c.width/2+BLOCK_SIZE/2) && precos >= Math.cos(60 * Math.PI / 180.0) && c.xSpeed < 0){
@@ -62,7 +62,7 @@ public class Block extends AbstractChara {
 					hitl = 1;
 					isHitx = true;
 					c.xPosition = xPosition + (c.width / 2 + BLOCK_SIZE / 2);
-					System.out.println("hitLeft2");
+				//	System.out.println("hitLeft2");
 				}
 				
 			}
@@ -70,14 +70,14 @@ public class Block extends AbstractChara {
 				hitr = 1;
 				isHitx = false;
 				c.xPosition = xPosition - (c.width / 2 + BLOCK_SIZE / 2);
-				System.out.println("hitRight1");
+			//	System.out.println("hitRight1");
 			}
 			else if(prex < -(c.width/2+BLOCK_SIZE/2) && precos >= Math.cos(120 * Math.PI / 180.0) && c.xSpeed > 0){
 				if(!c.hitLeg && !c.hitHead){
 					hitr = 1;
 					isHitx = true;
 					c.xPosition = xPosition - (c.width / 2 + BLOCK_SIZE / 2);
-					System.out.println("hitRight2");
+				//	System.out.println("hitRight2");
 				}
 			}
 			else {
@@ -106,26 +106,26 @@ public class Block extends AbstractChara {
 			if(sin <= Math.sin(-60 * Math.PI / 180.0)){
 					hitl = 1;
 					c.yPosition = yPosition - (c.height / 2 + BLOCK_SIZE / 2);
-					System.out.println("leg1");
+				//	System.out.println("leg1");
 			}
 			else if(prey <= -(c.height/2+BLOCK_SIZE/2) && presin <= Math.sin(-40 * Math.PI / 180.0) && c.ySpeed >= 0){
 				if(!c.hitLeft && !c.hitRight && !c.hitLeg && !isHitx){
 					hitl = 1;
 					c.yPosition = yPosition - (c.height / 2 + BLOCK_SIZE / 2);
-					System.out.println("leg2");
+				//	System.out.println("leg2");
 				}
 
 			}
 			else if(sin >= Math.sin(60 * Math.PI / 180.0) ){//|| (prey > (c.height/2+BLOCK_SIZE/2) && presin >=  Math.sin(60 * Math.PI / 180.0) && ySpeed < 0)){
 				hith = 1;
 				c.yPosition = yPosition + (c.height / 2 + BLOCK_SIZE / 2);
-				System.out.println("head1");
+			//	System.out.println("head1");
 			}
 			else if (prey > (c.height/2+BLOCK_SIZE/2) && presin >=  Math.sin(35 * Math.PI / 180.0) && c.ySpeed < 0){
 				if(!c.hitLeft && !c.hitRight && !isHitx){
 					hith = 1;
 					c.yPosition = yPosition + (c.height / 2 + BLOCK_SIZE / 2);
-					System.out.println("head2");
+				//	System.out.println("head2");
 				}
 			}
 			// 貫通防止、前のフレームで空中におり、現在のフレームでブロック内の角度が変な場所にいるとき

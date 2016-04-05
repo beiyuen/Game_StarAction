@@ -3,7 +3,6 @@ package star_action;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class MainFrame extends JFrame {
@@ -12,11 +11,9 @@ public class MainFrame extends JFrame {
 	public static final int YMAX = 520;
 	//Model model;
 	ViewPanel viewPanel;
-	JButton button;
 	
 	public MainFrame(){
 		viewPanel = new ViewPanel();
-		button = new JButton("button");
 		//viewPanel.add(button);
 		this.getContentPane().add(viewPanel);
 		//model = new Model();

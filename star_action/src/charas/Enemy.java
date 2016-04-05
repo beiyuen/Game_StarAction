@@ -28,6 +28,7 @@ public class Enemy extends AbstractChara {
 	//enemyからこのオブジェクトを除去
 	void death() {
 		death = true;
+		System.out.println("enemy.death");
 		//Mario.sound("stamp.wav", 0.6);
 		//Mario.iterator.remove();
 	}
@@ -70,8 +71,6 @@ public class Enemy extends AbstractChara {
 
 	}
 
-	public boolean isDeath(){
-		return death;
-	}
+	
 
 }

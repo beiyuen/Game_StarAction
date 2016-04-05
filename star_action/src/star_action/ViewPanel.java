@@ -24,7 +24,7 @@ public class ViewPanel extends JPanel {
 	public ArrayList<Needle> needleList;
 	//Image image = getToolkit().createImage("image/block.png");
 	
-	public Image gameoverImage =  getToolkit().createImage("image/Gameover2.png");
+	public Image gameoverImage =  getToolkit().createImage("image/Gameover.png");
 	
 	public PlayerChara playerChara = new PlayerChara(40, 50);
 
@@ -49,6 +49,8 @@ public class ViewPanel extends JPanel {
 						//System.out.println("timer : run");
 						break;
 					case GAMESTATUS_DIE:
+						Model.run();
+						repaint();
 						break;
 					case GAMESTATUS_ENDING:
 						break;
@@ -103,7 +105,7 @@ public class ViewPanel extends JPanel {
 					n.draw(g);
 				}
 				debugShowText.draw(g);
-				g.drawImage(gameoverImage, 180,80,690,163, this);
+				g.drawImage(gameoverImage, 0,0,1000,500, this);
 				break;
 
 			case GAMESTATUS_ENDING:

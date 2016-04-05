@@ -59,8 +59,7 @@ public class Controller {
 				case 'r':// 自殺用
 				case 'R':
 					// NPCshoot.bullet.clear();
-					Model.playerChara.death = true;
-					Model.playerChara.init();
+					Model.death();
 					// int num = s.num;
 					// s.remove();
 					// s = new Stage(num);//リロード

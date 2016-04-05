@@ -22,7 +22,6 @@ public class Model {
 	public static Stage stage = new Stage(0, blockList, enemyList, needleList);
 	public static PlayerChara playerChara = new PlayerChara(40, 50);
 	public static DebugShowText debugShowText = new DebugShowText();
-	
 
 	public static ArrayList<Block> getBlockList() {
 		return blockList;
@@ -89,14 +88,19 @@ public class Model {
 	
 	
 	public static void run(){
-		playerChara.calcAcceleration();
+		if(!playerChara.isDeath()){
+			playerChara.calcAcceleration();
+		}
+		
 		for (Enemy e : enemyList) {
 			if(!e.isDeath()){
 				e.calcAcceleration();
 				e.move();
 			}
 		}
-		playerChara.move();
+		if(!playerChara.isDeath()){
+			playerChara.move();
+		}
 		scroll();
 		
 		debugShowText.run(playerChara.xPosition, playerChara.yPosition);

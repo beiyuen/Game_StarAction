@@ -182,6 +182,9 @@ public class PlayerChara extends AbstractChara {
 
 	public void death() {
 		// TODO 自動生成されたメソッド・スタブ
+		death = true;
+		xSpeed = 0.0;
+		ySpeed = 0.0;
 	}
 
 }
