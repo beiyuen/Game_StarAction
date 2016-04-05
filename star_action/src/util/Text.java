@@ -13,8 +13,8 @@ public class Text extends JPanel{
 	Color col;
 
 	//座標、文字列、フォント
-	public Text(int x, int y, String t, Font f) {
-		col = Color.BLACK;
+	public Text(int x, int y, String t, Font f, Color c) {
+		col = c;
 		xpos = x;
 		ypos = y;
 		txt = t;

@@ -66,6 +66,9 @@ public class PlayerChara extends AbstractChara {
 		}*/
 		// ブロックとの当たり判定をし、hitRight, hitLeft, hitHead, hitLeg を変更
 		isHitBlock();
+		if(Model.goalBlock.hit(this)){
+			Model.nextStage();
+		}
 		if(hitLeft || hitRight){
 			changeXSpeed();
 		}
@@ -170,14 +173,14 @@ public class PlayerChara extends AbstractChara {
 
 	@Override
 	public void changeXSpeed() {
-		xSpeed = 0;
+		xSpeed = 0.0;
 
 	}
 
 	@Override
 	public void changeYSpeed() {
 		// TODO 自動生成されたメソッド・スタブ
-		ySpeed = 0;
+		ySpeed = 0.0;
 	}
 
 	public void death() {

@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 import charas.Block;
 import charas.Enemy;
+import charas.GoalBlock;
 import charas.Needle;
+import star_action.Model;
 public class Stage {
 
 	public int currentStageNum; //現在のステージ数
@@ -63,25 +65,29 @@ public class Stage {
 		blockList = bl;
 		enemyList = en;
 		needleList = ne;
+		int stageNum = stage-1;
 		// enemy,block作成
-		for (int i = 0; i < map[stage].length; i++) {
-			for (int j = 0; j < map[stage][i].length; j++) {
-				switch (map[stage][i][j]) {
+		for (int i = 0; i < map[stageNum].length; i++) {
+			for (int j = 0; j < map[stageNum][i].length; j++) {
+				switch (map[stageNum][i][j]) {
 					case h:	//ブロック
 					case n:
 						blockList.add(new Block(j, i));
 						break;
 					case u: // とげ
-						needleList.add(new Needle(j, i, 1));
+						needleList.add(new Needle(j, i, 0));
 						break;
 					case e: // 敵
 						enemyList.add(new Enemy(j, i));
+						break;
+					case g:
+						Model.goalBlock = new GoalBlock(j, i);
+						break;
 				}
 			}
 		}
 		System.out.println("Stage loaded");
-		currentStageNum=stage;
-		currentClickableNum = clickableNum[currentStageNum];
+		currentClickableNum = clickableNum[stageNum];
 	}
 
 	public boolean isScrollable(){

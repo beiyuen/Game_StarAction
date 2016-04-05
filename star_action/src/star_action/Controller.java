@@ -74,6 +74,14 @@ public class Controller {
 					Model.init();
 				}
 				break;
+				
+			case GAMESTATUS_STAGECHANGE:	
+				switch (evt.getKeyCode()) {
+				case KeyEvent.VK_ENTER:
+					Model.setGameStatus(GAMESTATUS_PLAYING);
+					break;
+				}
+				break;
 			}
 				
 			

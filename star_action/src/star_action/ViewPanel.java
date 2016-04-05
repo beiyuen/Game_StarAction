@@ -89,6 +89,7 @@ public class ViewPanel extends JPanel {
 				for (Needle n : needleList) {
 					n.draw(g);
 				}
+				Model.getGoalBlock().draw(g);
 				debugShowText.draw(g);
 				break;
 
@@ -104,6 +105,7 @@ public class ViewPanel extends JPanel {
 				for (Needle n : needleList) {
 					n.draw(g);
 				}
+				Model.getGoalBlock().draw(g);
 				debugShowText.draw(g);
 				g.drawImage(gameoverImage, 0,0,1000,500, this);
 				break;
@@ -112,6 +114,7 @@ public class ViewPanel extends JPanel {
 				break;
 				
 			case GAMESTATUS_STAGECHANGE:
+				Model.getStageChangeSlide().draw(g);
 				break;	
 			}
 		}

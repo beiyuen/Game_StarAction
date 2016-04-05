@@ -30,6 +30,8 @@ public class Block extends AbstractChara {
 		height = h;
 		xPosition = x * BLOCK_SIZE + BLOCK_SIZE / 2;
 		yPosition = y * BLOCK_SIZE + BLOCK_SIZE / 2;
+		initX = xPosition;
+		initY = yPosition;
 	}
 
 	public void calcAcceleration() {
