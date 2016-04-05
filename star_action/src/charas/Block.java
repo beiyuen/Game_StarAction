@@ -11,6 +11,7 @@ public class Block extends AbstractChara {
 	private static final long serialVersionUID = 1L;
 	public boolean removable = true;
 	public Dimension hitX,hitY;
+	public boolean hitX2;
 
 	public Block(int x, int y) {
 		width = BLOCK_SIZE;
@@ -20,6 +21,7 @@ public class Block extends AbstractChara {
 		image = getToolkit().createImage("image/block.png");
 		hitX = new Dimension(0, 0);
 		hitY = new Dimension(0, 0);
+		hitX2 = false;
 	}
 	public Block(int x, int y, int w, int h) {
 		width = w;
@@ -54,26 +56,40 @@ public class Block extends AbstractChara {
 			double cos = Math.cos(Math.atan2(c.yPosition-yPosition, c.xPosition-xPosition));
 			if(cos >= Math.cos(30 * Math.PI / 180.0)){
 				hitl = 1;
+				hitX2 = false;
+				c.xPosition = xPosition + (c.width / 2 + BLOCK_SIZE / 2);
 				System.out.println("hitLeft1");
 			}
 			
 			else if(prex > (c.width/2+BLOCK_SIZE/2) && precos >= Math.cos(60 * Math.PI / 180.0) && c.xSpeed < 0){
 				if(!c.hitLeg && !c.hitHead){
 					hitl = 1;
+					hitX2 = true;
+					c.xPosition = xPosition + (c.width / 2 + BLOCK_SIZE / 2);
 					System.out.println("hitLeft2");
 				}
 				
 			}
 			else if(cos <= Math.cos(150 * Math.PI / 180.0)){
 				hitr = 1;
+				hitX2 = false;
+				c.xPosition = xPosition - (c.width / 2 + BLOCK_SIZE / 2);
 				System.out.println("hitRight1");
 			}
 			else if(prex < -(c.width/2+BLOCK_SIZE/2) && precos >= Math.cos(120 * Math.PI / 180.0) && c.xSpeed > 0){
 				if(!c.hitLeg && !c.hitHead){
 					hitr = 1;
-					System.out.println("hitRight1");
+					hitX2 = true;
+					c.xPosition = xPosition - (c.width / 2 + BLOCK_SIZE / 2);
+					System.out.println("hitRight2");
 				}
 			}
+			else {
+				hitX2 = false;
+			}
+		}
+		else {
+			hitX2 = false;
 		}
 		hitX.setSize(hitl, hitr);
 		return hitX;
@@ -100,8 +116,8 @@ public class Block extends AbstractChara {
 					//c.hitLeg = true;
 				//}
 			}
-			else if(prey < -(c.height/2+BLOCK_SIZE/2) && presin <= Math.sin(-35 * Math.PI / 180.0) && c.ySpeed > 0){
-				if(!c.hitLeft && !c.hitRight && !c.hitLeg){
+			else if(prey <= -(c.height/2+BLOCK_SIZE/2) && presin <= Math.sin(-40 * Math.PI / 180.0) && c.ySpeed >= 0){
+				if(!c.hitLeft && !c.hitRight && !c.hitLeg && !hitX2){
 					hitl = 1;
 					c.yPosition = yPosition - (c.height / 2 + BLOCK_SIZE / 2);
 					System.out.println("leg2");
@@ -116,7 +132,7 @@ public class Block extends AbstractChara {
 				//c.hitHead = true;
 			}
 			else if (prey > (c.height/2+BLOCK_SIZE/2) && presin >=  Math.sin(35 * Math.PI / 180.0) && c.ySpeed < 0){
-				if(!c.hitLeft && !c.hitRight){
+				if(!c.hitLeft && !c.hitRight && !hitX2){
 					hith = 1;
 					c.yPosition = yPosition + (c.height / 2 + BLOCK_SIZE / 2);
 					System.out.println("head2");

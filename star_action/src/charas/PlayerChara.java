@@ -108,7 +108,7 @@ public class PlayerChara extends AbstractChara {
 	public void calcYAcceleration() {
 		super.calcYAcceleration();
 		// 接地しているときのジャンプ処理
-		if (up && hitLeg) {
+		if (up && hitLeg && !hitHead) {
 			jump();
 			if(imageKind<3)
 				imageKind = 0;
