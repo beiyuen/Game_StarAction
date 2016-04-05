@@ -1,5 +1,7 @@
 package star_action;
 
+import static constants.MathConstants.*;
+
 import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -24,19 +26,22 @@ public class Controller {
 	static class StarActionKeyAdapter extends KeyAdapter{
 		public void keyPressed(KeyEvent evt) {
 			
-				int mod = evt.getModifiersEx();
+			int mod = evt.getModifiersEx();
+			switch (Model.getGameStatus()) {
+			case GAMESTATUS_PLAYING:
 				switch (evt.getKeyCode()) {
 				case 'd':
 				case 'D':
 				case KeyEvent.VK_RIGHT:
-					if ((mod & InputEvent.SHIFT_DOWN_MASK) != 0) 
+					if ((mod & InputEvent.SHIFT_DOWN_MASK) != 0) {
 						Model.playerChara.up = true;
+					}
 					Model.playerChara.moveRight = true;
 					break;
 				case 'a':
 				case 'A':
 				case KeyEvent.VK_LEFT:
-					if ((mod & InputEvent.SHIFT_DOWN_MASK) != 0) 
+					if ((mod & InputEvent.SHIFT_DOWN_MASK) != 0)
 						Model.playerChara.up = true;
 					Model.playerChara.moveLeft = true;
 					break;
@@ -46,20 +51,32 @@ public class Controller {
 					Model.playerChara.up = true;
 					break;
 				case 'z':
-				case 'Z':if ((mod & InputEvent.SHIFT_DOWN_MASK) != 0) 
-					Model.playerChara.up = true;
+				case 'Z':
+					if ((mod & InputEvent.SHIFT_DOWN_MASK) != 0)
+						Model.playerChara.up = true;
 					Model.playerChara.dash = true;
 					break;
-				case 'r'://自殺用
+				case 'r':// 自殺用
 				case 'R':
-				//	NPCshoot.bullet.clear();
-					Model.playerChara.death = 0;
+					// NPCshoot.bullet.clear();
+					Model.playerChara.death = true;
 					Model.playerChara.init();
-				//	int num = s.num;
-				//	s.remove();
-				//	s = new Stage(num);//リロード
+					// int num = s.num;
+					// s.remove();
+					// s = new Stage(num);//リロード
 					break;
 				}
+				break;
+				
+			case GAMESTATUS_DIE:
+				switch (evt.getKeyCode()) {
+				case 'r':
+				case 'R':	
+					Model.init();
+				}
+				break;
+			}
+				
 			
 		}
 		public void keyReleased(KeyEvent evt) {

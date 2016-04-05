@@ -28,6 +28,10 @@ public class CharaConstants {
 	public static final int ENEMY_MOVE			=	105;
 	public static final int ENEMY_KING			=	106;
 
+	// 当たり判定
+	public static final int HIT_TREAD			= 	0;
+	public static final int HIT_MISS			=	1;
+	public static final int HIT_NOT				=	2;
 	
 	private CharaConstants(){
 	}

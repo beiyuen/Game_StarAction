@@ -12,11 +12,13 @@ import star_action.Model;
 
 public abstract class AbstractChara extends JPanel {
 	public double xPosition, yPosition; //位置
+	public double initX, initY;
 	double xSpeed, ySpeed; //スピード
 	int width, height; //縦横サイズ
 	Image image;  //画像
 	boolean hitRight = false, hitLeft = false, hitHead = false, hitLeg = false;
 	boolean ground = false;  //設置判定
+	public boolean death;
 
 	AbstractChara(){}
 
@@ -24,11 +26,20 @@ public abstract class AbstractChara extends JPanel {
 	AbstractChara(int x, int y, int w, int h, String c) {
 		xPosition = (x + 0.5) * BLOCK_SIZE;
 		yPosition = (y + 0.5) * BLOCK_SIZE;
+		initX = xPosition;
+		initY = yPosition;
 		xSpeed = 0;
 		ySpeed = 0;
 		width = w;
 		height = h;
 		image = getToolkit().createImage(c);
+		death = false;
+	}
+
+	public void init(){
+		xPosition = initX;
+		yPosition = initY;
+		death = false;
 	}
 
 	// 接触判定
@@ -70,19 +81,7 @@ public abstract class AbstractChara extends JPanel {
 	public void calcYAcceleration() {
 		if(!hitLeg && ySpeed <= 18) {
 			ySpeed += 1.3;
-			
 		}
-
-		//ブロックに接触できていなければhitLegをfalseに
-		/*boolean g = false;
-		for (Block b : Model.getBlockList())
-			if (b.hity(this))
-				g = true;
-		if (!g){
-			hitLeg = false;
-		}*/
-
-		//yPosition += ySpeed;
 	}
 
 	public void isHitBlock(){
@@ -111,10 +110,6 @@ public abstract class AbstractChara extends JPanel {
 		hitRight 	= hitr == 1 ? true:false;
 		hitHead 	= hith == 1 ? true:false;
 		hitLeg 		= hitd == 1 ? true:false;
-		//if(onhitLeg){
-		//	hitLeg = true;
-		//}
-		//return hitx + hity;
 	}
 
 	// 速度変更

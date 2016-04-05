@@ -22,7 +22,9 @@ public class ViewPanel extends JPanel {
 	public ArrayList<Block> blockList;
 	public ArrayList<Enemy> enemyList;
 	public ArrayList<Needle> needleList;
-	Image image = getToolkit().createImage("image/block.png");
+	//Image image = getToolkit().createImage("image/block.png");
+	
+	public Image gameoverImage =  getToolkit().createImage("image/Gameover2.png");
 	
 	public PlayerChara playerChara = new PlayerChara(40, 50);
 
@@ -73,19 +75,35 @@ public class ViewPanel extends JPanel {
 				
 			case GAMESTATUS_PLAYING:	//各キャラ、ブロック、右上の画像を描画
 				playerChara.draw(g);// draw関数が悪い?
-				for (Block block : blockList) {
-					block.draw(g);
+				for (Block b : blockList) {
+					b.draw(g);
 				}
-				for (Enemy enemy : enemyList) {
-					enemy.draw(g);
+				for (Enemy e : enemyList) {
+					if(!e.isDeath()){
+						e.draw(g);
+					}
+					
 				}
-				for (Needle needle : needleList) {
-					needle.draw(g);
+				for (Needle n : needleList) {
+					n.draw(g);
 				}
 				debugShowText.draw(g);
 				break;
 
 			case GAMESTATUS_DIE:
+				for (Block b : blockList) {
+					b.draw(g);
+				}
+				for (Enemy e : enemyList) {
+					if(!e.isDeath()){
+						e.draw(g);
+					}
+				}
+				for (Needle n : needleList) {
+					n.draw(g);
+				}
+				debugShowText.draw(g);
+				g.drawImage(gameoverImage, 180,80,690,163, this);
 				break;
 
 			case GAMESTATUS_ENDING:

@@ -1,4 +1,6 @@
 package charas;
+import static constants.CharaConstants.*;
+
 import java.util.Random;
 
 // 非操作キャラ(敵)
@@ -22,41 +24,28 @@ public class Enemy extends AbstractChara {
 		super(x,y,w,h,c);
 	}
 
+	
 	//enemyからこのオブジェクトを除去
 	void death() {
+		death = true;
 		//Mario.sound("stamp.wav", 0.6);
 		//Mario.iterator.remove();
 	}
 
-	// PlayerCharaが呼び出す。踏まれた時の対応
-	public boolean hit(PlayerChara c) {
-		if (super.hit(c)
-				&& Math.sin((Math.atan2(c.yPosition-yPosition, c.xPosition-xPosition))) <= -1/Math.sqrt(2.0)) {
-			// ここから下を変える
-			death();
-			((PlayerChara)c).kill++;
-			if(((PlayerChara)c).up)
-				((PlayerChara)c).ySpeed=-30;
-			else
-				((PlayerChara)c).ySpeed=-10;
-			return false;
-		}
-		return super.hit(c);
+	// PlayerCharaと敵の当たり判定。上から当たったらHIT_TREAD,それ以外の角度から当たったらHIT_MISS,当たっていなかったらHIT_NOT
+	public int hit(PlayerChara c) {
+		boolean hit = super.hit(c);
+		if (hit){
+			if(Math.sin((Math.atan2(c.yPosition-yPosition, c.xPosition-xPosition))) <= -1/Math.sqrt(2.0)) {
+				// ここから下を変える
+				death();
+				return HIT_TREAD;
+			}
+			return HIT_MISS;
+		}				
+		return HIT_NOT;
 	}
 
-	/*public void calcAcceleration() {
-		int hit = isHitBlock();
-		if(hit == 1 || hit == 11){
-			changeXSpeed();
-		}
-		else if(hit == 10){
-			changeYSpeed();
-		}
-		calcYAcceleration();
-		calcXAcceleration(0.7);
-		move();
-	}
-*/
 	// 移動定義
 	public void calcXAcceleration(double a) {
 		//ブロックにあたったら反転
@@ -81,5 +70,8 @@ public class Enemy extends AbstractChara {
 
 	}
 
+	public boolean isDeath(){
+		return death;
+	}
 
 }

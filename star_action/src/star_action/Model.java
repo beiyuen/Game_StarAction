@@ -38,14 +38,29 @@ public class Model {
 		return gameStatus;
 	}
 
-	public void death(){
-		setGameStatus(2);
+	public static void death(){
+		setGameStatus(GAMESTATUS_DIE);
+		playerChara.death();
 	}
 
-	private void setGameStatus(int i){
+	private static void setGameStatus(int i){
 		gameStatus = i;
 	}
 
+	public static void init(){
+		playerChara.init();
+		for (Block b : blockList){
+			b.init();
+		}
+		for (AbstractChara e : enemyList) {
+			e.init();
+		}
+		for (Needle n : needleList){
+			n.init();
+		}
+		setGameStatus(GAMESTATUS_PLAYING);
+	}
+	
 	private static void scroll(){
 		if(stage.isScrollable()){//s.num=4(ボス戦)ではスクロールできない
 			double xSpeed =  playerChara.getxSpeed();
@@ -56,8 +71,10 @@ public class Model {
 					b.xPosition -= xSpeed;
 				}
 					
-				for (AbstractChara e : enemyList) {
-					e.xPosition -= xSpeed;
+				for (Enemy e : enemyList) {
+					if(!e.isDeath()){
+						e.xPosition -= xSpeed;
+					}
 				//	if (e instanceof NPCshoot)
 				//		for (Shot s : NPCshoot.bullet)
 				//			s.xpos -= xSpeed;
@@ -69,11 +86,15 @@ public class Model {
 		}
 	}
 	
+	
+	
 	public static void run(){
 		playerChara.calcAcceleration();
-		for (Enemy enemy : enemyList) {
-			enemy.calcAcceleration();
-			enemy.move();
+		for (Enemy e : enemyList) {
+			if(!e.isDeath()){
+				e.calcAcceleration();
+				e.move();
+			}
 		}
 		playerChara.move();
 		scroll();

@@ -1,4 +1,5 @@
 package charas;
+import static constants.CharaConstants.*;
 import static constants.MathConstants.*;
 
 import java.awt.Graphics;
@@ -8,12 +9,13 @@ import star_action.Model;
 // 操作キャラ
 public class PlayerChara extends AbstractChara {
 	private static final long serialVersionUID = 1L;
-
+	
 	public boolean moveRight = false, moveLeft = false, up = false,dash = false;
-	public int death, kill;
+	public int  kill;
 	int yoko = 3,tate = 2; //画像の分割数
 	int imageNum,imageKind,kabe;//i,imgkind:画像用,kabe:敵用
-
+	
+	
 	public PlayerChara(int w, int h) {
 		image = getToolkit().createImage("image/otamesi.png");
 		width = w;
@@ -32,7 +34,7 @@ public class PlayerChara extends AbstractChara {
 		hitLeg = false;
 		imageNum=0;
 		imageKind = 0;
-	
+		death = false;
 	}
 
 	//落下時、敵接触時など
@@ -45,13 +47,23 @@ public class PlayerChara extends AbstractChara {
 		
 		//敵との当たり判定を計算
 		for (Enemy e : Model.getEnemyList()){
-			if (e.hit(this)){}
-				//death();
+			if(!e.isDeath()){
+				switch (e.hit(this)){
+				case HIT_TREAD:
+					tread();
+					break;
+				case HIT_MISS:
+					Model.death();
+					break;
+				case HIT_NOT:
+					break;
+				}
+			}
 		}
-		for (Needle n : Model.getNeedleList()){
+	/*	for (Needle n : Model.getNeedleList()){
 			if (n.hit(this)){}
 				//death();
-		}
+		}*/
 		// ブロックとの当たり判定をし、hitRight, hitLeft, hitHead, hitLeg を変更
 		isHitBlock();
 		if(hitLeft || hitRight){
@@ -145,6 +157,16 @@ public class PlayerChara extends AbstractChara {
 			yPosition += ySpeed;
 		//	System.out.println("hitLeg :" + hitLeg + ", hitHead :" + hitHead +", hitLeft :" + hitLeft + ", hitRight :" + hitRight);
 		}
+	
+	// 敵を踏んだ時の処理
+	public void tread(){
+		if(up){
+			ySpeed = -23;
+		}
+		else {
+			ySpeed = -6;
+		}
+	}
 
 	@Override
 	public void changeXSpeed() {
@@ -156,6 +178,10 @@ public class PlayerChara extends AbstractChara {
 	public void changeYSpeed() {
 		// TODO 自動生成されたメソッド・スタブ
 		ySpeed = 0;
+	}
+
+	public void death() {
+		// TODO 自動生成されたメソッド・スタブ
 	}
 
 }
