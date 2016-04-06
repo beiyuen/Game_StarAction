@@ -11,6 +11,8 @@ import charas.Needle;
 import charas.blocks.ClearBlock;
 import charas.blocks.FakeBlock;
 import charas.blocks.NomalBlock;
+import charas.enemys.GohstEnemy;
+import charas.enemys.WalkEnemy;
 public class Stage {
 
 	public int currentStageNum; //現在のステージ数
@@ -66,6 +68,12 @@ public class Stage {
 						break;
 					case e: // 敵
 						enemyList.add(new Enemy(j, i));
+						break;
+					case w: // 歩く敵
+						enemyList.add(new WalkEnemy(j, i));
+						break;
+					case G: // 幽霊の敵
+						enemyList.add(new GohstEnemy(j, i));
 						break;
 					case g:
 						goalBlock = new GoalBlock(j, i);

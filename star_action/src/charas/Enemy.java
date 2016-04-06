@@ -7,7 +7,7 @@ import java.util.Random;
 public class Enemy extends AbstractChara {
 	private static final long serialVersionUID = 1L;
 
-	Random r = new Random(); //移動速度をランダムにしている
+	public Random r = new Random(); //移動速度をランダムにしている
 
 	//NPC自身のコンストラクタ
 	public Enemy(int x, int y){
@@ -16,15 +16,15 @@ public class Enemy extends AbstractChara {
 	}
 
 	//height=widthな子クラスのコンストラクタに使用する　
-	Enemy(int x, int y, int s, String c){
+	public Enemy(int x, int y, int s, String c){
 		super(x,y,s,s,c);
 	}
 	//上以外の子クラスのコンストラクタに使用する
-	Enemy(int x, int y, int w, int h, String c){
+	public Enemy(int x, int y, int w, int h, String c){
 		super(x,y,w,h,c);
 	}
 
-	
+
 	//enemyからこのオブジェクトを除去
 	void death() {
 		death = true;
@@ -43,21 +43,16 @@ public class Enemy extends AbstractChara {
 				return HIT_TREAD;
 			}
 			return HIT_MISS;
-		}				
+		}
 		return HIT_NOT;
 	}
 
 	// 移動定義
 	public void calcXAcceleration(double a) {
-		//ブロックにあたったら反転
-	//	for (Block b : Mario.s.block)
-	//		if (b.hitx(this))
-	//			xSpeed *= -1;
-
 		//ランダムで速度0になったときに加速
 		if (xSpeed == 0)
 			xSpeed = Math.random()*4;
-		
+
 	}
 
 	@Override
@@ -68,9 +63,8 @@ public class Enemy extends AbstractChara {
 	@Override
 	public void changeYSpeed() {
 		ySpeed = 0;
-
 	}
 
-	
+
 
 }

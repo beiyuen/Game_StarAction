@@ -60,6 +60,7 @@ public class PlayerChara extends AbstractChara {
 				}
 			}
 		}
+		checkDeath();
 	/*	for (Needle n : Model.getNeedleList()){
 			if (n.hit(this)){}
 				//death();
@@ -77,6 +78,13 @@ public class PlayerChara extends AbstractChara {
 		}
 		calcXAcceleration(0.7);
 		calcYAcceleration();
+	}
+
+	private void checkDeath() {
+		// TODO 自動生成されたメソッド・スタブ
+		if(yPosition > GAME_HEIGHT){
+			Model.death();
+		}
 	}
 
 	// 操作およびhit時の挙動

@@ -13,11 +13,12 @@ import star_action.Model;
 public abstract class AbstractChara extends JPanel {
 	public double xPosition, yPosition; //位置
 	public double initX, initY;
-	double xSpeed, ySpeed; //スピード
-	int width, height; //縦横サイズ
+	public double xSpeed, ySpeed; //スピード
+	public int width; //縦横サイズ
+	public int height;
 	public Image image;  //画像
-	boolean hitRight = false, hitLeft = false, hitHead = false, hitLeg = false;
-	boolean ground = false;  //設置判定
+	public boolean hitRight = false, hitLeft = false, hitHead = false, hitLeg = false;
+	public boolean ground = false;  //設置判定
 	public boolean death;
 
 	AbstractChara(){}
@@ -56,7 +57,7 @@ public abstract class AbstractChara extends JPanel {
 
 	// 呼び出され用
 	public void calcAcceleration() {
-		
+
 		calcYAcceleration();
 		calcXAcceleration(0.7);
 		isHitBlock();
@@ -225,4 +226,7 @@ public abstract class AbstractChara extends JPanel {
 		return death;
 	}
 
+	public void setDeath(boolean b){
+		death = b;
+	}
 }

@@ -7,6 +7,8 @@ import java.awt.Dimension;
 //----------------------------------------------------
 import java.awt.Graphics;
 
+import charas.enemys.WalkEnemy;
+
 
 /**
  * 通常ゲームでは普通のブロック。プレイヤーが触れても、敵が触れても消えることはない。また、このブロックは消すことはできない。
@@ -45,8 +47,14 @@ public class Block extends AbstractChara {
 
 	// 接触判定
 	public boolean hit(AbstractChara c) {
-		return Math.abs(c.xPosition - xPosition) <= c.width / 2 + width / 2
-				&& Math.abs(c.yPosition  - yPosition) <= c.height / 2 + height / 2;
+		if(c instanceof WalkEnemy){
+			return Math.abs(c.xPosition - xPosition) <= c.width / 2 + width / 2
+					&& Math.abs(c.yPosition  - yPosition) <= c.height / 2 + height / 2;
+		}
+		else {
+			return !death && Math.abs(c.xPosition - xPosition) <= c.width / 2 + width / 2
+					&& Math.abs(c.yPosition  - yPosition) <= c.height / 2 + height / 2;
+		}
 	}
 
 	// 接触かつ直前にx方向に接触していない場合に位置、速度を調整
@@ -147,8 +155,10 @@ public class Block extends AbstractChara {
 
 	// 描画
 	public void draw(Graphics g) {
-		g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2),
-				(int) width, (int) height, this);
+		if(!death){
+			g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2), (int) width, (int) height, this);
+		}
+		
 	}
 	@Override
 	public void changeXSpeed() {
