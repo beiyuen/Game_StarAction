@@ -67,6 +67,7 @@ public abstract class AbstractChara extends JPanel {
 		else if(hitHead || hitLeg){
 			changeYSpeed();
 		}
+		
 	}
 
 	// x方向の速度計算  減速、衝突 aは加速度相当

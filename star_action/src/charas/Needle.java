@@ -7,19 +7,19 @@ import java.awt.Graphics;
 
 
 
-public class Needle extends Enemy {
+public class Needle extends AbstractChara {
 	private static final long serialVersionUID = 1L;
 	int tate = 1,
 		yoko = 4,
 		imgkind;
     public static int SIZE = 50;
 
-	 public Needle(int x, int y,int i) {
-		 super(x,y,50,"image/needle.png");
+	 public Needle(int x, int y, int i) {
+		 super(x,y,50,50,"image/needle.png");
 		 imgkind = i;
 	}
 
-	void death() {
+	public void death() {
 	//	Mario.iterator.remove();
 	}
 
@@ -30,7 +30,8 @@ public class Needle extends Enemy {
 				&& (Math.sqrt((xPosition-c.xPosition)*(xPosition-c.xPosition)+
 					(yPosition-c.yPosition)*(yPosition-c.yPosition))<=33)
 			){
-			//c.death();
+			
+			return true;
 		}
 		return false;
 	}
@@ -48,6 +49,18 @@ public class Needle extends Enemy {
 		g.drawImage(image,(int)(xPosition- width / 2),(int)(yPosition- height / 2),
 				(int)(xPosition+width/2),(int)(yPosition+height/2),
 				(int)(sx),(int)(sy), (int)(sx+pwidth), (int)(sy+pheight),this);
+	}
+
+	@Override
+	public void changeXSpeed() {
+		// TODO 自動生成されたメソッド・スタブ
+		
+	}
+
+	@Override
+	public void changeYSpeed() {
+		// TODO 自動生成されたメソッド・スタブ
+		
 	}
 
 }

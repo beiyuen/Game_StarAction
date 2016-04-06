@@ -10,7 +10,7 @@ import charas.PlayerChara;
 import star_action.Model;
 
 public class WalkEnemy extends Enemy {
-	int imgkind = 0, i = 0, tate = 2, yoko = 4;
+	int imagekind = 0, i = 0, tate = 2, yoko = 4;
 	boolean isHit;
 
 	public WalkEnemy(int x, int y) {
@@ -21,8 +21,7 @@ public class WalkEnemy extends Enemy {
 
 	@Override
 	public int hit(PlayerChara c) {
-		if (Math.abs(c.xPosition + c.getxSpeed() - xPosition) < c.getWidth() / 2 + width / 2
-				&& Math.abs(c.yPosition + c.getySpeed() - yPosition) < c.getHeight() / 2 + height / 2) {
+		if (hit2(c)) {
 			isHit = true;
 		}
 		else {
@@ -56,10 +55,10 @@ public class WalkEnemy extends Enemy {
 		
 		if (xSpeed < 0) {
 			i++;
-			imgkind = (i % 32) / 8;// 0,1,2,3番目の画像
+			imagekind = (i % 32) / 8;// 0,1,2,3番目の画像
 		} else if (xSpeed  > 0) {
 			i++;
-			imgkind = (i % 32) / 8 + 4; // 4,5,6,7番目の画像
+			imagekind = (i % 32) / 8 + 4; // 4,5,6,7番目の画像
 		}
 	}
 
@@ -71,8 +70,8 @@ public class WalkEnemy extends Enemy {
 		double sx, sy;
 		int pwidth = image.getWidth(null) / yoko;
 		int pheight = image.getHeight(null) / tate;
-		sx = (imgkind % yoko) * pwidth;
-		sy = (imgkind / yoko) * pheight;
+		sx = (imagekind % yoko) * pwidth;
+		sy = (imagekind / yoko) * pheight;
 
 		g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2), (int) (xPosition + width / 2),
 				(int) (yPosition + height / 2), (int) (sx), (int) (sy), (int) (sx + pwidth), (int) (sy + pheight), this);

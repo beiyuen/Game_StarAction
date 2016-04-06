@@ -9,13 +9,13 @@ import star_action.Model;
 // 操作キャラ
 public class PlayerChara extends AbstractChara {
 	private static final long serialVersionUID = 1L;
-	
+
 	public boolean moveRight = false, moveLeft = false, up = false,dash = false;
 	public int  kill;
 	int yoko = 3,tate = 2; //画像の分割数
 	int imageNum,imageKind,kabe;//i,imgkind:画像用,kabe:敵用
-	
-	
+
+
 	public PlayerChara(int w, int h) {
 		image = getToolkit().createImage("image/otamesi.png");
 		width = w;
@@ -43,8 +43,8 @@ public class PlayerChara extends AbstractChara {
 	//衝突処理を追加
 	public void calcAcceleration(){
 	//	super.calcAcceleration();
-		
-		
+
+
 		//敵との当たり判定を計算
 		for (Enemy e : Model.getEnemyList()){
 			if(!e.isDeath()){
@@ -61,10 +61,11 @@ public class PlayerChara extends AbstractChara {
 			}
 		}
 		checkDeath();
-	/*	for (Needle n : Model.getNeedleList()){
-			if (n.hit(this)){}
-				//death();
-		}*/
+		for (Needle n : Model.getNeedleList()){
+			if (n.hit(this)){
+				Model.death();
+			}
+		}
 		// ブロックとの当たり判定をし、hitRight, hitLeft, hitHead, hitLeg を変更
 		isHitBlock();
 		if(Model.goalBlock.hit(this)){
@@ -124,7 +125,7 @@ public class PlayerChara extends AbstractChara {
 			}
 
 		super.calcXAcceleration(a);
-	
+
 	}
 
 	 //ジャンプ操作と画像の変更
@@ -142,10 +143,10 @@ public class PlayerChara extends AbstractChara {
 		else if(!up && hitLeg){
 			changeYSpeed();
 		}
-		
+
 	//	System.out.println("xSppd = " + xSpeed + ", ySpeed = " + ySpeed);
 	//	System.out.println("hitLeg = " + hitLeg + ", ySeed = " + ySpeed);
-		
+
 	}
 
 	//描画 分割後の画像幅を示すpwidthを設定
@@ -160,7 +161,7 @@ public class PlayerChara extends AbstractChara {
 				(int)(xPosition+width/2),(int)(yPosition+height/2),
 				(int)(sx),(int)(sy), (int)(sx+pwidth), (int)(sy+pheight),this);
 	}
-	
+
 	// 移動処理
 	@Override
 	public void move(){
@@ -168,7 +169,7 @@ public class PlayerChara extends AbstractChara {
 			yPosition += ySpeed;
 		//	System.out.println("hitLeg :" + hitLeg + ", hitHead :" + hitHead +", hitLeft :" + hitLeft + ", hitRight :" + hitRight);
 		}
-	
+
 	// 敵を踏んだ時の処理
 	public void tread(){
 		if(up){

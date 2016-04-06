@@ -26,7 +26,7 @@ public class Enemy extends AbstractChara {
 
 
 	//enemyからこのオブジェクトを除去
-	void death() {
+	public void death() {
 		death = true;
 		System.out.println("enemy.death");
 		//Mario.sound("stamp.wav", 0.6);
@@ -47,12 +47,15 @@ public class Enemy extends AbstractChara {
 		return HIT_NOT;
 	}
 
+	public boolean hit2(PlayerChara c){
+		return super.hit(c);
+	}
+
 	// 移動定義
 	public void calcXAcceleration(double a) {
 		//ランダムで速度0になったときに加速
 		if (xSpeed == 0)
 			xSpeed = Math.random()*4;
-
 	}
 
 	@Override
