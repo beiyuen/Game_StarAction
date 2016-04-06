@@ -22,6 +22,8 @@ public class ViewPanel extends JPanel {
 	public ArrayList<Block> blockList;
 	public ArrayList<Enemy> enemyList;
 	public ArrayList<Needle> needleList;
+	public ArrayList<Block> placeBlockList;
+	public ArrayList<Enemy> placeEnemyList;
 	//Image image = getToolkit().createImage("image/block.png");
 
 	public Image gameoverImage =  getToolkit().createImage("image/Gameover.png");
@@ -84,12 +86,20 @@ public class ViewPanel extends JPanel {
 					if(!e.isDeath()){
 						e.draw(g);
 					}
-
 				}
 				for (Needle n : Model.getNeedleList()) {
 					n.draw(g);
 				}
+				for (Block b : Model.getPlaceBlockList()) {
+					b.draw(g);
+				}
+				for (Enemy e : Model.getPlaceEnemyList()) {
+					if(!e.isDeath()){
+						e.draw(g);
+					}
+				}
 				Model.getGoalBlock().draw(g);
+				Model.getClickItem().draw(g);
 				debugShowText.draw(g);
 				break;
 
@@ -105,7 +115,16 @@ public class ViewPanel extends JPanel {
 				for (Needle n : Model.getNeedleList()) {
 					n.draw(g);
 				}
+				for (Block b : Model.getPlaceBlockList()) {
+					b.draw(g);
+				}
+				for (Enemy e : Model.getPlaceEnemyList()) {
+					if(!e.isDeath()){
+						e.draw(g);
+					}
+				}
 				Model.getGoalBlock().draw(g);
+				Model.getClickItem().draw(g);
 				debugShowText.draw(g);
 				g.drawImage(gameoverImage, 0,0,1000,500, this);
 				break;

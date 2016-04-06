@@ -14,12 +14,15 @@ import charas.PlayerChara;
 import charas.enemys.GhostEnemy;
 import slide.StageChangeSlide;
 import stages.Stage;
+import util.ClickItem;
 import util.DebugShowText;
 
 public class Model {
 	public static ArrayList<Block> blockList = null;
 	public static ArrayList<Enemy> enemyList = null;
 	public static ArrayList<Needle> needleList = null;
+	public static ArrayList<Block> placeBlockList = new ArrayList<Block>();
+	public static ArrayList<Enemy> placeEnemyList = new ArrayList<Enemy>();
 	public static int gameStatus = GAMESTATUS_STAGECHANGE;
 	public static GoalBlock goalBlock = null;
 
@@ -42,6 +45,7 @@ public class Model {
 	public static int[] clickableNum = null;
 	public static boolean scrollable = true;
 	public static int placementMode = 0;
+	public static ClickItem clickItem;
 
 	public static void setStageNum(int i){
 		stageNum = i;
@@ -73,8 +77,12 @@ public class Model {
 		for (Needle n : needleList){
 			n.init();
 		}
+		placeBlockList.clear();
+		placeEnemyList.clear();
 		goalBlock.init();
 		setGameStatus(GAMESTATUS_PLAYING);
+		clickableNum = stage.getClickableNum();
+		scrollable = stage.getScrollable();
 	}
 
 	/**
@@ -97,6 +105,12 @@ public class Model {
 
 				for (Needle n : needleList){
 					n.scroll(speed);
+				}
+				for (Block b : placeBlockList){
+					b.scroll(speed);
+				}
+				for (Enemy e : placeEnemyList) {
+					e.scroll(speed);
 				}
 				goalBlock.scroll(speed);
 			}
@@ -148,12 +162,30 @@ public class Model {
 		goalBlock = stage.getGoalBlock();
 		clickableNum = stage.getClickableNum();
 		scrollable = stage.getScrollable();
+		clickItem = new ClickItem();
+		clickItem.setSize();
 	}
 
 	public static int[] getClickableNum(){return clickableNum;}
-	
+
 	public static int getplacementMode(){return placementMode;}
-	public static void setplacementMode(int i){placementMode = i%3;}
+	public static void setplacementMode(int i){
+		placementMode = i%3;
+		clickItem.setText(clickableNum[placementMode]);
+		clickItem.setImageKind(placementMode);
+	}
+	public static ArrayList<Block> getPlaceBlockList() {
+		return placeBlockList;
+	}
+	public static ArrayList<Enemy> getPlaceEnemyList() {
+		return placeEnemyList;
+	}
+	public static boolean isScrollable() {
+		return scrollable;
+	}
+	public static ClickItem getClickItem() {
+		return clickItem;
+	}
 	/**
 	 * 左クリックしたときにブロックや敵を配置する
 	 * @param x
@@ -162,16 +194,17 @@ public class Model {
 	public static void placement(int x, int y){
 		switch (placementMode) {
 		case 0:
-			blockList.add(new Block(x,y));
+			placeBlockList.add(new Block(x,y));
 			break;
 		case 1:
-			enemyList.add(new Enemy(x,y));
-			break;	
+			placeEnemyList.add(new Enemy(x,y));
+			break;
 		case 2:
-			enemyList.add(new GhostEnemy(x,y));
+			placeEnemyList.add(new GhostEnemy(x,y));
 			break;
 		}
 		clickableNum[placementMode] -= 1;
+		clickItem.setText(clickableNum[placementMode]);
 	}
 
 	public static void removeBlock(int x, int y){

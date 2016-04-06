@@ -95,7 +95,6 @@ public abstract class AbstractChara extends JPanel {
 		boolean hitGoal = false;
 		Dimension hx, hy;
 		for (Block b : Model.getBlockList()){
-
 			hx = b.hitx(this);
 			hy = b.hity(this);
 			if(hx.width == 1){
@@ -110,8 +109,22 @@ public abstract class AbstractChara extends JPanel {
 			if(hy.height == 1){
 				hitd = 1;
 			}
-
-
+		}
+		for (Block b : Model.getPlaceBlockList()){
+			hx = b.hitx(this);
+			hy = b.hity(this);
+			if(hx.width == 1){
+				hitl = 1;
+			}
+			if(hx.height == 1){
+				hitr = 1;
+			}
+			if(hy.width == 1){
+				hith = 1;
+			}
+			if(hy.height == 1){
+				hitd = 1;
+			}
 		}
 		hitLeft 	= hitl == 1 ? true:false;
 		hitRight 	= hitr == 1 ? true:false;

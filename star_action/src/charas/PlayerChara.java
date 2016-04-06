@@ -60,6 +60,20 @@ public class PlayerChara extends AbstractChara {
 				}
 			}
 		}
+		for (Enemy e : Model.getPlaceEnemyList()){
+			if(!e.isDeath()){
+				switch (e.hit(this)){
+				case HIT_TREAD:
+					tread();
+					break;
+				case HIT_MISS:
+					Model.death();
+					break;
+				case HIT_NOT:
+					break;
+				}
+			}
+		}
 		checkDeath();
 		for (Needle n : Model.getNeedleList()){
 			if (n.hit(this)){
