@@ -13,7 +13,7 @@ import charas.blocks.FakeBlock;
 import charas.blocks.NomalBlock;
 import charas.enemys.GohstEnemy;
 import charas.enemys.MoveEnemy;
-import charas.enemys.ShotEnemy;
+import charas.enemys.ShootEnemy;
 import charas.enemys.WalkEnemy;
 public class Stage {
 
@@ -81,7 +81,7 @@ public class Stage {
 						enemyList.add(new MoveEnemy(j, i, 2));
 						break;	
 					case s: // 弾を撃つ敵
-						enemyList.add(new ShotEnemy(j, i));
+						enemyList.add(new ShootEnemy(j, i));
 						break;		
 					case g:
 						goalBlock = new GoalBlock(j, i);
