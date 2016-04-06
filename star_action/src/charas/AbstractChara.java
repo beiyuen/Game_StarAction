@@ -15,7 +15,7 @@ public abstract class AbstractChara extends JPanel {
 	public double initX, initY;
 	double xSpeed, ySpeed; //スピード
 	int width, height; //縦横サイズ
-	Image image;  //画像
+	public Image image;  //画像
 	boolean hitRight = false, hitLeft = false, hitHead = false, hitLeg = false;
 	boolean ground = false;  //設置判定
 	public boolean death;

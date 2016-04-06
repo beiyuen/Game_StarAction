@@ -8,6 +8,9 @@ import charas.Block;
 import charas.Enemy;
 import charas.GoalBlock;
 import charas.Needle;
+import charas.blocks.ClearBlock;
+import charas.blocks.FakeBlock;
+import charas.blocks.NomalBlock;
 public class Stage {
 
 	public int currentStageNum; //現在のステージ数
@@ -37,10 +40,18 @@ public class Stage {
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
 				switch (map[i][j]) {
-					case h:	//ブロック
-					case n:
+					case h:	//消せないブロック
 						blockList.add(new Block(j, i));
 						break;
+					case n: //右クリックで消せるブロック
+						blockList.add(new NomalBlock(j, i));
+						break;
+					case c: //敵のみが触れられる透明ブロック
+						blockList.add(new ClearBlock(j, i));
+						break;	
+					case f: //プレイヤーが触れると消えるブロック
+						blockList.add(new FakeBlock(j, i));
+						break;	
 					case u: // とげ(上向き)
 						needleList.add(new Needle(j, i, 0));
 						break;

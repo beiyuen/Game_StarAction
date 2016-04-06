@@ -7,9 +7,15 @@ import java.awt.Dimension;
 //----------------------------------------------------
 import java.awt.Graphics;
 
+
+/**
+ * 通常ゲームでは普通のブロック。プレイヤーが触れても、敵が触れても消えることはない。また、このブロックは消すことはできない。
+ * @author kitahara
+ *
+ */
 public class Block extends AbstractChara {
 	private static final long serialVersionUID = 1L;
-	public boolean removable = true;
+	public boolean removable = false;
 	public Dimension hitX,hitY;
 	public boolean isHitx;
 
