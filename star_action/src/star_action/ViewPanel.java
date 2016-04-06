@@ -23,9 +23,9 @@ public class ViewPanel extends JPanel {
 	public ArrayList<Enemy> enemyList;
 	public ArrayList<Needle> needleList;
 	//Image image = getToolkit().createImage("image/block.png");
-	
+
 	public Image gameoverImage =  getToolkit().createImage("image/Gameover.png");
-	
+
 	public PlayerChara playerChara = new PlayerChara(40, 50);
 
 	public DebugShowText debugShowText;
@@ -74,7 +74,7 @@ public class ViewPanel extends JPanel {
 			case GAMESTATUS_OPENING:
 				//open.draw(g);
 				break;
-				
+
 			case GAMESTATUS_PLAYING:	//各キャラ、ブロック、右上の画像を描画
 				playerChara.draw(g);// draw関数が悪い?
 				for (Block b : blockList) {
@@ -84,7 +84,7 @@ public class ViewPanel extends JPanel {
 					if(!e.isDeath()){
 						e.draw(g);
 					}
-					
+
 				}
 				for (Needle n : needleList) {
 					n.draw(g);
@@ -112,10 +112,10 @@ public class ViewPanel extends JPanel {
 
 			case GAMESTATUS_ENDING:
 				break;
-				
+
 			case GAMESTATUS_STAGECHANGE:
 				Model.getStageChangeSlide().draw(g);
-				break;	
+				break;
 			}
 		}
 

@@ -2,7 +2,6 @@ package star_action;
 
 import static constants.MathConstants.*;
 
-import java.awt.Graphics;
 import java.util.ArrayList;
 
 import charas.AbstractChara;
@@ -13,26 +12,27 @@ import charas.Needle;
 import charas.PlayerChara;
 import slide.StageChangeSlide;
 import stages.Stage;
+import stages.Stage1_1;
 import util.DebugShowText;
 
 public class Model {
-	public static ArrayList<Block> blockList = new ArrayList<Block>();
-	public static ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
-	public static ArrayList<Needle> needleList = new ArrayList<Needle>();
+	public static ArrayList<Block> blockList = null;
+	public static ArrayList<Enemy> enemyList = null;
+	public static ArrayList<Needle> needleList = null;
 	public static int gameStatus = GAMESTATUS_STAGECHANGE;
 	public static GoalBlock goalBlock = null;
-	
+
 	public static int stageNum = 1;
-	public static Stage stage = new Stage(stageNum, blockList, enemyList, needleList);
+	public static Stage stage = new Stage();
 	public static PlayerChara playerChara = new PlayerChara(40, 50);
 	public static DebugShowText debugShowText = new DebugShowText();
-	
+
 	public static StageChangeSlide stageChangeSlide = new StageChangeSlide();
-	
+
 	public static ArrayList<Block> getBlockList() {return blockList;}
 	public static ArrayList<Enemy> getEnemyList() {return enemyList;}
 	public static ArrayList<Needle> getNeedleList() {return needleList;}
-	public static int getGameStatus() {	return gameStatus;}	
+	public static int getGameStatus() {	return gameStatus;}
 	public static int getStageNum() {	return stageNum;}
 	public static PlayerChara getPlayerChara() {	return playerChara;}
 	public static StageChangeSlide getStageChangeSlide() {	return stageChangeSlide;}
@@ -41,7 +41,7 @@ public class Model {
 	public static void setStageNum(int i){
 		stageNum = i;
 	}
-	
+
 	/**
 	 *  プレイヤーがやられた時のゲーム全体の処理
 	 */
@@ -53,7 +53,7 @@ public class Model {
 	public static void setGameStatus(int i){
 		gameStatus = i;
 	}
-	
+
 	/**
 	 * プレイヤーの情報とステージの情報を初期化
 	 */
@@ -71,7 +71,7 @@ public class Model {
 		goalBlock.init();
 		setGameStatus(GAMESTATUS_PLAYING);
 	}
-	
+
 	/**
 	 * プレイヤーのx座標が一定以上になったときに右へ移動した場合に画面をスクロール
 	 */
@@ -84,7 +84,7 @@ public class Model {
 				for (Block b : blockList){
 					b.xPosition -= xSpeed;
 				}
-					
+
 				for (Enemy e : enemyList) {
 					if(!e.isDeath()){
 						e.xPosition -= xSpeed;
@@ -100,8 +100,8 @@ public class Model {
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * 1フレームごとのゲーム全体の処理
 	 */
@@ -109,7 +109,7 @@ public class Model {
 		if(!playerChara.isDeath()){
 			playerChara.calcAcceleration();
 		}
-		
+
 		for (Enemy e : enemyList) {
 			if(!e.isDeath()){
 				e.calcAcceleration();
@@ -120,17 +120,30 @@ public class Model {
 			playerChara.move();
 		}
 		scroll();
-		
+
 		debugShowText.run(playerChara.xPosition, playerChara.yPosition);
 	}
-	
-	public static void draw(Graphics g){
-	}
+
 	public static void nextStage() {
-		// TODO 自動生成されたメソッド・スタブ	
+		// TODO 自動生成されたメソッド・スタブ
 		setStageNum(stageNum+1);
 		stageChangeSlide.setText(stageNum);
 		setGameStatus(GAMESTATUS_STAGECHANGE);
+	}
+
+	public static void setStage(int i){
+		switch (i) {
+		case 1:
+			stage = new Stage1_1();
+			break;
+
+		default:
+			break;
+		}
+		blockList = stage.getBlockList();
+		enemyList = stage.getEnemyList();
+		needleList = stage.getNeedleList();
+		goalBlock = stage.getGoalBlock();
 	}
 
 }

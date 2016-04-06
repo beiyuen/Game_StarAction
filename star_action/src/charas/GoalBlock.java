@@ -16,4 +16,12 @@ public class GoalBlock extends Block {
 	public boolean hit(PlayerChara c){
 		return super.hit(c);
 	}
+	/**
+	 * 敵がゴールブロックに当たっているか判定。意味がないので常にfalseを返す
+	 * @param e
+	 * @return
+	 */
+	public boolean hit(Enemy e){
+		return false;
+	}
 }

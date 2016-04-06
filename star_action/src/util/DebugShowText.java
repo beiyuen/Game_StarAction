@@ -21,13 +21,13 @@ public class DebugShowText {
 		textArray.add(textY);
 		textArray.add(textGX);
 	}
-	
+
 	public void run(double x, double y){
 		textX.setText("x:" + String.valueOf((int)x));
 		textY.setText("y:" + String.valueOf((int)y));
 		textGX.setText("gx:" + String.valueOf(Model.getGoalBlock().getxPosition()));
 	}
-	
+
 	public void draw(Graphics g){
 		for (Text text : textArray) {
 			text.draw(g);

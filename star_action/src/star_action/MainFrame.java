@@ -1,6 +1,5 @@
 package star_action;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
@@ -13,11 +12,13 @@ public class MainFrame extends JFrame {
 	ViewPanel viewPanel;
 	
 	public MainFrame(){
+		Model.setStage(Model.getStageNum());
 		viewPanel = new ViewPanel();
 		//viewPanel.add(button);
 		this.getContentPane().add(viewPanel);
 		//model = new Model();
-		this.setBackground(Color.black);
+		
+		//this.setBackground(Color.black);
 		this.setSize(XMAX, YMAX);
 		this.setTitle("star_action");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
