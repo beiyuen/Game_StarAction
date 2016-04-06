@@ -37,10 +37,10 @@ public class Block extends AbstractChara {
 	public void calcAcceleration() {
 	}
 
-	// 接触判定
+	// 接触判定, 次のフレームでの接触判定を行う
 	public boolean hit(AbstractChara c) {
-		return Math.abs(c.xPosition - xPosition) <= c.width / 2 + width / 2
-				&& Math.abs(c.yPosition  - yPosition) <= c.height / 2 + height / 2;
+		return Math.abs(c.xPosition + c.xSpeed - xPosition) < c.width / 2 + width / 2
+				&& Math.abs(c.yPosition + c.ySpeed - yPosition) < c.height / 2 + height / 2;
 	}
 
 	// 接触かつ直前にx方向に接触していない場合に位置、速度を調整
@@ -50,7 +50,7 @@ public class Block extends AbstractChara {
 		int hitl = 0;
 		double prex = c.xPosition-c.xSpeed-xPosition;
 		if(x){
-			double precos = Math.cos(Math.atan2(c.yPosition-c.ySpeed-yPosition, c.xPosition-c.xSpeed-xPosition));
+			/*double precos = Math.cos(Math.atan2(c.yPosition-c.ySpeed-yPosition, c.xPosition-c.xSpeed-xPosition));
 			double cos = Math.cos(Math.atan2(c.yPosition-yPosition, c.xPosition-xPosition));
 			if(cos >= Math.cos(30 * Math.PI / 180.0)){
 				hitl = 1;
@@ -84,6 +84,11 @@ public class Block extends AbstractChara {
 			}
 			else {
 				isHitx = false;
+			}*/
+			if ( Math.abs(c.xPosition - c.xSpeed - xPosition) >= c.width / 2 + width / 2 ) {
+				c.xPosition = xPosition - (c.width / 2 + BLOCK_SIZE / 2) * Math.signum(c.xSpeed);
+				if(c.xSpeed <0)hitl = 1;
+				else hitr = 1;
 			}
 		}
 		else {
@@ -100,10 +105,27 @@ public class Block extends AbstractChara {
 		int hitl = 0;
 		double prey = c.yPosition-c.ySpeed-yPosition;
 		double curr = c.yPosition-yPosition;
+		double h =  c.height/2 + height/2;
 		if(x){
-
+			if(c instanceof PlayerChara)
+				System.out.println("preh :" + prey + ", blockh :" + h);
+			if ( Math.abs(c.yPosition -c.ySpeed  - yPosition) >= c.height / 2 + height / 2) {
+				c.yPosition = yPosition - (c.height / 2 + BLOCK_SIZE / 2) * Math.signum(c.ySpeed);
+				if(c.ySpeed < 0){
+					c.yPosition = yPosition + (c.height / 2 + BLOCK_SIZE / 2);
+					hith = 1;
+				//	System.out.println("hit head");
+				}
+				else {
+					c.yPosition = yPosition - (c.height / 2 + BLOCK_SIZE / 2);
+					hitl = 1;
+					if(c instanceof PlayerChara)	System.out.println("hitleg");
+				//	System.out.println("hitleg :" +c.hitLeg + ", hitHead :" + c.hitHead + ", hitLeft :" + c.hitLeft + ", hitRight :" + c.hitRight);
+				}
+			}
+			
 			// ブロックの上にいるとき、着地するようにgroundの値を変更
-			double sin = Math.sin(Math.atan2(c.yPosition-yPosition, c.xPosition-xPosition));
+			/*double sin = Math.sin(Math.atan2(c.yPosition-yPosition, c.xPosition-xPosition));
 			double presin = Math.sin(Math.atan2(c.yPosition-c.ySpeed-yPosition, c.xPosition-c.xSpeed-xPosition));
 			if(sin <= Math.sin(-60 * Math.PI / 180.0)){
 					hitl = 1;
@@ -129,7 +151,7 @@ public class Block extends AbstractChara {
 					c.yPosition = yPosition + (c.height / 2 + BLOCK_SIZE / 2);
 				//	System.out.println("head2");
 				}
-			}
+			}*/
 			// 貫通防止、前のフレームで空中におり、現在のフレームでブロック内の角度が変な場所にいるとき
 			// ブロックの上下どちらかに接地しているとき、座標を修正
 		}

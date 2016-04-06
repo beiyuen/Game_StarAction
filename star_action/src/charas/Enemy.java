@@ -24,7 +24,7 @@ public class Enemy extends AbstractChara {
 		super(x,y,w,h,c);
 	}
 
-	
+
 	//enemyからこのオブジェクトを除去
 	void death() {
 		death = true;
@@ -43,7 +43,7 @@ public class Enemy extends AbstractChara {
 				return HIT_TREAD;
 			}
 			return HIT_MISS;
-		}				
+		}
 		return HIT_NOT;
 	}
 
@@ -57,7 +57,7 @@ public class Enemy extends AbstractChara {
 		//ランダムで速度0になったときに加速
 		if (xSpeed == 0)
 			xSpeed = Math.random()*4;
-		
+
 	}
 
 	@Override
@@ -71,6 +71,6 @@ public class Enemy extends AbstractChara {
 
 	}
 
-	
+
 
 }

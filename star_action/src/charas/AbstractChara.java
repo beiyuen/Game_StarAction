@@ -44,8 +44,8 @@ public abstract class AbstractChara extends JPanel {
 
 	// 接触判定
 	public boolean hit(AbstractChara c) {
-		return Math.abs(c.xPosition - xPosition) <= c.width / 2 + width / 2
-				&& Math.abs(c.yPosition - yPosition) <= c.height / 2 + height / 2;
+		return Math.abs(c.xPosition + c.xSpeed - xPosition) < c.width / 2 + width / 2
+				&& Math.abs(c.yPosition + c.ySpeed - yPosition) < c.height / 2 + height / 2;
 	}
 
 	// ジャンプ
@@ -111,6 +111,9 @@ public abstract class AbstractChara extends JPanel {
 
 
 		}
+		if(this instanceof PlayerChara)
+		System.out.println("Abst hitleg :" +hitLeg + ", hitHead :" + hitHead + ", hitLeft :" + hitLeft + ", hitRight :" + hitRight + ", ysp :" + ySpeed + "y :" + yPosition);
+		
 		hitLeft 	= hitl == 1 ? true:false;
 		hitRight 	= hitr == 1 ? true:false;
 		hitHead 	= hith == 1 ? true:false;

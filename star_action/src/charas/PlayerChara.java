@@ -65,6 +65,8 @@ public class PlayerChara extends AbstractChara {
 				//death();
 		}*/
 		// ブロックとの当たり判定をし、hitRight, hitLeft, hitHead, hitLeg を変更
+		calcXAcceleration(0.7);
+		calcYAcceleration();
 		isHitBlock();
 		if(Model.goalBlock.hit(this)){
 			Model.nextStage();
@@ -75,14 +77,13 @@ public class PlayerChara extends AbstractChara {
 		else if(hitHead || hitLeg){
 			changeYSpeed();
 		}
-		calcXAcceleration(0.7);
-		calcYAcceleration();
+
 	}
 
 	// 操作およびhit時の挙動
 	public void calcXAcceleration(double a) {
 		// 右を押していたとき
-		if (moveRight && !hitRight){
+		if (moveRight /*&& !hitRight*/){
 			if(dash&& xSpeed <= 16){
 				xSpeed += 2;
 			}
@@ -93,7 +94,7 @@ public class PlayerChara extends AbstractChara {
 			imageKind = (imageNum % 18) / 6;//0,1,2番目の画像
 		}
 		// 左を押していたとき
-		else if (moveLeft && !hitLeft){
+		else if (moveLeft/* && !hitLeft*/){
 			if(dash&& xSpeed >= -16){
 				xSpeed -= 2;
 			}
