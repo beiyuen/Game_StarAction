@@ -58,7 +58,7 @@ public class Block extends AbstractChara {
 				c.xPosition = xPosition + (c.width / 2 + BLOCK_SIZE / 2);
 			//	System.out.println("hitLeft1");
 			}
-			
+
 			else if(prex > (c.width/2+BLOCK_SIZE/2) && precos >= Math.cos(60 * Math.PI / 180.0) && c.xSpeed < 0){
 				if(!c.hitLeg && !c.hitHead){
 					hitl = 1;
@@ -66,7 +66,7 @@ public class Block extends AbstractChara {
 					c.xPosition = xPosition + (c.width / 2 + BLOCK_SIZE / 2);
 				//	System.out.println("hitLeft2");
 				}
-				
+
 			}
 			else if(cos <= Math.cos(150 * Math.PI / 180.0)){
 				hitr = 1;
@@ -74,7 +74,7 @@ public class Block extends AbstractChara {
 				c.xPosition = xPosition - (c.width / 2 + BLOCK_SIZE / 2);
 			//	System.out.println("hitRight1");
 			}
-			else if(prex < -(c.width/2+BLOCK_SIZE/2) && precos >= Math.cos(120 * Math.PI / 180.0) && c.xSpeed > 0){
+			else if(prex < -(c.width/2+BLOCK_SIZE/2) && precos <= Math.cos(120 * Math.PI / 180.0) && c.xSpeed > 0){
 				if(!c.hitLeg && !c.hitHead){
 					hitr = 1;
 					isHitx = true;
@@ -110,7 +110,7 @@ public class Block extends AbstractChara {
 					c.yPosition = yPosition - (c.height / 2 + BLOCK_SIZE / 2);
 				//	System.out.println("leg1");
 			}
-			else if(prey <= -(c.height/2+BLOCK_SIZE/2) && presin <= Math.sin(-40 * Math.PI / 180.0) && c.ySpeed >= 0){
+			else if(prey <= -(c.height/2+BLOCK_SIZE/2) && presin <= Math.sin(-40 * Math.PI / 180.0) && c.ySpeed >= 2){
 				if(!c.hitLeft && !c.hitRight && !c.hitLeg && !isHitx){
 					hitl = 1;
 					c.yPosition = yPosition - (c.height / 2 + BLOCK_SIZE / 2);
@@ -133,7 +133,7 @@ public class Block extends AbstractChara {
 			// 貫通防止、前のフレームで空中におり、現在のフレームでブロック内の角度が変な場所にいるとき
 			// ブロックの上下どちらかに接地しているとき、座標を修正
 		}
-		else {		
+		else {
 		}
 		hitY.setSize(hith, hitl);
 		return hitY;

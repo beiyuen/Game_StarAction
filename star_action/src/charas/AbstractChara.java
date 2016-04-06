@@ -56,6 +56,7 @@ public abstract class AbstractChara extends JPanel {
 
 	// 呼び出され用
 	public void calcAcceleration() {
+		
 		calcYAcceleration();
 		calcXAcceleration(0.7);
 		isHitBlock();
