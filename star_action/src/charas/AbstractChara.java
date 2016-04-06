@@ -92,34 +92,28 @@ public abstract class AbstractChara extends JPanel {
 		boolean hitGoal = false;
 		Dimension hx, hy;
 		for (Block b : Model.getBlockList()){
-			if(b instanceof GoalBlock){
-				hitGoal = b.hit(this);
+
+			hx = b.hitx(this);
+			hy = b.hity(this);
+			if(hx.width == 1){
+				hitl = 1;
 			}
-			else {
-				hx = b.hitx(this);
-				hy = b.hity(this);
-				if(hx.width == 1){
-					hitl = 1;
-				}
-				if(hx.height == 1){
-					hitr = 1;
-				}
-				if(hy.width == 1){
-					hith = 1;
-				}
-				if(hy.height == 1){
-					hitd = 1;
-				}
+			if(hx.height == 1){
+				hitr = 1;
 			}
-			
+			if(hy.width == 1){
+				hith = 1;
+			}
+			if(hy.height == 1){
+				hitd = 1;
+			}
+
+
 		}
 		hitLeft 	= hitl == 1 ? true:false;
 		hitRight 	= hitr == 1 ? true:false;
 		hitHead 	= hith == 1 ? true:false;
 		hitLeg 		= hitd == 1 ? true:false;
-		if(hitGoal){
-			Model.nextStage();
-		}
 	}
 
 	// 速度変更
@@ -225,7 +219,7 @@ public abstract class AbstractChara extends JPanel {
 	public boolean ishitLeg() {
 	    return hitLeg;
 	}
-	
+
 	public boolean isDeath(){
 		return death;
 	}

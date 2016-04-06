@@ -1,6 +1,6 @@
 package stages;
 
-import static constants.CharaConstants.*;
+import static constants.StageConstants.*;
 
 import java.util.ArrayList;
 
@@ -21,49 +21,19 @@ public class Stage {
 	public ArrayList<Needle> needleList = new ArrayList<Needle>();
 	public GoalBlock goalBlock;
 
-	//各文字の定義
-	final int h = BLOCK_HARD;
-	final int c = BLOCK_CLEAR;
-	final int g = GOAL;
-	final int f = BLOCK_FAKE;
-	final int n = BLOCK_NOMAL;
-
-	final int e = ENEMY_SLIME;
-	final int k = ENEMY_KING;
-	final int G = ENEMY_GHOST;
-	final int w = ENEMY_WALK;
-	final int m = ENEMY_MOVE;
-	final int j = ENEMY_JUMP;
-	final int s = ENEMY_SHOT;
-
-	final int u = NEEDLE_UP;
-	final int r = NEEDLE_RIGHT;
-	final int d = NEEDLE_DOWN;
-	final int l = NEEDLE_LEFT;
-	final int U = NEEDLE_BLOCK_UP;
-	final int R = NEEDLE_BLOCK_RIGHT;
-	final int L = NEEDLE_BLOCK_LEFT;
-	final int D = NEEDLE_BLOCK_DOWN;
-
-	 int[][] map = {
-		//stage1
-			{h,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,h,h,h},
-			{h,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,h,h,h},
-			{h,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,h,h,h},
-			{h,0,0,0,0,0,0,0,c,0,0,0,e,0,0,0,0,c,0,0,0,0,0,0,0,0,0,0,0,0,h,h,h},
-			{h,0,0,0,0,0,0,0,0,n,n,n,n,n,n,n,n,0,0,0,0,0,0,0,0,0,0,0,0,0,h,h,h},
-			{h,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,G,0,0,0,0,0,0,h,h,h},
-			{h,0,0,0,n,n,n,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,g,h,h,h},
-			{h,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,h,h,h,h},
-			{h,0,0,0,0,0,0,0,0,0,0,u,u,u,u,u,u,0,0,0,0,n,0,0,0,0,0,0,0,0,h,h,h},
-			{h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h},
-
-	 	};
+	 int[][] map;
 
 
 
 	public Stage(){
-		// enemy,block作成
+	}
+	
+	public void setStage(int stageNum){
+		blockList.clear();
+		enemyList.clear();
+		needleList.clear();
+		map = StageMap.getStageMap(stageNum);
+		
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
 				switch (map[i][j]) {
@@ -71,8 +41,17 @@ public class Stage {
 					case n:
 						blockList.add(new Block(j, i));
 						break;
-					case u: // とげ
+					case u: // とげ(上向き)
 						needleList.add(new Needle(j, i, 0));
+						break;
+					case r: // とげ(右向き)
+						needleList.add(new Needle(j, i, 1));
+						break;
+					case d: // とげ(下向き)
+						needleList.add(new Needle(j, i, 2));
+						break;
+					case l: // とげ(左向き)
+						needleList.add(new Needle(j, i, 3));
 						break;
 					case e: // 敵
 						enemyList.add(new Enemy(j, i));

@@ -13,7 +13,7 @@ public class Controller {
 
 	private static StarActionMouseAdapter mouseAdapter = null;
 	private static StarActionKeyAdapter keyAdapter = null;
-	
+
 	static class StarActionMouseAdapter extends MouseAdapter{
 		public void mouseClicked(MouseEvent evt) {
 			int click = evt.getButton();
@@ -22,10 +22,10 @@ public class Controller {
 			}
 		}
 	}
-	
+
 	static class StarActionKeyAdapter extends KeyAdapter{
 		public void keyPressed(KeyEvent evt) {
-			
+
 			int mod = evt.getModifiersEx();
 			switch (Model.getGameStatus()) {
 			case GAMESTATUS_PLAYING:
@@ -66,16 +66,16 @@ public class Controller {
 					break;
 				}
 				break;
-				
+
 			case GAMESTATUS_DIE:
 				switch (evt.getKeyCode()) {
 				case 'r':
-				case 'R':	
+				case 'R':
 					Model.init();
 				}
 				break;
-				
-			case GAMESTATUS_STAGECHANGE:	
+
+			case GAMESTATUS_STAGECHANGE:
 				switch (evt.getKeyCode()) {
 				case KeyEvent.VK_ENTER:
 					Model.setGameStatus(GAMESTATUS_PLAYING);
@@ -83,8 +83,8 @@ public class Controller {
 				}
 				break;
 			}
-				
-			
+
+
 		}
 		public void keyReleased(KeyEvent evt) {
 			switch (evt.getKeyCode()) {
@@ -105,21 +105,21 @@ public class Controller {
 			case 'Z':
 				Model.playerChara.dash = false;
 				break;
-			
+
 			}
 		}
 	}
-	
+
 	private Controller(){
 	}
-	
-	public static MouseAdapter getMouseAdapter(){		
+
+	public static MouseAdapter getMouseAdapter(){
 		if(mouseAdapter == null){
 			mouseAdapter = new StarActionMouseAdapter();
 		}
 		return mouseAdapter;
 	}
-	
+
 	public static KeyAdapter getKeyAdapter(){
 		if(keyAdapter == null){
 			keyAdapter = new StarActionKeyAdapter();

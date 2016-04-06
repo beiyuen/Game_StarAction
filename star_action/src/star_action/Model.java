@@ -12,7 +12,6 @@ import charas.Needle;
 import charas.PlayerChara;
 import slide.StageChangeSlide;
 import stages.Stage;
-import stages.Stage1_1;
 import util.DebugShowText;
 
 public class Model {
@@ -123,23 +122,23 @@ public class Model {
 
 		debugShowText.run(playerChara.xPosition, playerChara.yPosition);
 	}
-
+	/**
+	 * 次のステージに行くための処理
+	 */
 	public static void nextStage() {
 		// TODO 自動生成されたメソッド・スタブ
 		setStageNum(stageNum+1);
 		stageChangeSlide.setText(stageNum);
 		setGameStatus(GAMESTATUS_STAGECHANGE);
+		setStage(stageNum);
+		playerChara.init();
 	}
-
+	/**
+	 * 新しいステージをセット。これにより敵やブロックの位置情報を更新
+	 * @param i
+	 */
 	public static void setStage(int i){
-		switch (i) {
-		case 1:
-			stage = new Stage1_1();
-			break;
-
-		default:
-			break;
-		}
+		stage.setStage(i);
 		blockList = stage.getBlockList();
 		enemyList = stage.getEnemyList();
 		needleList = stage.getNeedleList();

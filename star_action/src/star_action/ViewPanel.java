@@ -33,9 +33,9 @@ public class ViewPanel extends JPanel {
 	public ViewPanel(){
 		//super();
 		debugShowText = Model.debugShowText;
-		blockList = Model.getBlockList();
-		enemyList = Model.getEnemyList();
-		needleList = Model.getNeedleList();
+	//	blockList = Model.getBlockList();
+	//	enemyList = Model.getEnemyList();
+	//	needleList = Model.getNeedleList();
 		playerChara = Model.playerChara;
 		setBackground(Color.GREEN);
 		setBorder(new BevelBorder(BevelBorder.LOWERED));
@@ -77,16 +77,16 @@ public class ViewPanel extends JPanel {
 
 			case GAMESTATUS_PLAYING:	//各キャラ、ブロック、右上の画像を描画
 				playerChara.draw(g);// draw関数が悪い?
-				for (Block b : blockList) {
+				for (Block b : Model.getBlockList()) {
 					b.draw(g);
 				}
-				for (Enemy e : enemyList) {
+				for (Enemy e : Model.getEnemyList()) {
 					if(!e.isDeath()){
 						e.draw(g);
 					}
 
 				}
-				for (Needle n : needleList) {
+				for (Needle n : Model.getNeedleList()) {
 					n.draw(g);
 				}
 				Model.getGoalBlock().draw(g);
@@ -94,15 +94,15 @@ public class ViewPanel extends JPanel {
 				break;
 
 			case GAMESTATUS_DIE:
-				for (Block b : blockList) {
+				for (Block b : Model.getBlockList()) {
 					b.draw(g);
 				}
-				for (Enemy e : enemyList) {
+				for (Enemy e : Model.getEnemyList()) {
 					if(!e.isDeath()){
 						e.draw(g);
 					}
 				}
-				for (Needle n : needleList) {
+				for (Needle n : Model.getNeedleList()) {
 					n.draw(g);
 				}
 				Model.getGoalBlock().draw(g);
