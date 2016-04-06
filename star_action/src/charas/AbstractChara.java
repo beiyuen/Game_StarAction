@@ -118,12 +118,18 @@ public abstract class AbstractChara extends JPanel {
 		hitHead 	= hith == 1 ? true:false;
 		hitLeg 		= hitd == 1 ? true:false;
 	}
+	
+	public void scroll(double speed){
+		xPosition -= speed;
+	}
 
 	// 速度変更
 	public abstract void changeXSpeed();
 	public abstract void changeYSpeed();
 
-	// 移動処理
+	/**
+	 * 移動処理を行う。x,yのそれぞれの座標に速度を足す
+	 */
 	public void move(){
 		xPosition += xSpeed;
 		yPosition += ySpeed;
@@ -222,11 +228,14 @@ public abstract class AbstractChara extends JPanel {
 	public boolean ishitLeg() {
 	    return hitLeg;
 	}
-
+	/**
+	 * deathを取得します。
+	 * @return
+	 */
 	public boolean isDeath(){
 		return death;
 	}
-
+	
 	public void setDeath(boolean b){
 		death = b;
 	}

@@ -17,8 +17,21 @@ public class Controller {
 	static class StarActionMouseAdapter extends MouseAdapter{
 		public void mouseClicked(MouseEvent evt) {
 			int click = evt.getButton();
-			if (click == MouseEvent.BUTTON1) {
+			int gameStatus = Model.getGameStatus();
+			int mode = Model.getplacementMode();
+			if (click == MouseEvent.BUTTON1 && gameStatus == GAMESTATUS_PLAYING) {
+				// モード変更
+				if(evt.getX() > GAME_WIDTH-50 && evt.getY() < 50){
+					Model.setplacementMode(mode+1);
+				}
+
+				else if(Model.getClickableNum()[mode] > 0){
+					Model.placement(evt.getX()/50, evt.getY()/50);
+				}
 				System.out.print("click");
+			}
+			else if(click == MouseEvent.BUTTON3){
+				Model.removeBlock(evt.getX(), evt.getY());
 			}
 		}
 	}

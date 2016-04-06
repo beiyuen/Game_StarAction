@@ -11,7 +11,7 @@ import charas.Needle;
 import charas.blocks.ClearBlock;
 import charas.blocks.FakeBlock;
 import charas.blocks.NomalBlock;
-import charas.enemys.GohstEnemy;
+import charas.enemys.GhostEnemy;
 import charas.enemys.MoveEnemy;
 import charas.enemys.ShootEnemy;
 import charas.enemys.WalkEnemy;
@@ -19,9 +19,10 @@ public class Stage {
 
 	public int currentStageNum; //現在のステージ数
 	public int currentClickableNum[];
-	//int clickableNum[][] = {{10,10,10},{5,0,0},{0,0,0},{0,5,0},{6,0,0}}; //クリック可能回数
-	int clickableNum[] = {10,10,10}; //クリック可能回数
-	boolean scrollable[] = {true,true,false,true,false};
+	int clickableNum[][] = {{10,10,10},{5,0,0},{0,0,0},{0,5,0},{6,0,0}}; //クリック可能回数
+	//int clickableNum[] = {10,10,10}; //クリック可能回数
+	public boolean scrollable[] = {true,true,false,true,false};
+	public boolean currentScrollable;
 
 	public ArrayList<Block> blockList = new ArrayList<Block>();
 	public ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
@@ -34,13 +35,13 @@ public class Stage {
 
 	public Stage(){
 	}
-	
+
 	public void setStage(int stageNum){
 		blockList.clear();
 		enemyList.clear();
 		needleList.clear();
 		map = StageMap.getStageMap(stageNum);
-		
+
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
 				switch (map[i][j]) {
@@ -52,10 +53,10 @@ public class Stage {
 						break;
 					case c: //敵のみが触れられる透明ブロック
 						blockList.add(new ClearBlock(j, i));
-						break;	
+						break;
 					case f: //プレイヤーが触れると消えるブロック
 						blockList.add(new FakeBlock(j, i));
-						break;	
+						break;
 					case u: // とげ(上向き)
 						needleList.add(new Needle(j, i, 0));
 						break;
@@ -75,14 +76,14 @@ public class Stage {
 						enemyList.add(new WalkEnemy(j, i));
 						break;
 					case G: // 幽霊の敵
-						enemyList.add(new GohstEnemy(j, i));
+						enemyList.add(new GhostEnemy(j, i));
 						break;
 					case m: // 動いてジャンプする敵
 						enemyList.add(new MoveEnemy(j, i, 2));
-						break;	
+						break;
 					case s: // 弾を撃つ敵
 						enemyList.add(new ShootEnemy(j, i));
-						break;		
+						break;
 					case g:
 						goalBlock = new GoalBlock(j, i);
 						break;
@@ -90,7 +91,8 @@ public class Stage {
 			}
 		}
 		System.out.println("Stage loaded");
-		currentClickableNum = clickableNum;
+		currentClickableNum = clickableNum[stageNum-1];
+		currentScrollable = scrollable[stageNum-1];
 	}
 
 	public boolean isScrollable(){
@@ -101,4 +103,7 @@ public class Stage {
 	public ArrayList<Enemy> getEnemyList() {return enemyList;}
 	public ArrayList<Needle> getNeedleList() {return needleList;}
 	public GoalBlock getGoalBlock(){return goalBlock;}
+	public int[] getClickableNum(){return currentClickableNum;}
+
+	public boolean getScrollable() {return currentScrollable;}
 }

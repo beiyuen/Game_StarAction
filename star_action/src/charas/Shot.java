@@ -1,5 +1,5 @@
 package charas;
-
+import static constants.CharaConstants.*;
 public class Shot extends Enemy {
 
 	//x,yは座標（発射主体に合わせるため）
@@ -10,12 +10,26 @@ public class Shot extends Enemy {
 			xSpeed = spd*Math.cos(angle);
 			ySpeed = spd*Math.sin(angle);
 		}
-
+		 @Override
+		public int hit(PlayerChara c){
+			if(hit2(c)){
+				return HIT_MISS;
+			}
+			else {
+				return HIT_NOT;
+			}
+		}
+		
+		@Override
+		public void calcAcceleration() {			
+		}
 
 		// 移動定義
+		@Override
 		public void calcXAcceleration(double a) {
 
 		}
+		@Override
 		public void calcYAcceleration() {
 
 		}

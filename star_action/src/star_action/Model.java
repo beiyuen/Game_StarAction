@@ -3,6 +3,7 @@ package star_action;
 import static constants.MathConstants.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import charas.AbstractChara;
 import charas.Block;
@@ -10,6 +11,7 @@ import charas.Enemy;
 import charas.GoalBlock;
 import charas.Needle;
 import charas.PlayerChara;
+import charas.enemys.GhostEnemy;
 import slide.StageChangeSlide;
 import stages.Stage;
 import util.DebugShowText;
@@ -36,6 +38,10 @@ public class Model {
 	public static PlayerChara getPlayerChara() {	return playerChara;}
 	public static StageChangeSlide getStageChangeSlide() {	return stageChangeSlide;}
 	public static GoalBlock getGoalBlock() {return goalBlock;}
+
+	public static int[] clickableNum = null;
+	public static boolean scrollable = true;
+	public static int placementMode = 0;
 
 	public static void setStageNum(int i){
 		stageNum = i;
@@ -75,27 +81,24 @@ public class Model {
 	 * プレイヤーのx座標が一定以上になったときに右へ移動した場合に画面をスクロール
 	 */
 	private static void scroll(){
-		if(stage.isScrollable()){//s.num=4(ボス戦)ではスクロールできない
+		if(scrollable){//s.num=4(ボス戦)ではスクロールできない
 			double xSpeed =  playerChara.getxSpeed();
 			double xPosition = playerChara.getxPosition();
+			double speed = playerChara.getxSpeed();
 			if (xPosition + xSpeed + playerChara.getWidth() / 2 > GAME_WIDTH - 400) {
-				playerChara.xPosition -= xSpeed;
+				playerChara.scroll(speed);
 				for (Block b : blockList){
-					b.xPosition -= xSpeed;
+					b.scroll(speed);
 				}
 
 				for (Enemy e : enemyList) {
-					if(!e.isDeath()){
-						e.xPosition -= xSpeed;
-					}
-				//	if (e instanceof NPCshoot)
-				//		for (Shot s : NPCshoot.bullet)
-				//			s.xpos -= xSpeed;
+					e.scroll(speed);
 				}
+
 				for (Needle n : needleList){
-					n.xPosition -= xSpeed;
+					n.scroll(speed);
 				}
-				goalBlock.xPosition -= xSpeed;
+				goalBlock.scroll(speed);
 			}
 		}
 	}
@@ -143,6 +146,41 @@ public class Model {
 		enemyList = stage.getEnemyList();
 		needleList = stage.getNeedleList();
 		goalBlock = stage.getGoalBlock();
+		clickableNum = stage.getClickableNum();
+		scrollable = stage.getScrollable();
 	}
 
+	public static int[] getClickableNum(){return clickableNum;}
+	
+	public static int getplacementMode(){return placementMode;}
+	public static void setplacementMode(int i){placementMode = i%3;}
+	/**
+	 * 左クリックしたときにブロックや敵を配置する
+	 * @param x
+	 * @param y
+	 */
+	public static void placement(int x, int y){
+		switch (placementMode) {
+		case 0:
+			blockList.add(new Block(x,y));
+			break;
+		case 1:
+			enemyList.add(new Enemy(x,y));
+			break;	
+		case 2:
+			enemyList.add(new GhostEnemy(x,y));
+			break;
+		}
+		clickableNum[placementMode] -= 1;
+	}
+
+	public static void removeBlock(int x, int y){
+		Iterator<Block> blockIterator = blockList.iterator();
+		while(blockIterator.hasNext()){
+			Block val = blockIterator.next();
+			if(val.removable && Math.abs(x - val.xPosition) < 25&& Math.abs(y - val.yPosition) < 25){
+				blockIterator.remove(); // イテレータが指す要素を削除
+			}
+		}
+	}
 }

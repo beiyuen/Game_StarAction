@@ -4,9 +4,9 @@ import java.awt.Graphics;
 
 import charas.Enemy;
 
-public class GohstEnemy extends Enemy {
+public class GhostEnemy extends Enemy {
 	private double ysin;
-	public GohstEnemy(int x, int y) {
+	public GhostEnemy(int x, int y) {
 		super(x, y,30,"image/enemy.png");
 		xSpeed = (r.nextInt(5) - 2) * 2;
 		ysin = 0.0;
