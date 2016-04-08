@@ -1,5 +1,7 @@
 package charas.blocks;
 
+import java.awt.Graphics;
+
 import charas.AbstractChara;
 import charas.Block;
 import charas.PlayerChara;
@@ -12,15 +14,16 @@ import charas.PlayerChara;
  */
 public class FakeBlock extends Block {
 
-	boolean death = false;
+
 	public FakeBlock(int x, int y) {
 		super(x, y);
 		// TODO 自動生成されたコンストラクター・スタブ
 	}
 	void death() {
 		death = true;
-		image = null;
 	}
+
+	
 	/**
 	 * キャラがブロックに触れたときの処理。キャラがプレイヤーの場合とその他の場合に分かれる
 	 */
@@ -46,5 +49,11 @@ public class FakeBlock extends Block {
 			return false;
 		}
 		return false;
+	}
+	
+	public void draw(Graphics g){
+		if(!death){
+			super.draw(g);
+		}
 	}
 }

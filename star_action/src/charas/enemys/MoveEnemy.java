@@ -32,10 +32,10 @@ public class MoveEnemy extends Enemy {
 			changeYSpeed();
 			//System.out.println("changeXSpeed:" + ySpeed);
 		}
-		System.out.println("ジャンプ前 imageKind:" + imagekind);
+		//System.out.println("ジャンプ前 imageKind:" + imagekind);
 		if(jump){
 			jump();
-			System.out.println("ジャンプ後 imageKind:" + imagekind);
+		//	System.out.println("ジャンプ後 imageKind:" + imagekind);
 		}
 		
 		calcXAcceleration(0.7);

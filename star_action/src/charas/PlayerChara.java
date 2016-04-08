@@ -106,19 +106,26 @@ public class PlayerChara extends AbstractChara {
 	public void calcXAcceleration(double a) {
 		// 右を押していたとき
 		if (moveRight && !hitRight){
-			if(dash&& xSpeed <= 16){
-				xSpeed += 2;
+			if(dash && xSpeed <= 16 && hitLeg){
+				xSpeed += 2;				
+			}
+			else if(dash && xSpeed <= 16 && !hitLeg){
+				xSpeed += 0.7;//等速にするための処理
 			}
 			else if(dash==false && xSpeed <= 6){
 				xSpeed += 1.5;
 			}
+			System.out.println("dash" + xSpeed);
 			imageNum ++;
 			imageKind = (imageNum % 18) / 6;//0,1,2番目の画像
 		}
 		// 左を押していたとき
 		else if (moveLeft && !hitLeft){
-			if(dash&& xSpeed >= -16){
+			if(dash&& xSpeed >= -16 && hitLeg){
 				xSpeed -= 2;
+			}
+			else if(dash&& xSpeed >= -16 && !hitLeg){
+				xSpeed -= 0.7;
 			}
 			else if(dash==false && xSpeed >= -6){
 				xSpeed -= 1.5;

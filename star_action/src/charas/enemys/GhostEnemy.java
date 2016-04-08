@@ -13,7 +13,7 @@ public class GhostEnemy extends Enemy {
 	}
 	
 	public void calcXAcceleration(double a) {
-		/*for (Block b : Model.getBlockList()){
+	/*	for (Block b : Model.getBlockList()){
 			if (//b.hitx(this) &&
 				Math.abs(Math.cos((Math.atan2(yPosition-b.yPosition, xPosition-b.xPosition)))) >1/Math.sqrt(2.0))
 				//敵とブロックの角度が(-45度~45度)なら
