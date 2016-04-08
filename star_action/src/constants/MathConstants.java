@@ -2,8 +2,8 @@ package constants;
 
 public class MathConstants {
 
-	public static final int WINDOW_WiDTH 			= 	1000;
-	public static final int WINDOW_HEIGHT 			= 	520;
+	public static final int WINDOW_WIDTH 			= 	1000;
+	public static final int WINDOW_HEIGHT 			= 	530;
 	public static final int GAME_WIDTH 				= 	1000;
 	public static final int GAME_HEIGHT 			= 	500;
 

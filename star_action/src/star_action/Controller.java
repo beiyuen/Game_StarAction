@@ -19,19 +19,24 @@ public class Controller {
 			int click = evt.getButton();
 			int gameStatus = Model.getGameStatus();
 			int mode = Model.getplacementMode();
+			int clickX = evt.getX();
+			int clickY = evt.getY()-30;
 			if (click == MouseEvent.BUTTON1 && gameStatus == GAMESTATUS_PLAYING) {
 				// モード変更
-				if(evt.getX() > GAME_WIDTH-50 && evt.getY() < 50){
+				
+				System.out.println("clickX :" + clickX + "clickY :" + clickY );
+				if(clickX > GAME_WIDTH-65 && clickX < GAME_WIDTH -15 && clickY  < 50){
 					Model.setplacementMode(mode+1);
 				}
 
 				else if(Model.getClickableNum()[mode] > 0){
-					Model.placement(evt.getX()/50, evt.getY()/50);
+					Model.placement(clickX/50, clickY/50);
 				}
 				System.out.print("click");
 			}
+			// 右クリックならブロックを削除
 			else if(click == MouseEvent.BUTTON3){
-				Model.removeBlock(evt.getX(), evt.getY());
+				Model.removeBlock(clickX, clickY );
 			}
 		}
 	}

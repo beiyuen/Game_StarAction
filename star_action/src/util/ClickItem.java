@@ -21,12 +21,11 @@ public class ClickItem extends JPanel{
 	public ClickItem(){
 		int place[] = Model.getClickableNum();
 		int clickable = place[Model.getplacementMode()];
-		text = new Text(GAME_WIDTH-40, 32, String.valueOf(clickable), font, Color.WHITE);
+		text = new Text(GAME_WIDTH-55, 32, String.valueOf(clickable), font, Color.WHITE);
 		image = getToolkit().createImage("image/mouse1.png");
-		if(image == null) System.err.println("adfa");
 		imageKind = 0;
-
-		System.out.println("loadimage");
+		width = 150;
+		height = 50;
 	}
 
 	public void setText(int i){
@@ -36,11 +35,10 @@ public class ClickItem extends JPanel{
 
 	public void draw(Graphics g){
 //		g.drawImage(climg, XMAX-50, 0, XMAX, 50,  this);
-	//	g.drawImage(image, GAME_WIDTH-50, 0, GAME_WIDTH, 50,width/3*imageKind, 0, width/3*(imageKind+1), height , this);
-		g.drawImage(image, GAME_WIDTH-50, 0, GAME_WIDTH, 50,0, 0, 50, 50 , this);
+		g.drawImage(image, GAME_WIDTH-65, 0, GAME_WIDTH-15, 50,(int)(width/3*imageKind), 0, (int)(width/3*(imageKind+1)), (int)height , this);
+	//	g.drawImage(image, GAME_WIDTH-50, 0, GAME_WIDTH, 50,0, 0, 50, 50 , this);
 
 		text.draw(g);
-		System.out.println("w :" + width + ", h :" + height);
 	}
 
 	public void setImageKind(int placementMode) {
@@ -50,7 +48,6 @@ public class ClickItem extends JPanel{
 
 	public void setSize() {
 		// TODO 自動生成されたメソッド・スタブ
-		width = image.getWidth(null);
-		height = image.getHeight(null);
+		
 	}
 }

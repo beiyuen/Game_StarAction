@@ -20,7 +20,7 @@ public class Block extends AbstractChara {
 	public boolean removable = false;
 	public Dimension hitX,hitY;
 	public boolean isHitx;
-
+	
 	public Block(int x, int y) {
 		width = BLOCK_SIZE;
 		height = BLOCK_SIZE;
@@ -32,6 +32,7 @@ public class Block extends AbstractChara {
 		hitX = new Dimension(0, 0);
 		hitY = new Dimension(0, 0);
 		isHitx = false;
+		death = false;
 	}
 	public Block(int x, int y, int w, int h) {
 		width = w;
@@ -40,8 +41,13 @@ public class Block extends AbstractChara {
 		yPosition = y * BLOCK_SIZE + BLOCK_SIZE / 2;
 		initX = xPosition;
 		initY = yPosition;
+		death = false;
 	}
 
+	public boolean isRemovable() {
+		return removable;
+	}
+	
 	public void calcAcceleration() {
 	}
 

@@ -16,39 +16,45 @@ public class ShootEnemy extends Enemy {
 	public ArrayList<Shot> bullet = new ArrayList<Shot>();
 	Iterator<Shot> bulletIterator = null;
 	int count;
+	boolean death2;
 
 	public ShootEnemy(int x, int y) {
 		super(x,y,30,"image/enemy3.png");
 		count = 0;
+		death2 = false;
 	}
 
 	public void init(){
 		super.init();
 		bullet.clear();
+		death2 = false;
 	}
 
 	@Override
 	public void calcAcceleration() {
-		super.calcAcceleration();
+		if(!death2){
+			super.calcAcceleration();
 
-		count++;
-	//弾を出す
-		if( count %150 == 100 &&xPosition>0 && xPosition < GAME_WIDTH-40){
-			for(int i =0;i<6;i++){
-				bullet.add(new Shot( (int)(xPosition+1), (int)(yPosition-13),3.0,
-						Math.atan2(yPosition-Model.getPlayerChara().getyPosition(),xPosition-Model.getPlayerChara().getxPosition())+(i*60)*Math.PI/180));
-			}
+			count++;
+			//弾を出す
+			if( count %150 == 100 &&xPosition>0 && xPosition < GAME_WIDTH-40){
+				for(int i =0;i<6;i++){
+					bullet.add(new Shot( (int)(xPosition+1), (int)(yPosition-13),3.0,
+							Math.atan2(yPosition-Model.getPlayerChara().getyPosition(),xPosition-Model.getPlayerChara().getxPosition())+(i*60)*Math.PI/180));
+				}
 
-			//Mario.sound("shoot.wav",0.4);
-		}
-		bulletIterator = bullet.iterator();
-		while (bulletIterator.hasNext()) {
-			Shot s = bulletIterator.next();
-			s.calcAcceleration();
-			if(s.xPosition > GAME_WIDTH || s.xPosition < 0 || s.yPosition >GAME_HEIGHT || s.yPosition < 0){
-				bulletIterator.remove();
+				//Mario.sound("shoot.wav",0.4);
+			}
+			bulletIterator = bullet.iterator();
+			while (bulletIterator.hasNext()) {
+				Shot s = bulletIterator.next();
+				s.calcAcceleration();
+				if(s.xPosition > GAME_WIDTH || s.xPosition < 0 || s.yPosition >GAME_HEIGHT || s.yPosition < 0){
+					bulletIterator.remove();
+				}
 			}
 		}
+		
 	}
 
 	@Override
@@ -58,9 +64,17 @@ public class ShootEnemy extends Enemy {
 				return HIT_MISS;
 			}
 		}
-		return super.hit(c);
+		if(!death2){
+			return super.hit(c);
+		}
+		return HIT_NOT;
 	}
-
+	
+	@Override
+	public void death(){
+		death2 = true;
+	}
+	
 	@Override
 	public void calcXAcceleration(double a) {}
 
@@ -73,15 +87,20 @@ public class ShootEnemy extends Enemy {
 	}
 	@Override
 	public void move(){
-		super.move();
+		if(!death2){
+			super.move();
+		}
+		
 		for(Shot s: bullet){
 			s.move();
 		}
 	}
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2),
-				(int) width, (int) height, this);
+		if(!death2){
+			g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2),
+					(int) width, (int) height, this);
+		}
 		for(Shot b : bullet){
 			b.draw(g);
 		}

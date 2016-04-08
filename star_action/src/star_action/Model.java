@@ -3,7 +3,6 @@ package star_action;
 import static constants.MathConstants.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import charas.AbstractChara;
 import charas.Block;
@@ -119,7 +118,7 @@ public class Model {
 
 
 	/**
-	 * 1フレームごとのゲーム全体の処理
+	 * 1フレームごとのゲーム全体の処理、各キャラの速度変更、プレイヤーと敵キャラとの当たり判定の実行、各キャラの移動を行う
 	 */
 	public static void run(){
 		if(!playerChara.isDeath()){
@@ -127,6 +126,12 @@ public class Model {
 		}
 
 		for (Enemy e : enemyList) {
+			if(!e.isDeath()){
+				e.calcAcceleration();
+				e.move();
+			}
+		}
+		for (Enemy e : placeEnemyList){
 			if(!e.isDeath()){
 				e.calcAcceleration();
 				e.move();
@@ -163,7 +168,10 @@ public class Model {
 		clickableNum = stage.getClickableNum();
 		scrollable = stage.getScrollable();
 		clickItem = new ClickItem();
-		clickItem.setSize();
+		placeBlockList.clear();
+		placeEnemyList.clear();
+		placementMode = 0;
+		clickItem.setText(clickableNum[placementMode]);
 	}
 
 	public static int[] getClickableNum(){return clickableNum;}
@@ -186,6 +194,7 @@ public class Model {
 	public static ClickItem getClickItem() {
 		return clickItem;
 	}
+	
 	/**
 	 * 左クリックしたときにブロックや敵を配置する
 	 * @param x
@@ -206,13 +215,16 @@ public class Model {
 		clickableNum[placementMode] -= 1;
 		clickItem.setText(clickableNum[placementMode]);
 	}
-
+	
+	/**
+	 * 引数の位置に存在するブロックを削除する。具体的にはdeath変数をtrueにしているだけなので、リストから削除されているわけではない
+	 * @param x
+	 * @param y
+	 */
 	public static void removeBlock(int x, int y){
-		Iterator<Block> blockIterator = blockList.iterator();
-		while(blockIterator.hasNext()){
-			Block val = blockIterator.next();
-			if(val.removable && Math.abs(x - val.xPosition) < 25&& Math.abs(y - val.yPosition) < 25){
-				blockIterator.remove(); // イテレータが指す要素を削除
+		for (Block b : blockList) {
+			if(b.isRemovable() && Math.abs(x - b.getxPosition()) < 25 && Math.abs(y - b.getyPosition()) < 25){
+				b.setDeath(true);
 			}
 		}
 	}

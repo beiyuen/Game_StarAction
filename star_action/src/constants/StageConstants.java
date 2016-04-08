@@ -15,7 +15,7 @@ public class StageConstants {
 	public static final int G = ENEMY_GHOST;
 	public static final int w = ENEMY_WALK;
 	public static final int m = ENEMY_MOVE;
-	public static final int j = ENEMY_JUMP;
+	public static final int J = ENEMY_JUMP;
 	public static final int s = ENEMY_SHOT;
 
 	public static final int u = NEEDLE_UP;
