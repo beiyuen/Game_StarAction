@@ -3,7 +3,6 @@ package charas.blocks;
 import java.awt.Graphics;
 
 import charas.AbstractChara;
-import charas.Block;
 import charas.PlayerChara;
 
 /**
@@ -25,12 +24,12 @@ public class ClearBlock extends Block {
 	 * @param c
 	 * @return
 	 */
-	public boolean hit(AbstractChara c){
+	public boolean isHit(AbstractChara c){
 		if(c instanceof PlayerChara){
 			return false;
 		}
 		else {
-			return super.hit(c);
+			return super.isHit(c);
 		}
 	}
 

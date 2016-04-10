@@ -1,27 +1,32 @@
 package charas.enemys;
 
 import static constants.CharaConstants.*;
+import static constants.MathConstants.*;
 
 import java.awt.Graphics;
 
-import charas.Block;
-import charas.Enemy;
+import charas.Needle;
 import charas.PlayerChara;
+import charas.blocks.Block;
 import star_action.Model;
-
-public class WalkEnemy extends Enemy {
+/**
+ * 地面を歩く敵。プレイヤーが触れると、その時にこの敵が触れているブロックとトゲを破壊する。この敵はy方向の移動をしないので、
+ * ブロックが消えても落ちることはない。また、この敵をプレイヤーは倒せない。
+ * @author kitahara
+ *
+ */
+public class WalkEnemy extends AbstractEnemy {
 	int imagekind = 0, i = 0, tate = 2, yoko = 4;
 	boolean isHit;
 
 	public WalkEnemy(int x, int y) {
-		super(x, y, 40, 50, "image/enemy4.png");
-		ySpeed = 0;
+		super(x, y, 40, 50, IMAGE_ENEMY_WALK);
 		isHit = false;
 	}
 
 	@Override
-	public int hit(PlayerChara c) {
-		if (hit2(c)) {
+	public int isHitPlayerChara(PlayerChara c) {
+		if (isHit(c)) {
 			isHit = true;
 		}
 		else {
@@ -31,6 +36,9 @@ public class WalkEnemy extends Enemy {
 	}
 	@Override
 	public void calcAcceleration() {
+		if(Model.getGameStatus() == GAMESTATUS_DIE){
+			isHit = false;
+		}
 		calcXAcceleration(0.7);
 		isHitBlock();
 		if(hitLeft || hitRight){
@@ -47,8 +55,13 @@ public class WalkEnemy extends Enemy {
 		
 		if(isHit){
 			for (Block b : Model.getBlockList()) {
-				if(b.hit(this) && !b.isDeath()){
+				if(b.isHit(this) && !b.isDeath()){
 					b.setDeath(true);
+				}
+			}
+			for(Needle n : Model.getNeedleList() ){
+				if(n.isHit(this) && !n.isDeath()){
+					n.setDeath(true);
 				}
 			}
 		}
@@ -68,11 +81,10 @@ public class WalkEnemy extends Enemy {
 
 	public void draw(Graphics g) {
 		double sx, sy;
-		int pwidth = image.getWidth(null) / yoko;
-		int pheight = image.getHeight(null) / tate;
+		int pwidth = 40;
+		int pheight = 50;
 		sx = (imagekind % yoko) * pwidth;
 		sy = (imagekind / yoko) * pheight;
-
 		g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2), (int) (xPosition + width / 2),
 				(int) (yPosition + height / 2), (int) (sx), (int) (sy), (int) (sx + pwidth), (int) (sy + pheight), this);
 	}

@@ -3,14 +3,18 @@ package star_action;
 import static constants.MathConstants.*;
 
 import java.awt.Graphics;
+import java.io.IOException;
 
 import javax.swing.JFrame;
+
+import util.ReferenceItems;
 
 public class MainFrame extends JFrame {
 	
 	private ViewPanel viewPanel;
 	
-	public MainFrame(){
+	public MainFrame() throws IOException{
+		ReferenceItems.Load();
 		Model.setStage(Model.getStageNum());
 		viewPanel = new ViewPanel();
 		//viewPanel.add(button);
@@ -37,7 +41,7 @@ public class MainFrame extends JFrame {
 		
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		new MainFrame();
 		
 	}

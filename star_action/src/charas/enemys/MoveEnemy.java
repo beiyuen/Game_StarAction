@@ -5,24 +5,22 @@ import static constants.MathConstants.*;
 
 import java.awt.Graphics;
 
-import charas.Enemy;
 import charas.PlayerChara;
 import star_action.Model;
 
-public class MoveEnemy extends Enemy {
+public class MoveEnemy extends AbstractEnemy {
 	private int imagekind = 0, i = 0, tate = 2, yoko = 5;
 	public boolean jump;
+	
 	public MoveEnemy(int x, int y, double xs) {
-		super(x,y,40,50,"image/enemy5.png");
+		super(x,y,40,50,IMAGE_ENEMY_MOVE);
 		xSpeed = xs;
-		ySpeed = 0;
 		jump = false;
-		// TODO 自動生成されたコンストラクター・スタブ
 	}
 
 	// 呼び出され用
 	public void calcAcceleration() {
-		
+
 		isHitBlock();
 		checkDeath();
 		if(hitLeft || hitRight){
@@ -37,16 +35,16 @@ public class MoveEnemy extends Enemy {
 			jump();
 		//	System.out.println("ジャンプ後 imageKind:" + imagekind);
 		}
-		
+
 		calcXAcceleration(0.7);
 		calcYAcceleration();
-		
-		
+
+
 	}
 
-	public int hit(PlayerChara c) {
+	public int isHitPlayerChara(PlayerChara c) {
 		// プレイヤーと接触しているとき
-		if(hit2(c)){
+		if(isHit(c)){
 			if(Math.sin((Math.atan2(c.yPosition-ySpeed-yPosition, c.xPosition-xSpeed-xPosition))) <= -1/Math.sqrt(2.0)) {
 				death();
 				return HIT_TREAD;
@@ -100,8 +98,8 @@ public class MoveEnemy extends Enemy {
 
 		public void draw(Graphics g){
 			double sx, sy;
-			int pwidth = image.getWidth(null)/yoko;
-			int pheight = image.getHeight(null)/tate;
+			int pwidth = 40;
+			int pheight = 50;
 	        sx = (imagekind % yoko) * pwidth;
 	        sy = (imagekind / yoko) * pheight;
 
@@ -131,7 +129,7 @@ public class MoveEnemy extends Enemy {
 				imagekind = 9;
 			}
 		}
-		
+
 	}
 
 	public void changeXSpeed(){

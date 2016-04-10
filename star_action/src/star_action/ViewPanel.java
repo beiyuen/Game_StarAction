@@ -11,19 +11,19 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
 
-import charas.Block;
-import charas.Enemy;
 import charas.Needle;
 import charas.PlayerChara;
+import charas.blocks.Block;
+import charas.enemys.AbstractEnemy;
 import util.DebugShowText;
 
 public class ViewPanel extends JPanel {
 	public Timer timer;
 	public ArrayList<Block> blockList;
-	public ArrayList<Enemy> enemyList;
+	public ArrayList<AbstractEnemy> enemyList;
 	public ArrayList<Needle> needleList;
 	public ArrayList<Block> placeBlockList;
-	public ArrayList<Enemy> placeEnemyList;
+	public ArrayList<AbstractEnemy> placeEnemyList;
 	//Image image = getToolkit().createImage("image/block.png");
 
 	public Image gameoverImage =  getToolkit().createImage("image/Gameover.png");
@@ -82,18 +82,20 @@ public class ViewPanel extends JPanel {
 				for (Block b : Model.getBlockList()) {
 					b.draw(g);
 				}
-				for (Enemy e : Model.getEnemyList()) {
+				for (AbstractEnemy e : Model.getEnemyList()) {
 					if(!e.isDeath()){
 						e.draw(g);
 					}
 				}
 				for (Needle n : Model.getNeedleList()) {
-					n.draw(g);
+					if(!n.isDeath()){
+						n.draw(g);
+					}
 				}
 				for (Block b : Model.getPlaceBlockList()) {
 					b.draw(g);
 				}
-				for (Enemy e : Model.getPlaceEnemyList()) {
+				for (AbstractEnemy e : Model.getPlaceEnemyList()) {
 					if(!e.isDeath()){
 						e.draw(g);
 					}
@@ -107,18 +109,20 @@ public class ViewPanel extends JPanel {
 				for (Block b : Model.getBlockList()) {
 					b.draw(g);
 				}
-				for (Enemy e : Model.getEnemyList()) {
+				for (AbstractEnemy e : Model.getEnemyList()) {
 					if(!e.isDeath()){
 						e.draw(g);
 					}
 				}
 				for (Needle n : Model.getNeedleList()) {
-					n.draw(g);
+					if(!n.isDeath()){
+						n.draw(g);
+					}
 				}
 				for (Block b : Model.getPlaceBlockList()) {
 					b.draw(g);
 				}
-				for (Enemy e : Model.getPlaceEnemyList()) {
+				for (AbstractEnemy e : Model.getPlaceEnemyList()) {
 					if(!e.isDeath()){
 						e.draw(g);
 					}

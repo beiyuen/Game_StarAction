@@ -5,12 +5,13 @@ import static constants.MathConstants.*;
 import java.util.ArrayList;
 
 import charas.AbstractChara;
-import charas.Block;
-import charas.Enemy;
-import charas.GoalBlock;
 import charas.Needle;
 import charas.PlayerChara;
+import charas.blocks.Block;
+import charas.blocks.GoalBlock;
+import charas.enemys.AbstractEnemy;
 import charas.enemys.GhostEnemy;
+import charas.enemys.NomalEnemy;
 import slide.StageChangeSlide;
 import stages.Stage;
 import util.ClickItem;
@@ -18,14 +19,14 @@ import util.DebugShowText;
 
 public class Model {
 	public static ArrayList<Block> blockList = null;
-	public static ArrayList<Enemy> enemyList = null;
+	public static ArrayList<AbstractEnemy> enemyList = null;
 	public static ArrayList<Needle> needleList = null;
 	public static ArrayList<Block> placeBlockList = new ArrayList<Block>();
-	public static ArrayList<Enemy> placeEnemyList = new ArrayList<Enemy>();
+	public static ArrayList<AbstractEnemy> placeEnemyList = new ArrayList<AbstractEnemy>();
 	public static int gameStatus = GAMESTATUS_STAGECHANGE;
 	public static GoalBlock goalBlock = null;
 
-	public static int stageNum = 1;
+	public static int stageNum = 2;
 	public static Stage stage = new Stage();
 	public static PlayerChara playerChara = new PlayerChara(40, 50);
 	public static DebugShowText debugShowText = new DebugShowText();
@@ -33,7 +34,7 @@ public class Model {
 	public static StageChangeSlide stageChangeSlide = new StageChangeSlide();
 
 	public static ArrayList<Block> getBlockList() {return blockList;}
-	public static ArrayList<Enemy> getEnemyList() {return enemyList;}
+	public static ArrayList<AbstractEnemy> getEnemyList() {return enemyList;}
 	public static ArrayList<Needle> getNeedleList() {return needleList;}
 	public static int getGameStatus() {	return gameStatus;}
 	public static int getStageNum() {	return stageNum;}
@@ -98,7 +99,7 @@ public class Model {
 					b.scroll(speed);
 				}
 
-				for (Enemy e : enemyList) {
+				for (AbstractEnemy e : enemyList) {
 					e.scroll(speed);
 				}
 
@@ -108,7 +109,7 @@ public class Model {
 				for (Block b : placeBlockList){
 					b.scroll(speed);
 				}
-				for (Enemy e : placeEnemyList) {
+				for (AbstractEnemy e : placeEnemyList) {
 					e.scroll(speed);
 				}
 				goalBlock.scroll(speed);
@@ -125,13 +126,13 @@ public class Model {
 			playerChara.calcAcceleration();
 		}
 
-		for (Enemy e : enemyList) {
+		for (AbstractEnemy e : enemyList) {
 			if(!e.isDeath()){
 				e.calcAcceleration();
 				e.move();
 			}
 		}
-		for (Enemy e : placeEnemyList){
+		for (AbstractEnemy e : placeEnemyList){
 			if(!e.isDeath()){
 				e.calcAcceleration();
 				e.move();
@@ -185,7 +186,7 @@ public class Model {
 	public static ArrayList<Block> getPlaceBlockList() {
 		return placeBlockList;
 	}
-	public static ArrayList<Enemy> getPlaceEnemyList() {
+	public static ArrayList<AbstractEnemy> getPlaceEnemyList() {
 		return placeEnemyList;
 	}
 	public static boolean isScrollable() {
@@ -206,7 +207,7 @@ public class Model {
 			placeBlockList.add(new Block(x,y));
 			break;
 		case 1:
-			placeEnemyList.add(new Enemy(x,y));
+			placeEnemyList.add(new NomalEnemy(x,y));
 			break;
 		case 2:
 			placeEnemyList.add(new GhostEnemy(x,y));

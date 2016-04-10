@@ -1,4 +1,7 @@
-package charas;
+package charas.blocks;
+
+import charas.PlayerChara;
+import charas.enemys.AbstractEnemy;
 
 public class GoalBlock extends Block {
 
@@ -14,14 +17,14 @@ public class GoalBlock extends Block {
 	 * @return
 	 */
 	public boolean hit(PlayerChara c){
-		return super.hit(c);
+		return super.isHit(c);
 	}
 	/**
 	 * 敵がゴールブロックに当たっているか判定。意味がないので常にfalseを返す
 	 * @param e
 	 * @return
 	 */
-	public boolean hit(Enemy e){
+	public boolean hit(AbstractEnemy e){
 		return false;
 	}
 }

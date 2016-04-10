@@ -1,14 +1,13 @@
 package charas.enemys;
 
+import static constants.CharaConstants.*;
+
 import java.awt.Graphics;
 
-import charas.Enemy;
-
-public class GhostEnemy extends Enemy {
+public class GhostEnemy extends AbstractEnemy {
 	private double ysin;
 	public GhostEnemy(int x, int y) {
-		super(x, y,30,"image/enemy.png");
-		xSpeed = (r.nextInt(5) - 2) * 2;
+		super(x, y,30,30,IMAGE_ENEMY_GHOST);
 		ysin = 0.0;
 	}
 	
@@ -38,13 +37,7 @@ public class GhostEnemy extends Enemy {
 	}
 
 	public void draw(Graphics g){
-		g.drawImage(image, (int)(xPosition-width/2), (int)(yPosition-height/2), (int)(xPosition+width/2),(int)(yPosition+height/2), (int)(image.getWidth(null)*(Math.signum(xSpeed)+1)/4),0,(int)(image.getWidth(null)*(Math.signum(xSpeed)+3)/4
-				),(int)image.getHeight(null),this);
-	}
-
-	@Override
-	public void changeXSpeed() {
-		super.changeXSpeed();
+		g.drawImage(image, (int)(xPosition-width/2), (int)(yPosition-height/2), (int)(xPosition+width/2),(int)(yPosition+height/2), (int)(48*(Math.signum(xSpeed)+1)/4),0,(int)(48*(Math.signum(xSpeed)+3)/4),32,this);
 	}
 
 	@Override

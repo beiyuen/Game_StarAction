@@ -4,6 +4,7 @@ import static constants.MathConstants.*;
 
 import java.awt.Graphics;
 
+import charas.enemys.AbstractEnemy;
 import star_action.Model;
 
 // 操作キャラ
@@ -46,9 +47,9 @@ public class PlayerChara extends AbstractChara {
 
 
 		//敵との当たり判定を計算
-		for (Enemy e : Model.getEnemyList()){
+		for (AbstractEnemy e : Model.getEnemyList()){
 			if(!e.isDeath()){
-				switch (e.hit(this)){
+				switch (e.isHitPlayerChara(this)){
 				case HIT_TREAD:
 					tread();
 					break;
@@ -60,9 +61,9 @@ public class PlayerChara extends AbstractChara {
 				}
 			}
 		}
-		for (Enemy e : Model.getPlaceEnemyList()){
+		for (AbstractEnemy e : Model.getPlaceEnemyList()){
 			if(!e.isDeath()){
-				switch (e.hit(this)){
+				switch (e.isHitPlayerChara(this)){
 				case HIT_TREAD:
 					tread();
 					break;
@@ -76,7 +77,7 @@ public class PlayerChara extends AbstractChara {
 		}
 		checkDeath();
 		for (Needle n : Model.getNeedleList()){
-			if (n.hit(this)){
+			if (!n.isDeath() && n.isHit(this)){
 				Model.death();
 			}
 		}
@@ -115,7 +116,7 @@ public class PlayerChara extends AbstractChara {
 			else if(dash==false && xSpeed <= 6){
 				xSpeed += 1.5;
 			}
-			System.out.println("dash" + xSpeed);
+			//System.out.println("dash" + xSpeed);
 			imageNum ++;
 			imageKind = (imageNum % 18) / 6;//0,1,2番目の画像
 		}

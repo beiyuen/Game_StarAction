@@ -8,6 +8,7 @@ import java.awt.Image;
 
 import javax.swing.JPanel;
 
+import charas.blocks.Block;
 import star_action.Model;
 
 public abstract class AbstractChara extends JPanel {
@@ -21,10 +22,10 @@ public abstract class AbstractChara extends JPanel {
 	public boolean ground = false;  //設置判定
 	public boolean death;
 
-	AbstractChara(){}
+	public AbstractChara(){}
 
 	//x,yはマップ座標
-	AbstractChara(int x, int y, int w, int h, String c) {
+	public AbstractChara(int x, int y, int w, int h, String c) {
 		xPosition = (x + 0.5) * BLOCK_SIZE;
 		yPosition = (y + 0.5) * BLOCK_SIZE;
 		initX = xPosition;
@@ -43,8 +44,12 @@ public abstract class AbstractChara extends JPanel {
 		death = false;
 	}
 
-	// 接触判定
-	public boolean hit(AbstractChara c) {
+	/**
+	 * 対象キャラ(c)との当たり判定を返す。当たっていたらtrue,当たっていなかったらfalseを返す
+	 * @param c
+	 * @return
+	 */
+	public boolean isHit(AbstractChara c) {
 		return Math.abs(c.xPosition - xPosition) <= c.width / 2 + width / 2
 				&& Math.abs(c.yPosition - yPosition) <= c.height / 2 + height / 2;
 	}
@@ -67,7 +72,7 @@ public abstract class AbstractChara extends JPanel {
 		else if(hitHead || hitLeg){
 			changeYSpeed();
 		}
-		
+
 	}
 
 	// x方向の速度計算  減速、衝突 aは加速度相当
@@ -131,7 +136,7 @@ public abstract class AbstractChara extends JPanel {
 		hitHead 	= hith == 1 ? true:false;
 		hitLeg 		= hitd == 1 ? true:false;
 	}
-	
+
 	public void scroll(double speed){
 		xPosition -= speed;
 	}
@@ -248,7 +253,7 @@ public abstract class AbstractChara extends JPanel {
 	public boolean isDeath(){
 		return death;
 	}
-	
+
 	public void setDeath(boolean b){
 		death = b;
 	}

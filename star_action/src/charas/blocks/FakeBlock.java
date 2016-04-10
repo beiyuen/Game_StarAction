@@ -3,7 +3,6 @@ package charas.blocks;
 import java.awt.Graphics;
 
 import charas.AbstractChara;
-import charas.Block;
 import charas.PlayerChara;
 
 
@@ -27,12 +26,12 @@ public class FakeBlock extends Block {
 	/**
 	 * キャラがブロックに触れたときの処理。キャラがプレイヤーの場合とその他の場合に分かれる
 	 */
-	public boolean hit(AbstractChara c){
+	public boolean isHit(AbstractChara c){
 		if(c instanceof PlayerChara){
 			return hit((PlayerChara) c);
 		}
 		else {
-			return super.hit(c);
+			return super.isHit(c);
 		}
 	}
 
@@ -43,7 +42,7 @@ public class FakeBlock extends Block {
 	 */
 	private boolean hit(PlayerChara c) {
 		if(death) return false;
-		if (super.hit(c)){
+		if (super.isHit(c)){
 		//	Mario.sound("surprise.wav", 0.6);
 			death();
 			return false;

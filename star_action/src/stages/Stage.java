@@ -4,15 +4,16 @@ import static constants.StageConstants.*;
 
 import java.util.ArrayList;
 
-import charas.Block;
-import charas.Enemy;
-import charas.GoalBlock;
 import charas.Needle;
+import charas.blocks.Block;
 import charas.blocks.ClearBlock;
 import charas.blocks.FakeBlock;
+import charas.blocks.GoalBlock;
 import charas.blocks.NomalBlock;
+import charas.enemys.AbstractEnemy;
 import charas.enemys.GhostEnemy;
 import charas.enemys.MoveEnemy;
+import charas.enemys.NomalEnemy;
 import charas.enemys.ShootEnemy;
 import charas.enemys.WalkEnemy;
 public class Stage {
@@ -24,7 +25,7 @@ public class Stage {
 	public boolean currentScrollable;
 
 	public ArrayList<Block> blockList = new ArrayList<Block>();
-	public ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
+	public ArrayList<AbstractEnemy> enemyList = new ArrayList<AbstractEnemy>();
 	public ArrayList<Needle> needleList = new ArrayList<Needle>();
 	public GoalBlock goalBlock;
 
@@ -59,9 +60,9 @@ public class Stage {
 						break;
 					case g: // ゴール
 						goalBlock = new GoalBlock(j, i);
-						break;	
-						
-					// とげの配置	
+						break;
+
+					// とげの配置
 					case u: // とげ(上向き)
 						needleList.add(new Needle(j, i, 0));
 						break;
@@ -89,10 +90,10 @@ public class Stage {
 					case L: // とげ+ブロック(左向き)
 						blockList.add(new NomalBlock(j, i));
 						needleList.add(new Needle(j, i, 3));
-						break;	
-					// 敵の配置	
+						break;
+					// 敵の配置
 					case e: // 敵
-						enemyList.add(new Enemy(j, i));
+						enemyList.add(new NomalEnemy(j, i));
 						break;
 					case w: // 歩く敵
 						enemyList.add(new WalkEnemy(j, i));
@@ -108,7 +109,7 @@ public class Stage {
 						break;
 					case J: // 静止してジャンプする敵
 						enemyList.add(new MoveEnemy(j, i, 0));
-						break;	
+						break;
 				}
 			}
 		}
@@ -122,10 +123,10 @@ public class Stage {
 	}
 
 	public ArrayList<Block> getBlockList(){return blockList;}
-	public ArrayList<Enemy> getEnemyList() {return enemyList;}
+	public ArrayList<AbstractEnemy> getEnemyList() {return enemyList;}
 	public ArrayList<Needle> getNeedleList() {return needleList;}
 	public GoalBlock getGoalBlock(){return goalBlock;}
-	public int[] getClickableNum(){return currentClickableNum;}
+	public int[] getClickableNum(){return currentClickableNum.clone();}
 
 	public boolean getScrollable() {return currentScrollable;}
 }

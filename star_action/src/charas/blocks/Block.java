@@ -1,4 +1,5 @@
-package charas;
+package charas.blocks;
+import static constants.CharaConstants.*;
 import static constants.MathConstants.*;
 
 import java.awt.Dimension;
@@ -7,11 +8,12 @@ import java.awt.Dimension;
 //----------------------------------------------------
 import java.awt.Graphics;
 
+import charas.AbstractChara;
 import charas.enemys.WalkEnemy;
-
+import util.ReferenceItems;
 
 /**
- * 通常ゲームでは普通のブロック。プレイヤーが触れても、敵が触れても消えることはない。また、このブロックは消すことはできない。
+ * 通常ゲームでは普通のブロック。プレイヤーが触れても、敵が触れても消えることはない。また、このブロックは右クリックで消すことはできない。
  * @author kitahara
  *
  */
@@ -20,7 +22,7 @@ public class Block extends AbstractChara {
 	public boolean removable = false;
 	public Dimension hitX,hitY;
 	public boolean isHitx;
-	
+
 	public Block(int x, int y) {
 		width = BLOCK_SIZE;
 		height = BLOCK_SIZE;
@@ -28,7 +30,7 @@ public class Block extends AbstractChara {
 		yPosition = y * BLOCK_SIZE + BLOCK_SIZE / 2;
 		initX = xPosition;
 		initY = yPosition;
-		image = getToolkit().createImage("image/block.png");
+		image = ReferenceItems.getBlockImage(IMAGE_BLOCK_NOMAL);
 		hitX = new Dimension(0, 0);
 		hitY = new Dimension(0, 0);
 		isHitx = false;
@@ -47,12 +49,12 @@ public class Block extends AbstractChara {
 	public boolean isRemovable() {
 		return removable;
 	}
-	
+
 	public void calcAcceleration() {
 	}
 
 	// 接触判定
-	public boolean hit(AbstractChara c) {
+	public boolean isHit(AbstractChara c) {
 		if(c instanceof WalkEnemy){
 			return Math.abs(c.xPosition - xPosition) <= c.width / 2 + width / 2
 					&& Math.abs(c.yPosition  - yPosition) <= c.height / 2 + height / 2;
@@ -65,7 +67,7 @@ public class Block extends AbstractChara {
 
 	// 接触かつ直前にx方向に接触していない場合に位置、速度を調整
 	public Dimension hitx(AbstractChara c) {
-		boolean x = hit(c);
+		boolean x = isHit(c);
 		int hitr = 0;
 		int hitl = 0;
 		double prex = c.xPosition-c.xSpeed-xPosition;
@@ -115,7 +117,7 @@ public class Block extends AbstractChara {
 	}
 
 	public Dimension hity(AbstractChara c) {
-		boolean x = hit(c);
+		boolean x = isHit(c);
 		int hith = 0;
 		int hitl = 0;
 		double prey = c.yPosition-c.ySpeed-yPosition;
@@ -164,7 +166,7 @@ public class Block extends AbstractChara {
 		if(!death){
 			g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2), (int) width, (int) height, this);
 		}
-		
+
 	}
 	@Override
 	public void changeXSpeed() {
