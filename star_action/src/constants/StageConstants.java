@@ -1,7 +1,11 @@
 package constants;
 
 import static constants.CharaConstants.*;
-
+/**
+ * StageMapで使用する際の文字列を定義
+ * @author kitahara
+ *
+ */
 public class StageConstants {
 	//各文字の定義
 	public static final int h = BLOCK_HARD;

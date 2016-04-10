@@ -2,14 +2,11 @@ package star_action;
 
 import static constants.MathConstants.*;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import javax.swing.border.BevelBorder;
 
 import charas.Needle;
 import charas.PlayerChara;
@@ -19,11 +16,11 @@ import util.DebugShowText;
 
 public class ViewPanel extends JPanel {
 	public Timer timer;
-	public ArrayList<Block> blockList;
-	public ArrayList<AbstractEnemy> enemyList;
-	public ArrayList<Needle> needleList;
-	public ArrayList<Block> placeBlockList;
-	public ArrayList<AbstractEnemy> placeEnemyList;
+	//public ArrayList<Block> blockList;
+	//public ArrayList<AbstractEnemy> enemyList;
+	//public ArrayList<Needle> needleList;
+	//public ArrayList<Block> placeBlockList;
+	//public ArrayList<AbstractEnemy> placeEnemyList;
 	//Image image = getToolkit().createImage("image/block.png");
 
 	public Image gameoverImage =  getToolkit().createImage("image/Gameover.png");
@@ -39,8 +36,8 @@ public class ViewPanel extends JPanel {
 	//	enemyList = Model.getEnemyList();
 	//	needleList = Model.getNeedleList();
 		playerChara = Model.playerChara;
-		setBackground(Color.GREEN);
-		setBorder(new BevelBorder(BevelBorder.LOWERED));
+	//	setBackground(Color.GREEN);
+	//	setBorder(new BevelBorder(BevelBorder.LOWERED));
 		timer = new Timer(DELAY, e -> {
 				switch(Model.getGameStatus()){
 					case GAMESTATUS_OPENING:

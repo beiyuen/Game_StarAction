@@ -1,6 +1,6 @@
 package charas.enemys;
 
-import static constants.CharaConstants.*;
+import static constants.ImageConstants.*;
 
 import java.awt.Graphics;
 
@@ -10,7 +10,7 @@ public class GhostEnemy extends AbstractEnemy {
 		super(x, y,30,30,IMAGE_ENEMY_GHOST);
 		ysin = 0.0;
 	}
-	
+
 	public void calcXAcceleration(double a) {
 	/*	for (Block b : Model.getBlockList()){
 			if (//b.hitx(this) &&
@@ -21,7 +21,7 @@ public class GhostEnemy extends AbstractEnemy {
 
 		if (xSpeed == 0)
 			xSpeed++;
-		
+
 	}
 
 	public void calcYAcceleration() {
@@ -33,7 +33,7 @@ public class GhostEnemy extends AbstractEnemy {
 */
 		ySpeed = 5*Math.sin(ysin);
 		ysin += 0.1;
-		
+
 	}
 
 	public void draw(Graphics g){

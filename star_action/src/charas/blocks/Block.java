@@ -1,11 +1,8 @@
 package charas.blocks;
-import static constants.CharaConstants.*;
+import static constants.ImageConstants.*;
 import static constants.MathConstants.*;
 
 import java.awt.Dimension;
-//----------------------------------------------------
-//
-//----------------------------------------------------
 import java.awt.Graphics;
 
 import charas.AbstractChara;

@@ -1,5 +1,6 @@
 package charas.enemys;
 import static constants.CharaConstants.*;
+import static constants.ImageConstants.*;
 
 import charas.PlayerChara;
 
@@ -12,13 +13,6 @@ public class NomalEnemy extends AbstractEnemy {
 
 	public NomalEnemy(int x, int y){
 		super(x,y,30,30,IMAGE_ENEMY_SLIME);
-	}
-	
-	public void death() {
-		death = true;
-		System.out.println("enemy.death");
-		//Mario.sound("stamp.wav", 0.6);
-		//Mario.iterator.remove();
 	}
 
 	// PlayerCharaと敵の当たり判定。上から当たったらHIT_TREAD,それ以外の角度から当たったらHIT_MISS,当たっていなかったらHIT_NOT

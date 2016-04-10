@@ -1,5 +1,9 @@
 package constants;
-
+/**
+ * 計算に使われる定数の定義
+ * @author kitahara
+ *
+ */
 public class MathConstants {
 
 	public static final int WINDOW_WIDTH 			= 	1000;

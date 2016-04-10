@@ -1,15 +1,22 @@
 package charas.enemys;
 
 import static constants.CharaConstants.*;
+import static constants.ImageConstants.*;
 import static constants.MathConstants.*;
+import static constants.SoundCnstants.*;
 
 import java.awt.Graphics;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import charas.PlayerChara;
 import charas.Shot;
 import star_action.Model;
+import util.Sound;
 
 public class ShootEnemy extends AbstractEnemy {
 	public ArrayList<Shot> bullet = new ArrayList<Shot>();
@@ -42,8 +49,12 @@ public class ShootEnemy extends AbstractEnemy {
 					bullet.add(new Shot( (int)(xPosition+1), (int)(yPosition-13),3.0,
 							Math.atan2(yPosition-Model.getPlayerChara().getyPosition(),xPosition-Model.getPlayerChara().getxPosition())+(i*60)*Math.PI/180));
 				}
-
-				//Mario.sound("shoot.wav",0.4);
+				// 音鳴らす
+				try {
+					Sound.soundSE(SOUND_SE_SHOT, 0.4);
+				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+					e.printStackTrace();
+				}
 			}
 			bulletIterator = bullet.iterator();
 			while (bulletIterator.hasNext()) {
@@ -73,6 +84,11 @@ public class ShootEnemy extends AbstractEnemy {
 	@Override
 	public void death(){
 		death2 = true;
+		try {
+			Sound.soundSE(SOUND_SE_TREAD, 0.6);
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

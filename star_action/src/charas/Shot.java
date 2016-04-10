@@ -1,5 +1,6 @@
 package charas;
 import static constants.CharaConstants.*;
+import static constants.ImageConstants.*;
 
 import charas.enemys.AbstractEnemy;
 public class Shot extends AbstractEnemy {

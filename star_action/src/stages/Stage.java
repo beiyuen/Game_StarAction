@@ -20,7 +20,7 @@ public class Stage {
 
 	public int currentStageNum; //現在のステージ数
 	public int currentClickableNum[];
-	int clickableNum[][] = {{10,10,10},{5,0,0},{0,0,0},{0,5,0},{6,0,0}}; //クリック可能回数
+	int clickableNum[][] = {{10,10,10},{15,0,0},{0,0,0},{0,5,0},{6,0,0}}; //クリック可能回数
 	public boolean scrollable[] = {true,true,false,true,false};
 	public boolean currentScrollable;
 

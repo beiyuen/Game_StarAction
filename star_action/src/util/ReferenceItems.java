@@ -1,12 +1,20 @@
 package util;
 
-import static constants.CharaConstants.*;
+import static constants.ImageConstants.*;
+import static constants.SoundCnstants.*;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
 import java.io.IOException;
 
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class ReferenceItems {
 	// 画像データ用変数
@@ -16,12 +24,20 @@ public class ReferenceItems {
 	private static Image	playerCharaImage;
 
 	// 効果音データ用変数
-	private static AudioInputStream[] soundSe;
+	private static File[] soundSe;
+	private static Clip[]    clip;
+	private static AudioInputStream[] audioInputStream;
+	private static AudioFormat[]     audioFormat;
+	private static DataLine.Info[]   info;
 
 
-	public static void Load() throws IOException{
+
+
+	public static void Load() throws IOException, UnsupportedAudioFileException, LineUnavailableException{
 		enemyImage = new Image[IMAGE_ENEMY_MAX];
 		blockImage = new Image[IMAGE_BLOCK_MAX];
+
+
 		enemyImage[IMAGE_ENEMY_SLIME] = Toolkit.getDefaultToolkit().createImage("image/enemy2.png");
 		enemyImage[IMAGE_ENEMY_GHOST] = Toolkit.getDefaultToolkit().createImage("image/enemy.png");
 		enemyImage[IMAGE_ENEMY_KING] = Toolkit.getDefaultToolkit().createImage("image/boss.png");
@@ -33,9 +49,25 @@ public class ReferenceItems {
 		blockImage[IMAGE_BLOCK_NOMAL] = Toolkit.getDefaultToolkit().createImage("image/block.png");
 		needleImage = Toolkit.getDefaultToolkit().createImage("image/needle.png");
 		playerCharaImage = Toolkit.getDefaultToolkit().createImage("image/otamesi.png");
-		System.out.println("references loaded!");
-		if(enemyImage[IMAGE_ENEMY_SLIME] == null){
-			System.err.println("slime is null!!!");
+
+
+
+		soundSe = new File[SOUND_SE_MAX];
+		clip = new Clip[SOUND_SE_MAX];
+		audioInputStream = new AudioInputStream[SOUND_SE_MAX];
+		audioFormat = new AudioFormat[SOUND_SE_MAX];
+		info = new DataLine.Info[SOUND_SE_MAX];
+
+
+		soundSe[SOUND_SE_SHOT] = new File("sound/shoot.wav");
+		soundSe[SOUND_SE_SURPRISE] = new File("sound/surprise.wav");
+		soundSe[SOUND_SE_TREAD] = new File("sound/tread.wav");
+		for(int i = 0; i < SOUND_SE_MAX; i++){
+			audioInputStream[i] = AudioSystem.getAudioInputStream(soundSe[i]);
+			audioFormat[i] = audioInputStream[i].getFormat();
+			info[i] = new DataLine.Info(Clip.class, audioFormat[i]);
+			clip[i] = (Clip)AudioSystem.getLine(info[i]);
+			clip[i].open(audioInputStream[i]);
 		}
 	}
 
@@ -54,8 +86,12 @@ public class ReferenceItems {
 		return playerCharaImage;
 	}
 
-	public static AudioInputStream getSoundSe(int i){
+	public static File getSoundSe(int i){
 		return soundSe[i];
+	}
+
+	public static Clip getClip(int i){
+		return clip[i];
 	}
 
 }

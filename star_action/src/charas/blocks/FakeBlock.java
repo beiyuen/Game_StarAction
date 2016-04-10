@@ -1,9 +1,16 @@
 package charas.blocks;
 
+import static constants.SoundCnstants.*;
+
 import java.awt.Graphics;
+import java.io.IOException;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import charas.AbstractChara;
 import charas.PlayerChara;
+import util.Sound;
 
 
 /**
@@ -20,9 +27,14 @@ public class FakeBlock extends Block {
 	}
 	void death() {
 		death = true;
+		try {
+			Sound.soundSE(SOUND_SE_SURPRISE, 0.4);
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}
 	}
 
-	
+
 	/**
 	 * キャラがブロックに触れたときの処理。キャラがプレイヤーの場合とその他の場合に分かれる
 	 */
@@ -49,7 +61,7 @@ public class FakeBlock extends Block {
 		}
 		return false;
 	}
-	
+
 	public void draw(Graphics g){
 		if(!death){
 			super.draw(g);

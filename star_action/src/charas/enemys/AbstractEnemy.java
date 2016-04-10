@@ -1,12 +1,18 @@
 package charas.enemys;
 import static constants.CharaConstants.*;
 import static constants.MathConstants.*;
+import static constants.SoundCnstants.*;
 
+import java.io.IOException;
 import java.util.Random;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import charas.AbstractChara;
 import charas.PlayerChara;
 import util.ReferenceItems;
+import util.Sound;
 
 /**
  * 敵の抽象的なクラス。すべての敵はこのクラスのサブクラス。敵は基本的にプレイヤーが上から踏むことで倒すことができる。
@@ -18,7 +24,7 @@ public abstract class AbstractEnemy extends AbstractChara {
 	public Random r;
 
 	/**
-	 * 
+	 *
 	 * @param x x座標
 	 * @param y y座標
 	 * @param w 横幅
@@ -43,7 +49,11 @@ public abstract class AbstractEnemy extends AbstractChara {
 	public void death() {
 		death = true;
 		System.out.println("enemy.death");
-		//Mario.sound("stamp.wav", 0.6);
+		try {
+			Sound.soundSE(SOUND_SE_TREAD, 0.6);
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

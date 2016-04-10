@@ -1,6 +1,7 @@
 package charas.enemys;
 
 import static constants.CharaConstants.*;
+import static constants.ImageConstants.*;
 import static constants.MathConstants.*;
 
 import java.awt.Graphics;
@@ -20,7 +21,9 @@ public class MoveEnemy extends AbstractEnemy {
 
 	// 呼び出され用
 	public void calcAcceleration() {
-
+		if(Model.getPlayerChara().isDeath()){
+			setJump(false);
+		}
 		isHitBlock();
 		checkDeath();
 		if(hitLeft || hitRight){
