@@ -12,6 +12,7 @@ import charas.blocks.FakeBlock;
 import charas.blocks.GoalBlock;
 import charas.blocks.HardBlock;
 import charas.blocks.NomalBlock;
+import charas.bosses.AbstractBoss;
 import charas.enemys.AbstractEnemy;
 import charas.enemys.GhostEnemy;
 import charas.enemys.MoveEnemy;
@@ -114,6 +115,9 @@ public class Stage {
 						break;
 					case J: // 静止してジャンプする敵
 						enemyList.add(new MoveEnemy(j, i, 0));
+						break;
+					case k: // ボス
+						enemyList.add(new AbstractBoss(j, i));
 						break;
 				}
 			}
