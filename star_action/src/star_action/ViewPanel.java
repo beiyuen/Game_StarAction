@@ -5,6 +5,7 @@ import static constants.MathConstants.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -17,13 +18,9 @@ import util.DebugShowText;
 
 public class ViewPanel extends JPanel {
 	public Timer timer;
+	private Graphics offScreen;
+	private BufferedImage offImage;
 	Color blue = new Color(150, 250, 255);
-	//public ArrayList<Block> blockList;
-	//public ArrayList<AbstractEnemy> enemyList;
-	//public ArrayList<Needle> needleList;
-	//public ArrayList<Block> placeBlockList;
-	//public ArrayList<AbstractEnemy> placeEnemyList;
-	//Image image = getToolkit().createImage("image/block.png");
 
 	public Image gameoverImage =  getToolkit().createImage("image/Gameover.png");
 
@@ -32,14 +29,10 @@ public class ViewPanel extends JPanel {
 	public DebugShowText debugShowText;
 
 	public ViewPanel(){
-		//super();
+		
+		offImage = new BufferedImage(GAME_WIDTH, GAME_HEIGHT, BufferedImage.TYPE_INT_BGR);
 		debugShowText = Model.debugShowText;
-	//	blockList = Model.getBlockList();
-	//	enemyList = Model.getEnemyList();
-	//	needleList = Model.getNeedleList();
 		playerChara = Model.playerChara;
-	//	setBackground(Color.GREEN);
-	//	setBorder(new BevelBorder(BevelBorder.LOWERED));
 		timer = new Timer(DELAY, e -> {
 				switch(Model.getGameStatus()){
 					case GAMESTATUS_OPENING:
@@ -71,6 +64,7 @@ public class ViewPanel extends JPanel {
 
 	// 描画
 		public void paintComponent(Graphics g) {
+			offScreen =  offImage.getGraphics();
 			switch(Model.getGameStatus()){
 			case GAMESTATUS_OPENING:
 				//open.draw(g);
