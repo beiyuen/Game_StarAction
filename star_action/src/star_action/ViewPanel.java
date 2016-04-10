@@ -71,70 +71,71 @@ public class ViewPanel extends JPanel {
 				break;
 
 			case GAMESTATUS_PLAYING:	//各キャラ、ブロック、右上の画像を描画
-				drawSky(g);
-				playerChara.draw(g);// draw関数が悪い?
+				drawSky(offScreen);
+				playerChara.draw(offScreen);// draw関数が悪い?
 				for (AbstractBlock b : Model.getBlockList()) {
-					b.draw(g);
+					b.draw(offScreen);
 				}
 				for (AbstractEnemy e : Model.getEnemyList()) {
 					if(!e.isDeath()){
-						e.draw(g);
+						e.draw(offScreen);
 					}
 				}
 				for (Needle n : Model.getNeedleList()) {
 					if(!n.isDeath()){
-						n.draw(g);
+						n.draw(offScreen);
 					}
 				}
 				for (AbstractBlock b : Model.getPlaceBlockList()) {
-					b.draw(g);
+					b.draw(offScreen);
 				}
 				for (AbstractEnemy e : Model.getPlaceEnemyList()) {
 					if(!e.isDeath()){
-						e.draw(g);
+						e.draw(offScreen);
 					}
 				}
-				Model.getGoalBlock().draw(g);
-				Model.getClickItem().draw(g);
-				debugShowText.draw(g);
+				Model.getGoalBlock().draw(offScreen);
+				Model.getClickItem().draw(offScreen);
+				debugShowText.draw(offScreen);
 				break;
 
 			case GAMESTATUS_DIE:
-				drawSky(g);
+				drawSky(offScreen);
 				for (AbstractBlock b : Model.getBlockList()) {
-					b.draw(g);
+					b.draw(offScreen);
 				}
 				for (AbstractEnemy e : Model.getEnemyList()) {
 					if(!e.isDeath()){
-						e.draw(g);
+						e.draw(offScreen);
 					}
 				}
 				for (Needle n : Model.getNeedleList()) {
 					if(!n.isDeath()){
-						n.draw(g);
+						n.draw(offScreen);
 					}
 				}
 				for (AbstractBlock b : Model.getPlaceBlockList()) {
-					b.draw(g);
+					b.draw(offScreen);
 				}
 				for (AbstractEnemy e : Model.getPlaceEnemyList()) {
 					if(!e.isDeath()){
-						e.draw(g);
+						e.draw(offScreen);
 					}
 				}
-				Model.getGoalBlock().draw(g);
-				Model.getClickItem().draw(g);
-				debugShowText.draw(g);
-				g.drawImage(gameoverImage, 0,0,1000,500, this);
+				Model.getGoalBlock().draw(offScreen);
+				Model.getClickItem().draw(offScreen);
+				debugShowText.draw(offScreen);
+				offScreen.drawImage(gameoverImage, 0,0,1000,500, this);
 				break;
 
 			case GAMESTATUS_ENDING:
 				break;
 
 			case GAMESTATUS_STAGECHANGE:
-				Model.getStageChangeSlide().draw(g);
+				Model.getStageChangeSlide().draw(offScreen);
 				break;
 			}
+			g.drawImage(offImage,0,0,this);
 		}
 		
 	public void drawSky(Graphics g){
