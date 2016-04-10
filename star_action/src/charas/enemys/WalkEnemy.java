@@ -13,7 +13,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import charas.Needle;
 import charas.PlayerChara;
-import charas.blocks.Block;
+import charas.blocks.AbstractBlock;
 import star_action.Model;
 import util.Sound;
 /**
@@ -61,7 +61,7 @@ public class WalkEnemy extends AbstractEnemy {
 		super.calcXAcceleration(a);
 
 		if(isHit){
-			for (Block b : Model.getBlockList()) {
+			for (AbstractBlock b : Model.getBlockList()) {
 				if(b.isHit(this) && !b.isDeath()){
 					b.setDeath(true);
 					try {

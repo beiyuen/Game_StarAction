@@ -1,14 +1,14 @@
 package charas.blocks;
 
+import static constants.ImageConstants.*;
+
 import charas.PlayerChara;
 import charas.enemys.AbstractEnemy;
 
-public class GoalBlock extends Block {
+public class GoalBlock extends AbstractBlock {
 
 	public GoalBlock(int x, int y) {
-		super(x, y,40,50);
-		image = getToolkit().createImage("image/goal.png");
-		// TODO 自動生成されたコンストラクター・スタブ
+		super(x, y, 40, 50, IMAGE_BLOCK_GOAL);
 	}
 
 	/**

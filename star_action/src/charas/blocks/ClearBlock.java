@@ -11,14 +11,14 @@ import charas.PlayerChara;
  * @author kitahara
  *
  */
-public class ClearBlock extends Block {
+public class ClearBlock extends AbstractBlock {
 
 	public ClearBlock(int x, int y) {
 		super(x, y);
 		removable = false;
 		// TODO 自動生成されたコンストラクター・スタブ
 	}
-	
+
 	/**
 	 * ブロックの当たり判定
 	 * @param c
@@ -34,6 +34,6 @@ public class ClearBlock extends Block {
 	}
 
 	public void draw(Graphics g){
-		
+
 	}
 }

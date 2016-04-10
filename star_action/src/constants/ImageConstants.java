@@ -17,5 +17,7 @@ public class ImageConstants {
 	public static final int IMAGE_ENEMY_KING	=	5;
 	public static final int IMAGE_ENEMY_BULLET	=	6;
 
-	public static final int IMAGE_BLOCK_NOMAL	=	0;
+	public static final int IMAGE_BLOCK_HARD	=	0;
+	public static final int IMAGE_BLOCK_NOMAL	=	1;
+	public static final int IMAGE_BLOCK_GOAL	=	2;
 }

@@ -1,5 +1,4 @@
 package charas.blocks;
-import static constants.ImageConstants.*;
 import static constants.MathConstants.*;
 
 import java.awt.Dimension;
@@ -14,32 +13,47 @@ import util.ReferenceItems;
  * @author kitahara
  *
  */
-public class Block extends AbstractChara {
+public class AbstractBlock extends AbstractChara {
 	private static final long serialVersionUID = 1L;
 	public boolean removable = false;
 	public Dimension hitX,hitY;
 	public boolean isHitx;
 
-	public Block(int x, int y) {
+	public AbstractBlock(int x, int y , int i) {
 		width = BLOCK_SIZE;
 		height = BLOCK_SIZE;
 		xPosition = x * BLOCK_SIZE + BLOCK_SIZE / 2;
 		yPosition = y * BLOCK_SIZE + BLOCK_SIZE / 2;
 		initX = xPosition;
 		initY = yPosition;
-		image = ReferenceItems.getBlockImage(IMAGE_BLOCK_NOMAL);
+		image = ReferenceItems.getBlockImage(i);
 		hitX = new Dimension(0, 0);
 		hitY = new Dimension(0, 0);
 		isHitx = false;
 		death = false;
 	}
-	public Block(int x, int y, int w, int h) {
+	public AbstractBlock(int x, int y, int w, int h, int i) {
 		width = w;
 		height = h;
 		xPosition = x * BLOCK_SIZE + BLOCK_SIZE / 2;
 		yPosition = y * BLOCK_SIZE + BLOCK_SIZE / 2;
 		initX = xPosition;
 		initY = yPosition;
+		image = ReferenceItems.getBlockImage(i);
+		death = false;
+	}
+
+	public AbstractBlock(int x, int y){
+		width = BLOCK_SIZE;
+		height = BLOCK_SIZE;
+		xPosition = x * BLOCK_SIZE + BLOCK_SIZE / 2;
+		yPosition = y * BLOCK_SIZE + BLOCK_SIZE / 2;
+		initX = xPosition;
+		initY = yPosition;
+		image = null;
+		hitX = new Dimension(0, 0);
+		hitY = new Dimension(0, 0);
+		isHitx = false;
 		death = false;
 	}
 

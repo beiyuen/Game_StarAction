@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import charas.AbstractChara;
 import charas.Needle;
 import charas.PlayerChara;
-import charas.blocks.Block;
+import charas.blocks.AbstractBlock;
 import charas.blocks.GoalBlock;
+import charas.blocks.HardBlock;
 import charas.enemys.AbstractEnemy;
 import charas.enemys.GhostEnemy;
 import charas.enemys.NomalEnemy;
@@ -18,10 +19,10 @@ import util.ClickItem;
 import util.DebugShowText;
 
 public class Model {
-	public static ArrayList<Block> blockList = null;
+	public static ArrayList<AbstractBlock> blockList = null;
 	public static ArrayList<AbstractEnemy> enemyList = null;
 	public static ArrayList<Needle> needleList = null;
-	public static ArrayList<Block> placeBlockList = new ArrayList<Block>();
+	public static ArrayList<AbstractBlock> placeBlockList = new ArrayList<AbstractBlock>();
 	public static ArrayList<AbstractEnemy> placeEnemyList = new ArrayList<AbstractEnemy>();
 	public static int gameStatus = GAMESTATUS_STAGECHANGE;
 	public static GoalBlock goalBlock = null;
@@ -33,7 +34,7 @@ public class Model {
 
 	public static StageChangeSlide stageChangeSlide = new StageChangeSlide();
 
-	public static ArrayList<Block> getBlockList() {return blockList;}
+	public static ArrayList<AbstractBlock> getBlockList() {return blockList;}
 	public static ArrayList<AbstractEnemy> getEnemyList() {return enemyList;}
 	public static ArrayList<Needle> getNeedleList() {return needleList;}
 	public static int getGameStatus() {	return gameStatus;}
@@ -68,7 +69,7 @@ public class Model {
 	 */
 	public static void init(){
 		playerChara.init();
-		for (Block b : blockList){
+		for (AbstractBlock b : blockList){
 			b.init();
 		}
 		for (AbstractChara e : enemyList) {
@@ -95,7 +96,7 @@ public class Model {
 			double speed = playerChara.getxSpeed();
 			if (xPosition + xSpeed + playerChara.getWidth() / 2 > GAME_WIDTH - 400) {
 				playerChara.scroll(speed);
-				for (Block b : blockList){
+				for (AbstractBlock b : blockList){
 					b.scroll(speed);
 				}
 
@@ -106,7 +107,7 @@ public class Model {
 				for (Needle n : needleList){
 					n.scroll(speed);
 				}
-				for (Block b : placeBlockList){
+				for (AbstractBlock b : placeBlockList){
 					b.scroll(speed);
 				}
 				for (AbstractEnemy e : placeEnemyList) {
@@ -183,7 +184,7 @@ public class Model {
 		clickItem.setText(clickableNum[placementMode]);
 		clickItem.setImageKind(placementMode);
 	}
-	public static ArrayList<Block> getPlaceBlockList() {
+	public static ArrayList<AbstractBlock> getPlaceBlockList() {
 		return placeBlockList;
 	}
 	public static ArrayList<AbstractEnemy> getPlaceEnemyList() {
@@ -195,7 +196,7 @@ public class Model {
 	public static ClickItem getClickItem() {
 		return clickItem;
 	}
-	
+
 	/**
 	 * 左クリックしたときにブロックや敵を配置する
 	 * @param x
@@ -204,7 +205,7 @@ public class Model {
 	public static void placement(int x, int y){
 		switch (placementMode) {
 		case 0:
-			placeBlockList.add(new Block(x,y));
+			placeBlockList.add(new HardBlock(x,y));
 			break;
 		case 1:
 			placeEnemyList.add(new NomalEnemy(x,y));
@@ -216,14 +217,14 @@ public class Model {
 		clickableNum[placementMode] -= 1;
 		clickItem.setText(clickableNum[placementMode]);
 	}
-	
+
 	/**
 	 * 引数の位置に存在するブロックを削除する。具体的にはdeath変数をtrueにしているだけなので、リストから削除されているわけではない
 	 * @param x
 	 * @param y
 	 */
 	public static void removeBlock(int x, int y){
-		for (Block b : blockList) {
+		for (AbstractBlock b : blockList) {
 			if(b.isRemovable() && Math.abs(x - b.getxPosition()) < 25 && Math.abs(y - b.getyPosition()) < 25){
 				b.setDeath(true);
 			}

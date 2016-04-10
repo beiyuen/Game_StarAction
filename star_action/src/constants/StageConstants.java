@@ -11,7 +11,8 @@ public class StageConstants {
 	public static final int h = BLOCK_HARD;
 	public static final int c = BLOCK_CLEAR;
 	public static final int g = GOAL;
-	public static final int f = BLOCK_FAKE;
+	public static final int f = BLOCK_FAKE_HARD;
+	public static final int N = BLOCK_FAKE_NOMAL;
 	public static final int n = BLOCK_NOMAL;
 
 	public static final int e = ENEMY_SLIME;

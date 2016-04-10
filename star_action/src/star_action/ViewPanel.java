@@ -2,6 +2,7 @@ package star_action;
 
 import static constants.MathConstants.*;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -10,12 +11,13 @@ import javax.swing.Timer;
 
 import charas.Needle;
 import charas.PlayerChara;
-import charas.blocks.Block;
+import charas.blocks.AbstractBlock;
 import charas.enemys.AbstractEnemy;
 import util.DebugShowText;
 
 public class ViewPanel extends JPanel {
 	public Timer timer;
+	Color blue = new Color(150, 250, 255);
 	//public ArrayList<Block> blockList;
 	//public ArrayList<AbstractEnemy> enemyList;
 	//public ArrayList<Needle> needleList;
@@ -75,8 +77,9 @@ public class ViewPanel extends JPanel {
 				break;
 
 			case GAMESTATUS_PLAYING:	//各キャラ、ブロック、右上の画像を描画
+				drawSky(g);
 				playerChara.draw(g);// draw関数が悪い?
-				for (Block b : Model.getBlockList()) {
+				for (AbstractBlock b : Model.getBlockList()) {
 					b.draw(g);
 				}
 				for (AbstractEnemy e : Model.getEnemyList()) {
@@ -89,7 +92,7 @@ public class ViewPanel extends JPanel {
 						n.draw(g);
 					}
 				}
-				for (Block b : Model.getPlaceBlockList()) {
+				for (AbstractBlock b : Model.getPlaceBlockList()) {
 					b.draw(g);
 				}
 				for (AbstractEnemy e : Model.getPlaceEnemyList()) {
@@ -103,7 +106,8 @@ public class ViewPanel extends JPanel {
 				break;
 
 			case GAMESTATUS_DIE:
-				for (Block b : Model.getBlockList()) {
+				drawSky(g);
+				for (AbstractBlock b : Model.getBlockList()) {
 					b.draw(g);
 				}
 				for (AbstractEnemy e : Model.getEnemyList()) {
@@ -116,7 +120,7 @@ public class ViewPanel extends JPanel {
 						n.draw(g);
 					}
 				}
-				for (Block b : Model.getPlaceBlockList()) {
+				for (AbstractBlock b : Model.getPlaceBlockList()) {
 					b.draw(g);
 				}
 				for (AbstractEnemy e : Model.getPlaceEnemyList()) {
@@ -138,5 +142,10 @@ public class ViewPanel extends JPanel {
 				break;
 			}
 		}
+		
+	public void drawSky(Graphics g){
+		g.setColor(blue);
+		g.fillRect(0, 0, GAME_WIDTH, GAME_WIDTH);
+	}
 
 }

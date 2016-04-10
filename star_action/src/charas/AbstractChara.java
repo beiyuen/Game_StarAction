@@ -8,7 +8,7 @@ import java.awt.Image;
 
 import javax.swing.JPanel;
 
-import charas.blocks.Block;
+import charas.blocks.AbstractBlock;
 import star_action.Model;
 
 public abstract class AbstractChara extends JPanel {
@@ -99,7 +99,7 @@ public abstract class AbstractChara extends JPanel {
 		int hitd = 0;
 		boolean hitGoal = false;
 		Dimension hx, hy;
-		for (Block b : Model.getBlockList()){
+		for (AbstractBlock b : Model.getBlockList()){
 			hx = b.hitx(this);
 			hy = b.hity(this);
 			if(hx.width == 1){
@@ -115,7 +115,7 @@ public abstract class AbstractChara extends JPanel {
 				hitd = 1;
 			}
 		}
-		for (Block b : Model.getPlaceBlockList()){
+		for (AbstractBlock b : Model.getPlaceBlockList()){
 			hx = b.hitx(this);
 			hy = b.hity(this);
 			if(hx.width == 1){

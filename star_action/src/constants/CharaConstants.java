@@ -10,8 +10,9 @@ public class CharaConstants {
 	public static final int BLOCK_NOMAL			=	1;
 	public static final int BLOCK_HARD			=	2;
 	public static final int BLOCK_CLEAR			=	3;
-	public static final int BLOCK_FAKE			=	4;
+	public static final int BLOCK_FAKE_HARD		=	4;
 	public static final int GOAL				=	5;
+	public static final int BLOCK_FAKE_NOMAL	=	6;
 
 
 	// トゲ

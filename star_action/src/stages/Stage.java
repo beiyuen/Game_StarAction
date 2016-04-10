@@ -1,14 +1,16 @@
 package stages;
 
+import static constants.ImageConstants.*;
 import static constants.StageConstants.*;
 
 import java.util.ArrayList;
 
 import charas.Needle;
-import charas.blocks.Block;
+import charas.blocks.AbstractBlock;
 import charas.blocks.ClearBlock;
 import charas.blocks.FakeBlock;
 import charas.blocks.GoalBlock;
+import charas.blocks.HardBlock;
 import charas.blocks.NomalBlock;
 import charas.enemys.AbstractEnemy;
 import charas.enemys.GhostEnemy;
@@ -24,7 +26,7 @@ public class Stage {
 	public boolean scrollable[] = {true,true,false,true,false};
 	public boolean currentScrollable;
 
-	public ArrayList<Block> blockList = new ArrayList<Block>();
+	public ArrayList<AbstractBlock> blockList = new ArrayList<AbstractBlock>();
 	public ArrayList<AbstractEnemy> enemyList = new ArrayList<AbstractEnemy>();
 	public ArrayList<Needle> needleList = new ArrayList<Needle>();
 	public GoalBlock goalBlock;
@@ -47,7 +49,7 @@ public class Stage {
 				switch (map[i][j]) {
 					// ブロックの配置
 					case h:	//消せないブロック
-						blockList.add(new Block(j, i));
+						blockList.add(new HardBlock(j, i));
 						break;
 					case n: //右クリックで消せるブロック
 						blockList.add(new NomalBlock(j, i));
@@ -56,8 +58,11 @@ public class Stage {
 						blockList.add(new ClearBlock(j, i));
 						break;
 					case f: //プレイヤーが触れると消えるブロック
-						blockList.add(new FakeBlock(j, i));
+						blockList.add(new FakeBlock(j, i, IMAGE_BLOCK_HARD));
 						break;
+					case N: //プレイヤーが触れると消えるブロック
+						blockList.add(new FakeBlock(j, i, IMAGE_BLOCK_NOMAL));
+						break;	
 					case g: // ゴール
 						goalBlock = new GoalBlock(j, i);
 						break;
@@ -122,7 +127,7 @@ public class Stage {
 		return scrollable[currentStageNum];
 	}
 
-	public ArrayList<Block> getBlockList(){return blockList;}
+	public ArrayList<AbstractBlock> getBlockList(){return blockList;}
 	public ArrayList<AbstractEnemy> getEnemyList() {return enemyList;}
 	public ArrayList<Needle> getNeedleList() {return needleList;}
 	public GoalBlock getGoalBlock(){return goalBlock;}

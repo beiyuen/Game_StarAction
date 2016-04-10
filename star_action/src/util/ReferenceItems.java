@@ -46,7 +46,9 @@ public class ReferenceItems {
 		enemyImage[IMAGE_ENEMY_MOVE] = Toolkit.getDefaultToolkit().createImage("image/enemy5.png");
 		enemyImage[IMAGE_ENEMY_BULLET] = Toolkit.getDefaultToolkit().createImage("image/bullet0.png");
 
+		blockImage[IMAGE_BLOCK_HARD] = Toolkit.getDefaultToolkit().createImage("image/hardBlock.png");
 		blockImage[IMAGE_BLOCK_NOMAL] = Toolkit.getDefaultToolkit().createImage("image/block.png");
+		blockImage[IMAGE_BLOCK_GOAL] = Toolkit.getDefaultToolkit().createImage("image/goal.png");
 		needleImage = Toolkit.getDefaultToolkit().createImage("image/needle.png");
 		playerCharaImage = Toolkit.getDefaultToolkit().createImage("image/otamesi.png");
 

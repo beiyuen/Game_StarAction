@@ -2,7 +2,6 @@ package charas.enemys;
 
 import static constants.CharaConstants.*;
 import static constants.ImageConstants.*;
-import static constants.MathConstants.*;
 
 import java.awt.Graphics;
 
@@ -110,13 +109,6 @@ public class MoveEnemy extends AbstractEnemy {
 					(int)(xPosition+width/2),(int)(yPosition+height/2),
 					(int)(sx),(int)(sy), (int)(sx+pwidth), (int)(sy+pheight),this);
 		}
-
-	private void checkDeath() {
-		// TODO 自動生成されたメソッド・スタブ
-		if(yPosition > GAME_HEIGHT){
-			death();
-		}
-	}
 
 	public void jump(){
 		// ジャンプ

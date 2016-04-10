@@ -18,11 +18,11 @@ import util.Sound;
  * @author kitahara
  *
  */
-public class FakeBlock extends Block {
+public class FakeBlock extends AbstractBlock {
 
 
-	public FakeBlock(int x, int y) {
-		super(x, y);
+	public FakeBlock(int x, int y, int i) {
+		super(x, y , i);
 		// TODO 自動生成されたコンストラクター・スタブ
 	}
 	void death() {

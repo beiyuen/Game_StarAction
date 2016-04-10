@@ -45,6 +45,21 @@ public abstract class AbstractEnemy extends AbstractChara {
 		death = false;
 	}
 
+	public void calcAcceleration() {
+
+		calcYAcceleration();
+		calcXAcceleration(0.7);
+		isHitBlock();
+		checkDeath();
+		if(hitLeft || hitRight){
+			changeXSpeed();
+		}
+		else if(hitHead || hitLeg){
+			changeYSpeed();
+		}
+
+	}
+	
 	//enemyからこのオブジェクトを除去
 	public void death() {
 		death = true;
@@ -89,6 +104,13 @@ public abstract class AbstractEnemy extends AbstractChara {
 	@Override
 	public void changeYSpeed() {
 		ySpeed = 0;
+	}
+	
+	public void checkDeath() {
+		// TODO 自動生成されたメソッド・スタブ
+		if(yPosition > GAME_HEIGHT){
+			death();
+		}
 	}
 
 
