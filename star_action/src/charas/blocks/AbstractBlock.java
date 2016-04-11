@@ -18,7 +18,8 @@ public class AbstractBlock extends AbstractChara {
 	public boolean removable = false;
 	public Dimension hitX,hitY;
 	public boolean isHitx;
-
+	public int imageNum = 0;
+	
 	public AbstractBlock(int x, int y , int i) {
 		width = BLOCK_SIZE;
 		height = BLOCK_SIZE;
@@ -26,6 +27,7 @@ public class AbstractBlock extends AbstractChara {
 		yPosition = y * BLOCK_SIZE + BLOCK_SIZE / 2;
 		initX = xPosition;
 		initY = yPosition;
+		imageNum = i;
 		image = ReferenceItems.getBlockImage(i);
 		hitX = new Dimension(0, 0);
 		hitY = new Dimension(0, 0);
@@ -39,6 +41,7 @@ public class AbstractBlock extends AbstractChara {
 		yPosition = y * BLOCK_SIZE + BLOCK_SIZE / 2;
 		initX = xPosition;
 		initY = yPosition;
+		imageNum = i;
 		image = ReferenceItems.getBlockImage(i);
 		death = false;
 	}
@@ -175,6 +178,7 @@ public class AbstractBlock extends AbstractChara {
 	// 描画
 	public void draw(Graphics g) {
 		if(!death){
+			//Image img = ReferenceItems.getBlockImage(imageNum);
 			g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2), (int) width, (int) height, this);
 		}
 

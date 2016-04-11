@@ -71,6 +71,7 @@ public class ReferenceItems {
 			clip[i] = (Clip)AudioSystem.getLine(info[i]);
 			clip[i].open(audioInputStream[i]);
 		}
+		System.out.println("file loaded");
 	}
 
 	public static Image getEnemyImage(int i){

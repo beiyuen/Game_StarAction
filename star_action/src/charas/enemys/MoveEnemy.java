@@ -117,7 +117,8 @@ public class MoveEnemy extends AbstractEnemy {
 			ySpeed = -19;
 		//	System.out.println(ySpeed);
 			hitLeg = false;
-			if(imagekind < 4){
+			double pcx = Model.getPlayerChara().getxPosition();
+			if(xPosition>=pcx){
 				imagekind = 4;
 			}
 			else{

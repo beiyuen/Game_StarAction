@@ -29,7 +29,7 @@ public class ViewPanel extends JPanel {
 	public DebugShowText debugShowText;
 
 	public ViewPanel(){
-		
+
 		offImage = new BufferedImage(GAME_WIDTH, GAME_HEIGHT, BufferedImage.TYPE_INT_BGR);
 		debugShowText = Model.debugShowText;
 		playerChara = Model.playerChara;
@@ -137,7 +137,7 @@ public class ViewPanel extends JPanel {
 			}
 			g.drawImage(offImage,0,0,this);
 		}
-		
+
 	public void drawSky(Graphics g){
 		g.setColor(blue);
 		g.fillRect(0, 0, GAME_WIDTH, GAME_WIDTH);
