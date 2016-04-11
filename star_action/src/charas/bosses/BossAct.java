@@ -8,14 +8,17 @@ public class BossAct {
 	public BossAct(){
 	}
 	public void pattern0(AbstractBoss c){//横移動
-		c.xPosition += c.xSpeed;
+		//c.xPosition += c.xSpeed;
+		if(c.hitLeg){
+			c.ySpeed = 0.0;
+		}
 	}
 
 	public void pattern1(AbstractBoss c){//跳びはねる
 		c.xSpeed = Math.signum(c.xSpeed)*7;
-		c.xPosition += c.xSpeed;
+		//c.xPosition += c.xSpeed;
 		if(c.count%45 == 10)
-			c.ySpeed=-11;
+			c.ySpeed=-20;
 	}
 
 	public void pattern2(AbstractBoss c){//自分の近くに移動する
@@ -44,8 +47,8 @@ public class BossAct {
 				//Mario.sound("shoot.wav",0.4);
 		}
 
-		c.xPosition += c.xSpeed;
-		c.yPosition += c.ySpeed;
+	//	c.xPosition += c.xSpeed;
+	//	c.yPosition += c.ySpeed;
 	}
 
 	public void pattern3(AbstractBoss c){//ショットを打つ
@@ -57,12 +60,13 @@ public class BossAct {
 		else if(c.count==180)
 			c.count=0;
 
-		c.xPosition += c.xSpeed;
-		c.yPosition += c.ySpeed;
+	//	c.xPosition += c.xSpeed;
+	//	c.yPosition += c.ySpeed;
 	}
 	public void pattern4(AbstractBoss c){//縦移動
 		if(c.count==0)
 			c.ySpeed=-5;
-		c.yPosition += c.ySpeed;
+	//	c.yPosition += c.ySpeed;
 	}
+
 }

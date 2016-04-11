@@ -35,13 +35,21 @@ public class AbstractBoss extends AbstractEnemy {
 	BossAct action = new BossAct();
 	public double imageWidth, imageHeight;
 
-
 	public AbstractBoss(int x,int y){
 		super(x,y-1,75,75,IMAGE_ENEMY_KING);
 		xSpeed=-6;
 		treadedNum = 1;
 		imageWidth = 300;
 		imageHeight = 150;
+	}
+	
+	public void init(){
+		super.init();
+		bullet.clear();
+		isTreadedTemp = 0;
+		count=0;
+		xSpeed=-6;
+		state = 0;
 	}
 
 	public void calcAcceleration(){
@@ -105,8 +113,10 @@ public class AbstractBoss extends AbstractEnemy {
 				switch (state) {
 				case 0:
 				case 1:
-					if (xSpeed == 0)
+					if (xSpeed == 0){
 						xSpeed++;
+					}
+						
 					if (xPosition + xSpeed < 70 || xPosition + xSpeed > GAME_WIDTH - 70) {
 						if (isTreadedTemp == 0)
 							xSpeed *= -1;
@@ -227,7 +237,6 @@ public class AbstractBoss extends AbstractEnemy {
 		}
 	}
 
-	public void move(){}
 
 	public void draw(Graphics g) {
 		double px = Model.getPlayerChara().getxPosition();
