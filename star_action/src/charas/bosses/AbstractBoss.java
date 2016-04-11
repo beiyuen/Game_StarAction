@@ -7,75 +7,65 @@ import static constants.SoundCnstants.*;
 
 import java.awt.Graphics;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import charas.PlayerChara;
-import charas.Shot;
 import charas.blocks.AbstractBlock;
 import charas.enemys.AbstractEnemy;
 import star_action.Model;
 import util.Sound;
 
 public class AbstractBoss extends AbstractEnemy {
-	private static final long serialVersionUID = 1L;
 
-	public static ArrayList<Shot> bullet = new ArrayList<Shot>();
-	int treadedNum; //踏まれ数カウンター
-	int i=0,
-		imagekind=0,
-		tate = 2,
-		yoko = 4,
-		state = 0,//ボスの動きを決める変数
-		isTreadedTemp = 0,//踏まれた時の一時変数,１なら踏んだとき
-		count=0; //動きのタイミングを決める
-	BossAct action = new BossAct();
+	int treadedNum; // 踏まれ数カウンター
+	int i = 0, imagekind = 0, tate = 2, yoko = 4, state = 0, // ボスの動きを決める変数
+			isTreadedTemp = 0, // 踏まれた時の一時変数,１なら踏んだとき
+			count = 0; // 動きのタイミングを決める
+	int hp;
+
+	BossAction action = new BossAction();
 	public double imageWidth, imageHeight;
 
-	public AbstractBoss(int x,int y){
-		super(x,y-1,75,75,IMAGE_ENEMY_KING);
-		xSpeed=-6;
+	public AbstractBoss(int x, int y) {
+		super(x, y - 1, 75, 75, IMAGE_ENEMY_KING);
+		xSpeed = -6;
 		treadedNum = 1;
 		imageWidth = 300;
 		imageHeight = 150;
+		tate = 2;
+		yoko = 4;
+		hp = 5;
 	}
-	
-	public void init(){
+
+	public void init() {
 		super.init();
-		bullet.clear();
 		isTreadedTemp = 0;
-		count=0;
-		xSpeed=-6;
+		count = 0;
+		xSpeed = -6;
 		state = 0;
 	}
 
-	public void calcAcceleration(){
+	public void calcAcceleration() {
 		isHitBlock();
-		if(hitLeg){
+		if (hitLeg) {
 			changeYSpeed();
 		}
 		calcYAcceleration();
 		calcXAcceleration(0.7);
 	}
 
-	//enemyからこのオブジェクトを除去
+	// enemyからこのオブジェクトを除去
 	public void death() {
-		//Mario.s.block.add(new GameclearBlock(9,5));
-		//Mario.sound("surprise.wav",0.6);
-		//Mario.iterator.remove();
+		// Mario.s.block.add(new GameclearBlock(9,5));
+		// Mario.sound("surprise.wav",0.6);
+		// Mario.iterator.remove();
 	}
 
 	public int isHitPlayerChara(PlayerChara c) {
-		for (Shot s : bullet) {
-			if (s.isHit(c)) {
-				return HIT_MISS;
-			}
-		}
 
-		if (treadedNum < 5 // やられる回数を定義
+		if (treadedNum < hp // やられる回数を定義
 				&& Math.abs(c.xPosition + c.xSpeed - xPosition) < c.width / 2 + width / 2
 				&& Math.abs(c.yPosition + c.ySpeed - yPosition) < c.height / 2 + height / 2
 				&& Math.sin((Math.atan2(c.yPosition - yPosition, c.xPosition - xPosition))) <= -1 / Math.sqrt(2.0)) {
@@ -83,10 +73,10 @@ public class AbstractBoss extends AbstractEnemy {
 			if (xPosition < 500) {
 				xSpeed = 15;
 			}
-
 			else {
 				xSpeed = -15;
 			}
+
 			// 通常時にプレイヤーに踏まれたら
 			if (isTreadedTemp == 0) {
 				System.out.println("boss treaded");
@@ -97,9 +87,6 @@ public class AbstractBoss extends AbstractEnemy {
 				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 					e.printStackTrace();
 				}
-				// Mario.sound("stamp.wav", 0.6);
-				if (state == 4 || state == 3)
-					AbstractBoss.bullet.clear();
 			}
 			isTreadedTemp = 1;// 走って壁に逃げる時
 			count = 0;
@@ -108,68 +95,61 @@ public class AbstractBoss extends AbstractEnemy {
 			return super.isHitPlayerChara(c);
 	}
 
-	public void isHitBlock(){
+	public void isHitBlock() {
 		// 壁に当たった時の反応など
-				switch (state) {
-				case 0:
-				case 1:
-					if (xSpeed == 0){
-						xSpeed++;
-					}
-						
-					if (xPosition + xSpeed < 70 || xPosition + xSpeed > GAME_WIDTH - 70) {
-						if (isTreadedTemp == 0)
-							xSpeed *= -1;
-						else if (isTreadedTemp == 1) {
-							xSpeed = 0;
-							isTreadedTemp = 0;
-						}
-					}
-					break;
-				case 2:
-				case 3:
-					if (xPosition + xSpeed < 70) {
-						xPosition = 80;
-						xSpeed *= -1;
-						if (isTreadedTemp == 1) {
-							if (state == 3) {
-								xSpeed = r.nextInt(4) + 1;
-								ySpeed = -5;
-							}
-							isTreadedTemp = 0;
-						}
-					} else if (xPosition + xSpeed > GAME_WIDTH - 70) {
-						xPosition = GAME_WIDTH - 80;
-						xSpeed *= -1;
-						if (isTreadedTemp == 1) {
-							if (state == 3) {
-								xSpeed = r.nextInt(4) - 9;
-								ySpeed = -5;
-							}
-							isTreadedTemp = 0;
-						}
-					}
-					Iterator<Shot> iter2 = AbstractBoss.bullet.iterator();// ショットを移動させる
-					while (iter2.hasNext()) { // 次の要素がある限りループ
-						Shot val = iter2.next();// 次の要素を取得
-						val.calcAcceleration();
-						val.move();
-					}
-					break;
-				case 4:
-					if (isTreadedTemp == 1 && (xPosition < 70 || xPosition > GAME_WIDTH - 70)) {
-						for (AbstractBlock b : Model.getBlockList()) {
-							b.setDeath(true);
-						}
-						// Mario.sound("surprise.wav", 0.6);
-					}
-					break;
+		switch (state) {
+		case 0:
+		case 1:
+			if (xSpeed == 0) {
+				xSpeed++;
+			}
+
+			if (xPosition + xSpeed < 70 || xPosition + xSpeed > GAME_WIDTH - 70) {
+				if (isTreadedTemp == 0)
+					xSpeed *= -1;
+				else if (isTreadedTemp == 1) {
+					xSpeed = 0;
+					isTreadedTemp = 0;
 				}
-		if(yPosition >= GAME_HEIGHT - 84){
+			}
+			break;
+		case 2:
+		case 3:
+			if (xPosition + xSpeed < 70) {
+				xPosition = 80;
+				xSpeed *= -1;
+				if (isTreadedTemp == 1) {
+					if (state == 3) {
+						xSpeed = r.nextInt(4) + 1;
+						ySpeed = -5;
+					}
+					isTreadedTemp = 0;
+				}
+			} else if (xPosition + xSpeed > GAME_WIDTH - 70) {
+				xPosition = GAME_WIDTH - 80;
+				xSpeed *= -1;
+				if (isTreadedTemp == 1) {
+					if (state == 3) {
+						xSpeed = r.nextInt(4) - 9;
+						ySpeed = -5;
+					}
+					isTreadedTemp = 0;
+				}
+			}
+			break;
+		case 4:
+			if (isTreadedTemp == 1 && (xPosition < 70 || xPosition > GAME_WIDTH - 70)) {
+				for (AbstractBlock b : Model.getBlockList()) {
+					b.setDeath(true);
+				}
+				// Mario.sound("surprise.wav", 0.6);
+			}
+			break;
+		}
+		if (yPosition >= GAME_HEIGHT - 84) {
 			yPosition = GAME_HEIGHT - 83;
 			hitLeg = true;
-		}
-		else {
+		} else {
 			hitLeg = false;
 		}
 	}
@@ -198,7 +178,7 @@ public class AbstractBoss extends AbstractEnemy {
 				break;
 			}
 			count++;
-		} else if (isTreadedTemp == 1){
+		} else if (isTreadedTemp == 1) {
 			action.pattern0(this);
 		}
 	}
@@ -237,15 +217,14 @@ public class AbstractBoss extends AbstractEnemy {
 		}
 	}
 
-
 	public void draw(Graphics g) {
 		double px = Model.getPlayerChara().getxPosition();
 		if (xPosition > px) {
 			i++;
-			imagekind = (i % 8) / 2;// 0,1,2,3番目の画像
+			imagekind = (i % 8) / tate;// 0,1,2,3番目の画像
 		} else if (xPosition <= px) {
 			i++;
-			imagekind = (i % 8) / 2 + 4; // 4,5,6,7番目の画像
+			imagekind = (i % 8) / tate + yoko; // 4,5,6,7番目の画像
 		}
 		double sx, sy;
 		int pwidth = (int) (imageWidth / yoko);
@@ -256,8 +235,5 @@ public class AbstractBoss extends AbstractEnemy {
 		g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2), (int) (xPosition + width / 2),
 				(int) (yPosition + height / 2), (int) (sx), (int) (sy), (int) (sx + pwidth), (int) (sy + pheight),
 				this);
-		for (Shot b : bullet)
-			b.draw(g);
-
 	}
 }

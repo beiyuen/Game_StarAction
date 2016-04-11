@@ -3,9 +3,9 @@ package charas.bosses;
 import charas.Shot;
 import star_action.Model;
 
-public class BossAct {
+public class BossAction {
 	public int flag=0;
-	public BossAct(){
+	public BossAction(){
 	}
 	public void pattern0(AbstractBoss c){//横移動
 		//c.xPosition += c.xSpeed;
