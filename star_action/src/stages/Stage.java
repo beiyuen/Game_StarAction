@@ -12,7 +12,7 @@ import charas.blocks.FakeBlock;
 import charas.blocks.GoalBlock;
 import charas.blocks.HardBlock;
 import charas.blocks.NomalBlock;
-import charas.bosses.AbstractBoss;
+import charas.bosses.Boss1;
 import charas.enemys.AbstractEnemy;
 import charas.enemys.GhostEnemy;
 import charas.enemys.MoveEnemy;
@@ -117,7 +117,7 @@ public class Stage {
 						enemyList.add(new MoveEnemy(j, i, 0));
 						break;
 					case k: // ボス
-						enemyList.add(new AbstractBoss(j, i));
+						enemyList.add(new Boss1(j, i));
 						break;
 				}
 			}

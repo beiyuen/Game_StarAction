@@ -60,7 +60,7 @@ public class ShootEnemy extends AbstractEnemy {
 			while (bulletIterator.hasNext()) {
 				Shot s = bulletIterator.next();
 				s.calcAcceleration();
-				if(s.xPosition > GAME_WIDTH || s.xPosition < 0 || s.yPosition >GAME_HEIGHT || s.yPosition < 0){
+				if(s.isOutOfFrame()){
 					bulletIterator.remove();
 				}
 			}

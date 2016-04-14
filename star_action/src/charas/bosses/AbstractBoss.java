@@ -17,19 +17,19 @@ import charas.enemys.AbstractEnemy;
 import star_action.Model;
 import util.Sound;
 
-public class AbstractBoss extends AbstractEnemy {
+public abstract class AbstractBoss extends AbstractEnemy {
 
 	int treadedNum; // 踏まれ数カウンター
 	int i = 0, imagekind = 0, tate = 2, yoko = 4, state = 0, // ボスの動きを決める変数
-			isTreadedTemp = 0, // 踏まれた時の一時変数,１なら踏んだとき
+			 // 踏まれた時の一時変数,１なら踏んだとき
 			count = 0; // 動きのタイミングを決める
 	int hp;
-
-	BossAction action = new BossAction();
+	boolean goAway;
 	public double imageWidth, imageHeight;
 
 	public AbstractBoss(int x, int y) {
 		super(x, y - 1, 75, 75, IMAGE_ENEMY_KING);
+		goAway = false;
 		xSpeed = -6;
 		treadedNum = 1;
 		imageWidth = 300;
@@ -41,10 +41,11 @@ public class AbstractBoss extends AbstractEnemy {
 
 	public void init() {
 		super.init();
-		isTreadedTemp = 0;
+		//goAway = false;
 		count = 0;
 		xSpeed = -6;
-		state = 0;
+		state = BOSS1_STATE_1;
+		hitLeg = false;
 	}
 
 	public void calcAcceleration() {
@@ -78,7 +79,7 @@ public class AbstractBoss extends AbstractEnemy {
 			}
 
 			// 通常時にプレイヤーに踏まれたら
-			if (isTreadedTemp == 0) {
+			if (!goAway ) {
 				System.out.println("boss treaded");
 				state++;
 				treadedNum++;
@@ -88,7 +89,7 @@ public class AbstractBoss extends AbstractEnemy {
 					e.printStackTrace();
 				}
 			}
-			isTreadedTemp = 1;// 走って壁に逃げる時
+			goAway  = true;// 走って壁に逃げる時
 			count = 0;
 			return HIT_TREAD;
 		} else
@@ -105,11 +106,11 @@ public class AbstractBoss extends AbstractEnemy {
 			}
 
 			if (xPosition + xSpeed < 70 || xPosition + xSpeed > GAME_WIDTH - 70) {
-				if (isTreadedTemp == 0)
+				if (!goAway )
 					xSpeed *= -1;
-				else if (isTreadedTemp == 1) {
+				else if (goAway ) {
 					xSpeed = 0;
-					isTreadedTemp = 0;
+					goAway  = false;
 				}
 			}
 			break;
@@ -118,27 +119,27 @@ public class AbstractBoss extends AbstractEnemy {
 			if (xPosition + xSpeed < 70) {
 				xPosition = 80;
 				xSpeed *= -1;
-				if (isTreadedTemp == 1) {
+				if (goAway ) {
 					if (state == 3) {
 						xSpeed = r.nextInt(4) + 1;
 						ySpeed = -5;
 					}
-					isTreadedTemp = 0;
+					goAway  = false;
 				}
 			} else if (xPosition + xSpeed > GAME_WIDTH - 70) {
 				xPosition = GAME_WIDTH - 80;
 				xSpeed *= -1;
-				if (isTreadedTemp == 1) {
+				if (goAway ) {
 					if (state == 3) {
 						xSpeed = r.nextInt(4) - 9;
 						ySpeed = -5;
 					}
-					isTreadedTemp = 0;
+					goAway  = false;
 				}
 			}
 			break;
 		case 4:
-			if (isTreadedTemp == 1 && (xPosition < 70 || xPosition > GAME_WIDTH - 70)) {
+			if (goAway  && (xPosition < 70 || xPosition > GAME_WIDTH - 70)) {
 				for (AbstractBlock b : Model.getBlockList()) {
 					b.setDeath(true);
 				}
@@ -154,68 +155,8 @@ public class AbstractBoss extends AbstractEnemy {
 		}
 	}
 
-	// 移動定義
-	public void calcXAcceleration(double a) {
-		// ブロックにあたったら反転
+	public abstract void calcBossAction();
 
-		///////////// 設定///////////////////
-		if (isTreadedTemp == 0) {
-			switch (state) {
-			case 0:
-				action.pattern0(this);
-				break;
-			case 1:
-				action.pattern1(this);
-				break;
-			case 2:
-				action.pattern2(this);
-				break;
-			case 3:
-				action.pattern3(this);
-				break;
-			case 4:
-				action.pattern4(this);
-				break;
-			}
-			count++;
-		} else if (isTreadedTemp == 1) {
-			action.pattern0(this);
-		}
-	}
-
-	// xsimここまで
-	public void calcYAcceleration() {// 重力関係
-		if (isTreadedTemp == 0) {
-			switch (state) {
-			case 0:
-			case 1:
-				super.calcYAcceleration();
-				break;
-			case 2:
-				if (yPosition > GAME_HEIGHT - 84) {
-					yPosition = GAME_HEIGHT - 87;
-					ySpeed = 0;
-					count = -40;
-					action.flag = 2;
-				}
-				break;
-			case 3:
-			case 4:
-				if (yPosition > GAME_HEIGHT - 84) {
-					yPosition = GAME_HEIGHT - 87;
-					ySpeed *= -1;
-				} else if (yPosition < 50) {
-					yPosition = 55;
-					ySpeed *= -1;
-				}
-				break;
-			}
-		} else if (isTreadedTemp == 1) {
-			super.calcYAcceleration();
-			if (yPosition > GAME_HEIGHT - 84)
-				yPosition = GAME_HEIGHT - 87;
-		}
-	}
 
 	public void draw(Graphics g) {
 		double px = Model.getPlayerChara().getxPosition();

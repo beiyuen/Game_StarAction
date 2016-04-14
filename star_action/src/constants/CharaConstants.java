@@ -41,6 +41,13 @@ public class CharaConstants {
 	public static final int HIT_MISS			=	1;
 	public static final int HIT_NOT				=	2;
 
+	public static final int BOSS1_STATE_1		=	1;
+	public static final int BOSS1_STATE_2		=	2;
+	public static final int BOSS1_STATE_3		=	3;
+	public static final int BOSS1_STATE_4		=	4;
+	public static final int BOSS1_STATE_5		=	5;
+	public static final int BOSS1_STATE_CHANGE	=	1;
+
 	private CharaConstants(){
 	}
 }
