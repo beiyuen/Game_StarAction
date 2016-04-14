@@ -84,6 +84,7 @@ public class Model {
 		setGameStatus(GAMESTATUS_PLAYING);
 		clickableNum = stage.getClickableNum();
 		scrollable = stage.getScrollable();
+		clickItem.setText(clickableNum[placementMode]);
 	}
 
 	/**
