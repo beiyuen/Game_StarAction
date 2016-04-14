@@ -65,7 +65,8 @@ public class Stage {
 						blockList.add(new FakeBlock(j, i, IMAGE_BLOCK_NOMAL));
 						break;	
 					case g: // ゴール
-						goalBlock = new GoalBlock(j, i);
+						blockList.add(new GoalBlock(j, i));
+						//goalBlock = new GoalBlock(j, i);
 						break;
 
 					// とげの配置

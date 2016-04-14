@@ -83,11 +83,6 @@ public class PlayerChara extends AbstractChara {
 		}
 		// ブロックとの当たり判定をし、hitRight, hitLeft, hitHead, hitLeg を変更
 		isHitBlock();
-		if(Model.getStageNum() != 5){
-			if(Model.goalBlock.hit(this)){
-				Model.nextStage();
-			}
-		}
 		
 		if(hitLeft || hitRight){
 			changeXSpeed();

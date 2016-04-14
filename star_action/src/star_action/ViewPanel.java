@@ -94,7 +94,7 @@ public class ViewPanel extends JPanel {
 						e.draw(offScreen);
 					}
 				}
-				Model.getGoalBlock().draw(offScreen);
+			//	Model.getGoalBlock().draw(offScreen);
 				Model.getClickItem().draw(offScreen);
 				debugShowText.draw(offScreen);
 				break;
@@ -122,7 +122,7 @@ public class ViewPanel extends JPanel {
 						e.draw(offScreen);
 					}
 				}
-				Model.getGoalBlock().draw(offScreen);
+			//	Model.getGoalBlock().draw(offScreen);
 				Model.getClickItem().draw(offScreen);
 				debugShowText.draw(offScreen);
 				offScreen.drawImage(gameoverImage, 0,0,1000,500, this);

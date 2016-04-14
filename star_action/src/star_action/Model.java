@@ -80,7 +80,7 @@ public class Model {
 		}
 		placeBlockList.clear();
 		placeEnemyList.clear();
-		goalBlock.init();
+		//goalBlock.init();
 		setGameStatus(GAMESTATUS_PLAYING);
 		clickableNum = stage.getClickableNum();
 		scrollable = stage.getScrollable();
@@ -113,7 +113,7 @@ public class Model {
 				for (AbstractEnemy e : placeEnemyList) {
 					e.scroll(speed);
 				}
-				goalBlock.scroll(speed);
+				//goalBlock.scroll(speed);
 			}
 		}
 	}
@@ -166,7 +166,7 @@ public class Model {
 		blockList = stage.getBlockList();
 		enemyList = stage.getEnemyList();
 		needleList = stage.getNeedleList();
-		goalBlock = stage.getGoalBlock();
+		//goalBlock = stage.getGoalBlock();
 		clickableNum = stage.getClickableNum();
 		scrollable = stage.getScrollable();
 		clickItem = new ClickItem();

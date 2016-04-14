@@ -5,8 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-import star_action.Model;
-
 public class DebugShowText {
 	Text textX,textY,textGX;
 	Font font = new Font("serif", Font.BOLD,24);
@@ -25,7 +23,7 @@ public class DebugShowText {
 	public void run(double x, double y){
 		textX.setText("x:" + String.valueOf((int)x));
 		textY.setText("y:" + String.valueOf((int)y));
-		textGX.setText("gx:" + String.valueOf(Model.getGoalBlock().getxPosition()));
+	//	textGX.setText("gx:" + String.valueOf(Model.getGoalBlock().getxPosition()));
 	}
 
 	public void draw(Graphics g){
