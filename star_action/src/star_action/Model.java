@@ -8,7 +8,6 @@ import charas.AbstractChara;
 import charas.Needle;
 import charas.PlayerChara;
 import charas.blocks.AbstractBlock;
-import charas.blocks.GoalBlock;
 import charas.blocks.HardBlock;
 import charas.enemys.AbstractEnemy;
 import charas.enemys.GhostEnemy;
@@ -25,7 +24,6 @@ public class Model {
 	public static ArrayList<AbstractBlock> placeBlockList = new ArrayList<AbstractBlock>();
 	public static ArrayList<AbstractEnemy> placeEnemyList = new ArrayList<AbstractEnemy>();
 	public static int gameStatus = GAMESTATUS_STAGECHANGE;
-	public static GoalBlock goalBlock = null;
 
 	public static int stageNum = 2;
 	public static Stage stage = new Stage();
@@ -41,7 +39,6 @@ public class Model {
 	public static int getStageNum() {	return stageNum;}
 	public static PlayerChara getPlayerChara() {	return playerChara;}
 	public static StageChangeSlide getStageChangeSlide() {	return stageChangeSlide;}
-	public static GoalBlock getGoalBlock() {return goalBlock;}
 
 	public static int[] clickableNum = null;
 	public static boolean scrollable = true;
@@ -84,6 +81,8 @@ public class Model {
 		setGameStatus(GAMESTATUS_PLAYING);
 		clickableNum = stage.getClickableNum();
 		scrollable = stage.getScrollable();
+		placementMode = 0;
+		clickItem.setImageKind(placementMode);
 		clickItem.setText(clickableNum[placementMode]);
 	}
 
@@ -114,7 +113,6 @@ public class Model {
 				for (AbstractEnemy e : placeEnemyList) {
 					e.scroll(speed);
 				}
-				//goalBlock.scroll(speed);
 			}
 		}
 	}
@@ -167,7 +165,6 @@ public class Model {
 		blockList = stage.getBlockList();
 		enemyList = stage.getEnemyList();
 		needleList = stage.getNeedleList();
-		//goalBlock = stage.getGoalBlock();
 		clickableNum = stage.getClickableNum();
 		scrollable = stage.getScrollable();
 		clickItem = new ClickItem();
@@ -231,4 +228,5 @@ public class Model {
 			}
 		}
 	}
+	
 }

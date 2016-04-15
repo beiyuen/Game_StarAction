@@ -17,6 +17,8 @@ import charas.enemys.AbstractEnemy;
 import util.DebugShowText;
 
 public class ViewPanel extends JPanel {
+	private static ViewPanel viewPanel = null;
+	
 	public Timer timer;
 	private Graphics offScreen;
 	private BufferedImage offImage;
@@ -27,9 +29,8 @@ public class ViewPanel extends JPanel {
 	public PlayerChara playerChara = new PlayerChara(40, 50);
 
 	public DebugShowText debugShowText;
-
-	public ViewPanel(){
-
+	
+	private ViewPanel(){
 		offImage = new BufferedImage(GAME_WIDTH, GAME_HEIGHT, BufferedImage.TYPE_INT_BGR);
 		debugShowText = Model.debugShowText;
 		playerChara = Model.playerChara;
@@ -142,5 +143,14 @@ public class ViewPanel extends JPanel {
 		g.setColor(blue);
 		g.fillRect(0, 0, GAME_WIDTH, GAME_WIDTH);
 	}
+
+	public static ViewPanel getViewPanel() {
+		if(viewPanel == null){
+			viewPanel = new ViewPanel();
+		}
+		return viewPanel;
+	}
+	
+	
 
 }

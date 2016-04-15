@@ -34,10 +34,7 @@ public class ClickItem extends JPanel{
 	}
 
 	public void draw(Graphics g){
-//		g.drawImage(climg, XMAX-50, 0, XMAX, 50,  this);
 		g.drawImage(image, GAME_WIDTH-65, 0, GAME_WIDTH-15, 50,(int)(width/3*imageKind), 0, (int)(width/3*(imageKind+1)), (int)height , this);
-	//	g.drawImage(image, GAME_WIDTH-50, 0, GAME_WIDTH, 50,0, 0, 50, 50 , this);
-
 		text.draw(g);
 	}
 

@@ -2,8 +2,6 @@ package charas;
 import static constants.CharaConstants.*;
 import static constants.MathConstants.*;
 
-import java.awt.Graphics;
-
 import charas.enemys.AbstractEnemy;
 import star_action.Model;
 
@@ -173,25 +171,6 @@ public class PlayerChara extends AbstractChara {
 	//	System.out.println("hitLeg = " + hitLeg + ", ySeed = " + ySpeed);
 
 	}
-
-	//描画 分割後の画像幅を示すpwidthを設定
-	public void draw(Graphics g){
-		double sx, sy;
-        sx = (imageKind % imageColumn) * imageDrawWidth;
-        sy = (imageKind / imageColumn) * imageDrawHeight;
-
-        g.drawImage(image,(int)(xPosition- width / 2),(int)(yPosition- height / 2),
-				(int)(xPosition+width/2),(int)(yPosition+height/2),
-				(int)(sx),(int)(sy), (int)(sx+imageDrawWidth), (int)(sy+imageDrawHeight),this);
-	}
-
-	// 移動処理
-	@Override
-	public void move(){
-			xPosition += xSpeed;
-			yPosition += ySpeed;
-		//	System.out.println("hitLeg :" + hitLeg + ", hitHead :" + hitHead +", hitLeft :" + hitLeft + ", hitRight :" + hitRight);
-		}
 
 	// 敵を踏んだ時の処理
 	public void tread(){

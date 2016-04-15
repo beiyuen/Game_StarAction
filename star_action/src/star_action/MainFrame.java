@@ -18,7 +18,7 @@ public class MainFrame extends JFrame {
 	public MainFrame() throws IOException, UnsupportedAudioFileException, LineUnavailableException{
 		ReferenceItems.Load();
 		Model.setStage(Model.getStageNum());
-		viewPanel = new ViewPanel();
+		viewPanel = ViewPanel.getViewPanel();
 		this.getContentPane().add(viewPanel);
 		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		this.setTitle("star_action");

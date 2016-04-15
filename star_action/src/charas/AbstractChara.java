@@ -81,7 +81,10 @@ public abstract class AbstractChara extends JPanel {
 
 	}
 
-	// x方向の速度計算  減速、衝突 aは加速度相当
+	/**
+	 * 減速処理を行う。また、速度が一定以下になったら止まるようにする
+	 * @param a
+	 */
 	public void calcXAcceleration(double a) {
 		if (xSpeed > 0)xSpeed -= a;
 		if (xSpeed < 0)xSpeed += a;
@@ -91,7 +94,9 @@ public abstract class AbstractChara extends JPanel {
 
 	}
 
-	// y方向の速度計算  空中の挙動
+	/**
+	 * 空中にいるときはy方向の速度が大きくなるようにする
+	 */
 	public void calcYAcceleration() {
 		if(!hitLeg && ySpeed <= 18) {
 			ySpeed += 1.3;
@@ -177,8 +182,6 @@ public abstract class AbstractChara extends JPanel {
         g.drawImage(image,(int)(xPosition- width / 2),(int)(yPosition- height / 2),
 				(int)(xPosition+width/2),(int)(yPosition+height/2),
 				(int)(sx),(int)(sy), (int)(sx+imageDrawWidth), (int)(sy+imageDrawHeight),this);
-		//g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2),
-		//		(int) width, (int) height, this);
 	}
 
 	/**
