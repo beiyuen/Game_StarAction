@@ -27,7 +27,7 @@ public class Model {
 	public static int gameStatus = GAMESTATUS_STAGECHANGE;
 	public static GoalBlock goalBlock = null;
 
-	public static int stageNum = 5;
+	public static int stageNum = 2;
 	public static Stage stage = new Stage();
 	public static PlayerChara playerChara = new PlayerChara(40, 50);
 	public static DebugShowText debugShowText = new DebugShowText();

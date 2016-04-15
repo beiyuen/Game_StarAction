@@ -13,14 +13,19 @@ public class PlayerChara extends AbstractChara {
 
 	public boolean moveRight = false, moveLeft = false, up = false,dash = false;
 	public int  kill;
-	int yoko = 3,tate = 2; //画像の分割数
-	int imageNum,imageKind,kabe;//i,imgkind:画像用,kabe:敵用
+	
+	int kabe;//i,imgkind:画像用,kabe:敵用
 
 
 	public PlayerChara(int w, int h) {
-		image = getToolkit().createImage("image/otamesi.png");
+		image = getToolkit().createImage("image/playerChara.png");
 		width = w;
 		height = h;
+		imageDrawWidth = 40;
+		imageDrawHeight = 50;
+		imageColumn = 3;
+		imageLine = 2; //画像の分割数
+		imageKind = 3;
 		init();
 	}
 
@@ -33,8 +38,8 @@ public class PlayerChara extends AbstractChara {
 		hitRight = false;
 		hitLeft = false;
 		hitLeg = false;
-		imageNum=0;
-		imageKind = 0;
+		imageCount=0;
+		imageKind = 3;
 		death = false;
 	}
 
@@ -115,8 +120,8 @@ public class PlayerChara extends AbstractChara {
 				xSpeed += 1.5;
 			}
 			//System.out.println("dash" + xSpeed);
-			imageNum ++;
-			imageKind = (imageNum % 18) / 6;//0,1,2番目の画像
+			imageCount ++;
+			imageKind = (imageCount % 18) / 6 + 3;//3,4,5番目の画像
 		}
 		// 左を押していたとき
 		else if (moveLeft && !hitLeft){
@@ -129,8 +134,8 @@ public class PlayerChara extends AbstractChara {
 			else if(dash==false && xSpeed >= -6){
 				xSpeed -= 1.5;
 			}
-			imageNum ++;
-			imageKind = (imageNum % 18) / 6 + 3; //3,4,5番目の画像
+			imageCount ++;
+			imageKind = (imageCount % 18) / 6; //0,1,2番目の画像
 		}
 
 		//スクロール 各オブジェクトを動かすことで処理
@@ -172,14 +177,12 @@ public class PlayerChara extends AbstractChara {
 	//描画 分割後の画像幅を示すpwidthを設定
 	public void draw(Graphics g){
 		double sx, sy;
-		int pwidth = image.getWidth(null)/yoko;
-		int pheight = image.getHeight(null)/tate;
-        sx = (imageKind % yoko) * pwidth;
-        sy = (imageKind / yoko) * pheight;
+        sx = (imageKind % imageColumn) * imageDrawWidth;
+        sy = (imageKind / imageColumn) * imageDrawHeight;
 
         g.drawImage(image,(int)(xPosition- width / 2),(int)(yPosition- height / 2),
 				(int)(xPosition+width/2),(int)(yPosition+height/2),
-				(int)(sx),(int)(sy), (int)(sx+pwidth), (int)(sy+pheight),this);
+				(int)(sx),(int)(sy), (int)(sx+imageDrawWidth), (int)(sy+imageDrawHeight),this);
 	}
 
 	// 移動処理

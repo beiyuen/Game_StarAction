@@ -3,6 +3,8 @@ import static constants.CharaConstants.*;
 import static constants.ImageConstants.*;
 import static constants.MathConstants.*;
 
+import java.awt.Graphics;
+
 import charas.enemys.AbstractEnemy;
 public class Shot extends AbstractEnemy {
 
@@ -39,6 +41,10 @@ public class Shot extends AbstractEnemy {
 
 	public boolean isOutOfFrame(){
 		return xPosition > GAME_WIDTH || xPosition < 0 || yPosition > GAME_HEIGHT || yPosition < 0 ;
+	}
+	
+	public void draw(Graphics g){
+		g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2), (int) width, (int) height, this);
 	}
 
 }

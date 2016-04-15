@@ -4,7 +4,6 @@ import static constants.ImageConstants.*;
 
 import charas.AbstractChara;
 import charas.PlayerChara;
-import star_action.Model;
 
 public class GoalBlock extends AbstractBlock {
 
@@ -12,10 +11,11 @@ public class GoalBlock extends AbstractBlock {
 		super(x, y, 40, 50, IMAGE_BLOCK_GOAL);
 	}
 	
-	public void hitGoal(AbstractChara c){
+	public boolean hitGoal(AbstractChara c){
 		if(c instanceof PlayerChara){
-			hitGoal((PlayerChara)c);
+			return hitGoal((PlayerChara)c);
 		}
+		return false;
 	}
 
 	/**
@@ -23,9 +23,10 @@ public class GoalBlock extends AbstractBlock {
 	 * @param c
 	 * @return
 	 */
-	public void hitGoal(PlayerChara c){
+	public boolean hitGoal(PlayerChara c){
 		if(super.isHit(c)){
-			Model.nextStage();
+			return true;
 		}
+		return false;
 	}
 }

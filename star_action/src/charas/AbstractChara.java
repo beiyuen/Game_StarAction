@@ -20,9 +20,12 @@ public abstract class AbstractChara extends JPanel {
 	public int height;
 	public Image image;  //画像
 	public boolean hitRight = false, hitLeft = false, hitHead = false, hitLeg = false;
-	public boolean ground = false;  //設置判定
 	public boolean death;
-
+	public int imageDrawWidth = 1, imageDrawHeight = 1;
+	public int imageColumn = 1, imageLine = 1;
+	public int imageKind = 0;
+	public int imageCount = 0;
+	
 	public AbstractChara(){}
 
 	//x,yはマップ座標
@@ -36,6 +39,8 @@ public abstract class AbstractChara extends JPanel {
 		width = w;
 		height = h;
 		image = getToolkit().createImage(c);
+		imageDrawWidth = 50;
+		imageDrawHeight = 50;
 		death = false;
 	}
 
@@ -98,10 +103,11 @@ public abstract class AbstractChara extends JPanel {
 		int hitl = 0;
 		int hith = 0;
 		int hitd = 0;
+		boolean hitGoal = false;
 		Dimension hx, hy;
 		for (AbstractBlock b : Model.getBlockList()){
 			if(b instanceof GoalBlock){
-				((GoalBlock)b).hitGoal(this);
+				hitGoal = ((GoalBlock)b).hitGoal(this);
 			}
 			else {
 				hx = b.hitx(this);
@@ -141,6 +147,9 @@ public abstract class AbstractChara extends JPanel {
 		hitRight 	= hitr == 1 ? true:false;
 		hitHead 	= hith == 1 ? true:false;
 		hitLeg 		= hitd == 1 ? true:false;
+		if(hitGoal){
+			Model.nextStage();
+		}
 	}
 
 	public void scroll(double speed){
@@ -161,8 +170,15 @@ public abstract class AbstractChara extends JPanel {
 
 	//描画
 	public void draw(Graphics g) {
-		g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2),
-				(int) width, (int) height, this);
+		double sx, sy;
+        sx = (imageKind % imageColumn) * imageDrawWidth;
+        sy = (imageKind / imageColumn) * imageDrawHeight;
+
+        g.drawImage(image,(int)(xPosition- width / 2),(int)(yPosition- height / 2),
+				(int)(xPosition+width/2),(int)(yPosition+height/2),
+				(int)(sx),(int)(sy), (int)(sx+imageDrawWidth), (int)(sy+imageDrawHeight),this);
+		//g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2),
+		//		(int) width, (int) height, this);
 	}
 
 	/**

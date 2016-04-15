@@ -2,13 +2,14 @@ package charas.enemys;
 
 import static constants.ImageConstants.*;
 
-import java.awt.Graphics;
-
 public class GhostEnemy extends AbstractEnemy {
 	private double ysin;
 	public GhostEnemy(int x, int y) {
 		super(x, y,30,30,IMAGE_ENEMY_GHOST);
 		ysin = 0.0;
+		imageDrawWidth = 24;
+		imageDrawHeight = 32;
+		imageColumn = 2;
 	}
 
 	public void calcXAcceleration(double a) {
@@ -19,8 +20,16 @@ public class GhostEnemy extends AbstractEnemy {
 				xSpeed *= -1;
 		}*/
 
-		if (xSpeed == 0)
+		if (xSpeed == 0){
 			xSpeed++;
+		}
+		if(xSpeed > 0){
+			imageKind = 1;
+		}
+		else {
+			imageKind = 0;
+		}
+			
 
 	}
 
@@ -36,9 +45,7 @@ public class GhostEnemy extends AbstractEnemy {
 
 	}
 
-	public void draw(Graphics g){
-		g.drawImage(image, (int)(xPosition-width/2), (int)(yPosition-height/2), (int)(xPosition+width/2),(int)(yPosition+height/2), (int)(48*(Math.signum(xSpeed)+1)/4),0,(int)(48*(Math.signum(xSpeed)+3)/4),32,this);
-	}
+	
 
 	@Override
 	public void changeYSpeed() {

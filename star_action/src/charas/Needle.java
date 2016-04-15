@@ -10,15 +10,15 @@ import charas.enemys.WalkEnemy;
 
 
 public class Needle extends AbstractChara {
-	private static final long serialVersionUID = 1L;
-	int tate = 1,
-		yoko = 4,
-		imgkind;
     public static int SIZE = 50;
 
 	 public Needle(int x, int y, int i) {
 		 super(x,y,50,50,"image/needle.png");
-		 imgkind = i;
+		 imageKind = i;
+		 imageDrawWidth = 50;
+		 imageDrawHeight = 50;
+		 imageColumn = 4;
+		 imageLine = 1;
 	}
 
 	public void death() {
@@ -42,26 +42,24 @@ public class Needle extends AbstractChara {
 
 	public void draw(Graphics g){
 		double sx, sy;
-		int pwidth = image.getWidth(null)/yoko;
-		int pheight = image.getHeight(null)/tate;
-        sx = (imgkind % yoko) * pwidth;
-        sy = (imgkind / yoko) * pheight;
+        sx = (imageKind % imageColumn) * imageDrawWidth;
+        sy = (imageKind / imageColumn) * imageDrawHeight;
 
 		g.drawImage(image,(int)(xPosition- width / 2),(int)(yPosition- height / 2),
 				(int)(xPosition+width/2),(int)(yPosition+height/2),
-				(int)(sx),(int)(sy), (int)(sx+pwidth), (int)(sy+pheight),this);
+				(int)(sx),(int)(sy), (int)(sx+imageDrawWidth), (int)(sy+imageDrawHeight),this);
 	}
 
 	@Override
 	public void changeXSpeed() {
 		// TODO 自動生成されたメソッド・スタブ
-		
+
 	}
 
 	@Override
 	public void changeYSpeed() {
 		// TODO 自動生成されたメソッド・スタブ
-		
+
 	}
 
 }

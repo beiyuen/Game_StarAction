@@ -3,18 +3,19 @@ package charas.enemys;
 import static constants.CharaConstants.*;
 import static constants.ImageConstants.*;
 
-import java.awt.Graphics;
-
 import charas.PlayerChara;
 import star_action.Model;
 
 public class MoveEnemy extends AbstractEnemy {
-	private int imagekind = 0, i = 0, tate = 2, yoko = 5;
 	public boolean jump;
 	
 	public MoveEnemy(int x, int y, double xs) {
 		super(x,y,40,50,IMAGE_ENEMY_MOVE);
 		xSpeed = xs;
+		imageLine = 2;
+		imageColumn = 5;
+		imageDrawWidth = 40;
+		imageDrawHeight = 50;
 		jump = false;
 	}
 
@@ -74,21 +75,21 @@ public class MoveEnemy extends AbstractEnemy {
 
 	public void calcXAcceleration(double a) {
 		if(hitLeg){
-			i ++;
+			imageCount ++;
 			if(xSpeed<0){
-				imagekind=(i%28)/7;//0,1,2,3番目の画像
+				imageKind=(imageCount%28)/7;//0,1,2,3番目の画像
 			}
 			else if(xSpeed>0){
-				imagekind=(i%28)/7+5; //5,6,7,8番目の画像
+				imageKind=(imageCount%28)/7+5; //5,6,7,8番目の画像
 			}
 			else {
 				// ジャンプ時の画像
 				double pcx = Model.getPlayerChara().getxPosition();
 				if(xPosition>=pcx){
-					imagekind=1;
+					imageKind=1;
 				}
 				else if(xPosition<pcx){
-					imagekind=5;
+					imageKind=5;
 				}
 			}
 		}
@@ -96,18 +97,6 @@ public class MoveEnemy extends AbstractEnemy {
 
 		public void calcYAcceleration(){
 				if(!hitLeg) ySpeed += 1.3;
-		}
-
-		public void draw(Graphics g){
-			double sx, sy;
-			int pwidth = 40;
-			int pheight = 50;
-	        sx = (imagekind % yoko) * pwidth;
-	        sy = (imagekind / yoko) * pheight;
-
-			g.drawImage(image,(int)(xPosition- width / 2),(int)(yPosition- height / 2),
-					(int)(xPosition+width/2),(int)(yPosition+height/2),
-					(int)(sx),(int)(sy), (int)(sx+pwidth), (int)(sy+pheight),this);
 		}
 
 	public void jump(){
@@ -119,10 +108,10 @@ public class MoveEnemy extends AbstractEnemy {
 			hitLeg = false;
 			double pcx = Model.getPlayerChara().getxPosition();
 			if(xPosition>=pcx){
-				imagekind = 4;
+				imageKind = 4;
 			}
 			else{
-				imagekind = 9;
+				imageKind = 9;
 			}
 		}
 

@@ -5,7 +5,6 @@ import static constants.ImageConstants.*;
 import static constants.MathConstants.*;
 import static constants.SoundCnstants.*;
 
-import java.awt.Graphics;
 import java.io.IOException;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -23,11 +22,14 @@ import util.Sound;
  *
  */
 public class WalkEnemy extends AbstractEnemy {
-	int imagekind = 0, i = 0, tate = 2, yoko = 4;
 	boolean isHit;
 
 	public WalkEnemy(int x, int y) {
 		super(x, y, 40, 50, IMAGE_ENEMY_WALK);
+		imageColumn = 4;
+		imageLine = 2;
+		imageDrawWidth = 40;
+		imageDrawHeight = 50;
 		isHit = false;
 	}
 
@@ -84,25 +86,14 @@ public class WalkEnemy extends AbstractEnemy {
 		}
 
 		if (xSpeed < 0) {
-			i++;
-			imagekind = (i % 32) / 8;// 0,1,2,3番目の画像
+			imageCount++;
+			imageKind = (imageCount % 32) / 8;// 0,1,2,3番目の画像
 		} else if (xSpeed  > 0) {
-			i++;
-			imagekind = (i % 32) / 8 + 4; // 4,5,6,7番目の画像
+			imageCount++;
+			imageKind = (imageCount % 32) / 8 + 4; // 4,5,6,7番目の画像
 		}
 	}
 
 	public void calcYAcceleration() {
-
-	}
-
-	public void draw(Graphics g) {
-		double sx, sy;
-		int pwidth = 40;
-		int pheight = 50;
-		sx = (imagekind % yoko) * pwidth;
-		sy = (imagekind / yoko) * pheight;
-		g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2), (int) (xPosition + width / 2),
-				(int) (yPosition + height / 2), (int) (sx), (int) (sy), (int) (sx + pwidth), (int) (sy + pheight), this);
 	}
 }
