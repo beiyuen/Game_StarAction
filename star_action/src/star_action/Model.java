@@ -14,6 +14,8 @@ import charas.blocks.WorldClearBlock;
 import charas.enemys.AbstractEnemy;
 import charas.enemys.GhostEnemy;
 import charas.enemys.NomalEnemy;
+import slide.EndingSlide;
+import slide.OpeningSlide;
 import slide.StageChangeSlide;
 import slide.WorldClearSlide;
 import stages.Stage;
@@ -26,7 +28,7 @@ public class Model {
 	public static ArrayList<Needle> needleList = null;
 	public static ArrayList<AbstractBlock> placeBlockList = new ArrayList<AbstractBlock>();
 	public static ArrayList<AbstractEnemy> placeEnemyList = new ArrayList<AbstractEnemy>();
-	public static int gameStatus = GAMESTATUS_STAGECHANGE;
+	public static int gameStatus = GAMESTATUS_OPENING;
 
 	public static int stageNum = 5;
 	public static int worldNum = 1;
@@ -36,6 +38,8 @@ public class Model {
 
 	public static StageChangeSlide stageChangeSlide = new StageChangeSlide();
 	public static WorldClearSlide worldClearSlide = new WorldClearSlide(worldNum-1);
+	public static OpeningSlide openingSlide = new OpeningSlide();
+	public static EndingSlide endingSlide = new EndingSlide();
 
 	public static ArrayList<AbstractBlock> getBlockList() {return blockList;}
 	public static ArrayList<AbstractEnemy> getEnemyList() {return enemyList;}
@@ -66,6 +70,11 @@ public class Model {
 		gameStatus = i;
 	}
 
+	public static void gameInit(){
+		
+	}
+	
+	
 	/**
 	 * プレイヤーの情報とステージの情報を初期化
 	 */
@@ -186,11 +195,17 @@ public class Model {
 			}
 			b.init();
 		}
+		worldClearSlide.init();
+		worldNum++;
 		setGameStatus(GAMESTATUS_WORLDCHANGE);
-		if(stageNum < 10){
-			
+		if(stageNum == 5){
+			gameClear();
 		//	setStage(stageNum);
 		}
+	}
+	
+	public static void gameClear(){
+		setGameStatus(GAMESTATUS_ENDING);
 	}
 	/**
 	 * 新しいステージをセット。これにより敵やブロックの位置情報を更新
@@ -226,6 +241,12 @@ public class Model {
 	}
 	public static WorldClearSlide getWorldClearSlide() {
 		return worldClearSlide;
+	}
+	public static OpeningSlide getOpeningSlide() {
+		return openingSlide;
+	}
+	public static EndingSlide getEndingSlide() {
+		return endingSlide;
 	}
 	public static boolean isScrollable() {
 		return scrollable;

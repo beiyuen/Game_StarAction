@@ -46,7 +46,15 @@ public class Controller {
 
 			int mod = evt.getModifiersEx();
 			switch (Model.getGameStatus()) {
-			case GAMESTATUS_PLAYING:
+			case GAMESTATUS_OPENING:
+				switch (evt.getKeyCode()) {
+				case KeyEvent.VK_ENTER:
+					Model.gameInit();
+					Model.setGameStatus(GAMESTATUS_STAGECHANGE);
+					break;
+				}
+				break;
+			case GAMESTATUS_PLAYING:				
 				switch (evt.getKeyCode()) {
 				case 'd':
 				case 'D':
@@ -92,7 +100,14 @@ public class Controller {
 					Model.init();
 				}
 				break;
-
+			case GAMESTATUS_ENDING:
+				switch (evt.getKeyCode()) {
+				case KeyEvent.VK_ENTER:
+					Model.setGameStatus(GAMESTATUS_OPENING);
+					break;
+				}
+				break;
+			
 			case GAMESTATUS_STAGECHANGE:
 				switch (evt.getKeyCode()) {
 				case KeyEvent.VK_ENTER:

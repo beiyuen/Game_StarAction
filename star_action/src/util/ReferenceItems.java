@@ -23,7 +23,9 @@ public class ReferenceItems {
 	private static Image	needleImage;
 	private static Image	playerCharaImage;
 	private static Image[]	textImage;
-
+	private static Image	openingImage;
+	private static Image	endingImage;
+	
 	// 効果音データ用変数
 	private static File[] soundSe;
 	private static Clip[]    clip;
@@ -58,7 +60,8 @@ public class ReferenceItems {
 		textImage[IMAGE_TEXT_WORLD1] = Toolkit.getDefaultToolkit().createImage("image/textWorld1.png");
 		textImage[IMAGE_TEXT_CLEAR] = Toolkit.getDefaultToolkit().createImage("image/textClear.png");
 
-
+		openingImage = Toolkit.getDefaultToolkit().createImage("image/Title.png");
+		endingImage = Toolkit.getDefaultToolkit().createImage("image/Ending.png");
 
 		soundSe = new File[SOUND_SE_MAX];
 		clip = new Clip[SOUND_SE_MAX];
@@ -97,6 +100,14 @@ public class ReferenceItems {
 	
 	public static Image getTexteImage(int i){
 		return textImage[i];
+	}
+
+	public static Image getOpeningImage() {
+		return openingImage;
+	}
+
+	public static Image getEndingImage() {
+		return endingImage;
 	}
 
 	public static File getSoundSe(int i){

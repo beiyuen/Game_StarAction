@@ -37,6 +37,7 @@ public class ViewPanel extends JPanel {
 		timer = new Timer(DELAY, e -> {
 				switch(Model.getGameStatus()){
 					case GAMESTATUS_OPENING:
+						repaint();
 						break;
 					case GAMESTATUS_PLAYING:
 						Model.run();
@@ -72,7 +73,7 @@ public class ViewPanel extends JPanel {
 			offScreen =  offImage.getGraphics();
 			switch(Model.getGameStatus()){
 			case GAMESTATUS_OPENING:
-				//open.draw(g);
+				Model.getOpeningSlide().draw(offScreen);
 				break;
 
 			case GAMESTATUS_PLAYING:	//各キャラ、ブロック、右上の画像を描画
@@ -132,6 +133,7 @@ public class ViewPanel extends JPanel {
 				break;
 
 			case GAMESTATUS_ENDING:
+				Model.getEndingSlide().draw(offScreen);
 				break;
 
 			case GAMESTATUS_STAGECHANGE:
