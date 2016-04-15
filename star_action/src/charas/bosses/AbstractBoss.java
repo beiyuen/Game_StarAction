@@ -13,7 +13,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import charas.PlayerChara;
 import charas.blocks.AbstractBlock;
-import charas.blocks.GoalBlock;
 import charas.enemys.AbstractEnemy;
 import star_action.Model;
 import util.Sound;
@@ -59,7 +58,7 @@ public abstract class AbstractBoss extends AbstractEnemy {
 
 	// enemyからこのオブジェクトを除去
 	public void death() {
-		Model.getBlockList().add(new GoalBlock(9, 5, 0));
+		//Model.getBlockList().add(new GoalBlock(9, 5));
 		// Mario.s.block.add(new GameclearBlock(9,5));
 		// Mario.sound("surprise.wav",0.6);
 		// Mario.iterator.remove();

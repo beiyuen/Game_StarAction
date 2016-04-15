@@ -5,9 +5,9 @@ import static constants.ImageConstants.*;
 import charas.AbstractChara;
 import charas.PlayerChara;
 
-public class FloorClearBlock extends AbstractBlock {
+public class WorldClearBlock extends AbstractBlock {
 
-	public FloorClearBlock(int x, int y) {
+	public WorldClearBlock(int x, int y) {
 		super(x, y, 40, 50, IMAGE_BLOCK_FLOORCLEAR);
 	}
 	

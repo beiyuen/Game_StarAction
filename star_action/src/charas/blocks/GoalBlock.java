@@ -11,10 +11,6 @@ public class GoalBlock extends AbstractBlock {
 		super(x, y, 40, 50, IMAGE_BLOCK_GOAL);
 	}
 	
-	public GoalBlock(int x, int y, int n) {
-		super(x, y, 40, 50, IMAGE_BLOCK_FLOORCLEAR);
-	}
-	
 	public boolean hitGoal(AbstractChara c){
 		if(c instanceof PlayerChara){
 			return hitGoal((PlayerChara)c);

@@ -15,7 +15,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import charas.PlayerChara;
 import charas.Shot;
 import charas.blocks.AbstractBlock;
-import charas.blocks.FloorClearBlock;
+import charas.blocks.WorldClearBlock;
 import star_action.Model;
 import util.Sound;
 
@@ -75,7 +75,7 @@ public class Boss1 extends AbstractBoss {
 	}
 
 	public void death() {
-		Model.getBlockList().add(new FloorClearBlock(9, 5));
+		Model.getBlockList().add(new WorldClearBlock(9, 5));
 		death = true;
 		System.out.println("enemy.death");
 	}

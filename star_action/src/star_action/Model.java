@@ -9,7 +9,7 @@ import charas.AbstractChara;
 import charas.Needle;
 import charas.PlayerChara;
 import charas.blocks.AbstractBlock;
-import charas.blocks.FloorClearBlock;
+import charas.blocks.WorldClearBlock;
 import charas.blocks.HardBlock;
 import charas.enemys.AbstractEnemy;
 import charas.enemys.GhostEnemy;
@@ -71,7 +71,7 @@ public class Model {
 		Iterator<AbstractBlock> blockIterator = blockList.iterator();
 		while (blockIterator.hasNext()) {
 			AbstractBlock b = blockIterator.next();
-			if(b instanceof FloorClearBlock){
+			if(b instanceof WorldClearBlock){
 				blockIterator.remove();
 				break;
 			}

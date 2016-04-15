@@ -49,7 +49,7 @@ public class ReferenceItems {
 		blockImage[IMAGE_BLOCK_HARD] = Toolkit.getDefaultToolkit().createImage("image/hardBlock.png");
 		blockImage[IMAGE_BLOCK_NOMAL] = Toolkit.getDefaultToolkit().createImage("image/block.png");
 		blockImage[IMAGE_BLOCK_GOAL] = Toolkit.getDefaultToolkit().createImage("image/goal.png");
-		blockImage[IMAGE_BLOCK_FLOORCLEAR] = Toolkit.getDefaultToolkit().createImage("image/floorClearBlock.png");
+		blockImage[IMAGE_BLOCK_FLOORCLEAR] = Toolkit.getDefaultToolkit().createImage("image/worldClearBlock.png");
 		needleImage = Toolkit.getDefaultToolkit().createImage("image/needle.png");
 		playerCharaImage = Toolkit.getDefaultToolkit().createImage("image/otamesi.png");
 
