@@ -5,13 +5,9 @@ import static constants.ImageConstants.*;
 import charas.AbstractChara;
 import charas.PlayerChara;
 
-public class GoalBlock extends AbstractBlock {
+public class FloorClearBlock extends AbstractBlock {
 
-	public GoalBlock(int x, int y) {
-		super(x, y, 40, 50, IMAGE_BLOCK_GOAL);
-	}
-	
-	public GoalBlock(int x, int y, int n) {
+	public FloorClearBlock(int x, int y) {
 		super(x, y, 40, 50, IMAGE_BLOCK_FLOORCLEAR);
 	}
 	

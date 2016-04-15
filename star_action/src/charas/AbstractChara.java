@@ -9,6 +9,7 @@ import java.awt.Image;
 import javax.swing.JPanel;
 
 import charas.blocks.AbstractBlock;
+import charas.blocks.FloorClearBlock;
 import charas.blocks.GoalBlock;
 import star_action.Model;
 
@@ -113,6 +114,9 @@ public abstract class AbstractChara extends JPanel {
 		for (AbstractBlock b : Model.getBlockList()){
 			if(b instanceof GoalBlock){
 				hitGoal = ((GoalBlock)b).hitGoal(this);
+			}
+			else if(b instanceof FloorClearBlock){
+				hitGoal = ((FloorClearBlock)b).hitGoal(this);
 			}
 			else {
 				hx = b.hitx(this);

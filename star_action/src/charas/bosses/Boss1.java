@@ -15,6 +15,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import charas.PlayerChara;
 import charas.Shot;
 import charas.blocks.AbstractBlock;
+import charas.blocks.FloorClearBlock;
 import star_action.Model;
 import util.Sound;
 
@@ -25,18 +26,21 @@ public class Boss1 extends AbstractBoss {
 
 	public Boss1(int x, int y) {
 		super(x, y);
+		hp = 5;
 		init();
 	}
 
 	public void init(){
 		super.init();
+		death = false;
 		bullet.clear();
 		goAway = false;
 		count = 0;
 		xSpeed = -6;
 		state = BOSS1_STATE_1;
 		hitLeg = false;
-		treadedNum = 0;
+		treadedNum = 4;
+		
 	}
 
 	private void nextState(){
@@ -71,6 +75,9 @@ public class Boss1 extends AbstractBoss {
 	}
 
 	public void death() {
+		Model.getBlockList().add(new FloorClearBlock(9, 5));
+		death = true;
+		System.out.println("enemy.death");
 	}
 
 	public int isHitPlayerChara(PlayerChara c) {
@@ -80,7 +87,7 @@ public class Boss1 extends AbstractBoss {
 			}
 		}
 
-		if (treadedNum < 5 // やられる回数を定義
+		if (treadedNum < hp // やられる回数を定義
 				&& Math.abs(c.xPosition + c.xSpeed - xPosition) < c.width / 2 + width / 2
 				&& Math.abs(c.yPosition + c.ySpeed - yPosition) < c.height / 2 + height / 2
 				&& Math.sin((Math.atan2(c.yPosition - yPosition, c.xPosition - xPosition))) <= -1 / Math.sqrt(2.0)) {
@@ -95,20 +102,28 @@ public class Boss1 extends AbstractBoss {
 			if (!goAway) {
 				nextState();
 				treadedNum++;
+				
 				try {
 					Sound.soundSE(SOUND_SE_TREAD, 0.6);
 				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 					e.printStackTrace();
 				}
 				// Mario.sound("stamp.wav", 0.6);
-				if (state == BOSS1_STATE_3 || state == BOSS1_STATE_4)
+				if (state == BOSS1_STATE_4 || state == BOSS1_STATE_5){
 					bullet.clear();
+				}
+				if(treadedNum == hp){
+				//	System.out.println(state + "  " + treadedNum + "   " + hp);		
+					death();
+				}
+					
 			}
 			else {
 				
 			}
 			goAway = true;// 走って壁に逃げる時
 			count = 0;
+			hitLeg = false;
 			return HIT_TREAD;
 			
 		} else{
@@ -168,6 +183,11 @@ public class Boss1 extends AbstractBoss {
 							b.setDeath(true);
 						}
 						goAway = false;
+						try {
+							Sound.soundSE(SOUND_SE_SURPRISE, 0.4);
+						} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+							e.printStackTrace();
+						}
 						
 						// Mario.sound("surprise.wav", 0.6);
 					}

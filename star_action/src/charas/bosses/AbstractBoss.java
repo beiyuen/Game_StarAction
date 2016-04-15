@@ -13,6 +13,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import charas.PlayerChara;
 import charas.blocks.AbstractBlock;
+import charas.blocks.GoalBlock;
 import charas.enemys.AbstractEnemy;
 import star_action.Model;
 import util.Sound;
@@ -20,22 +21,21 @@ import util.Sound;
 public abstract class AbstractBoss extends AbstractEnemy {
 
 	int treadedNum; // 踏まれ数カウンター
-	int i = 0, imagekind = 0, tate = 2, yoko = 4, state = 0, // ボスの動きを決める変数
+	int state = 0;
 			 // 踏まれた時の一時変数,１なら踏んだとき
-			count = 0; // 動きのタイミングを決める
+	int	count = 0; // 動きのタイミングを決める
 	int hp;
 	boolean goAway;
-	public double imageWidth, imageHeight;
 
 	public AbstractBoss(int x, int y) {
 		super(x, y - 1, 75, 75, IMAGE_ENEMY_KING);
 		goAway = false;
 		xSpeed = -6;
 		treadedNum = 1;
-		imageWidth = 300;
-		imageHeight = 150;
-		tate = 2;
-		yoko = 4;
+		imageDrawWidth = 75;
+		imageDrawHeight = 75;
+		imageLine = 2;
+		imageColumn = 4;
 		hp = 5;
 	}
 
@@ -59,6 +59,7 @@ public abstract class AbstractBoss extends AbstractEnemy {
 
 	// enemyからこのオブジェクトを除去
 	public void death() {
+		Model.getBlockList().add(new GoalBlock(9, 5, 0));
 		// Mario.s.block.add(new GameclearBlock(9,5));
 		// Mario.sound("surprise.wav",0.6);
 		// Mario.iterator.remove();
@@ -161,20 +162,13 @@ public abstract class AbstractBoss extends AbstractEnemy {
 	public void draw(Graphics g) {
 		double px = Model.getPlayerChara().getxPosition();
 		if (xPosition > px) {
-			i++;
-			imagekind = (i % 8) / tate;// 0,1,2,3番目の画像
+			imageCount++;
+			imageKind = (imageCount % 8) / imageLine;// 0,1,2,3番目の画像
 		} else if (xPosition <= px) {
-			i++;
-			imagekind = (i % 8) / tate + yoko; // 4,5,6,7番目の画像
+			imageCount++;
+			imageKind = (imageCount % 8) / imageLine + imageColumn; // 4,5,6,7番目の画像
 		}
+		super.draw(g);
 		double sx, sy;
-		int pwidth = (int) (imageWidth / yoko);
-		int pheight = (int) (imageHeight / tate);
-		sx = (imagekind % yoko) * pwidth;
-		sy = (imagekind / yoko) * pheight;
-
-		g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2), (int) (xPosition + width / 2),
-				(int) (yPosition + height / 2), (int) (sx), (int) (sy), (int) (sx + pwidth), (int) (sy + pheight),
-				this);
 	}
 }

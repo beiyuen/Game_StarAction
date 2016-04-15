@@ -3,11 +3,13 @@ package star_action;
 import static constants.MathConstants.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import charas.AbstractChara;
 import charas.Needle;
 import charas.PlayerChara;
 import charas.blocks.AbstractBlock;
+import charas.blocks.FloorClearBlock;
 import charas.blocks.HardBlock;
 import charas.enemys.AbstractEnemy;
 import charas.enemys.GhostEnemy;
@@ -25,7 +27,7 @@ public class Model {
 	public static ArrayList<AbstractEnemy> placeEnemyList = new ArrayList<AbstractEnemy>();
 	public static int gameStatus = GAMESTATUS_STAGECHANGE;
 
-	public static int stageNum = 2;
+	public static int stageNum = 5;
 	public static Stage stage = new Stage();
 	public static PlayerChara playerChara = new PlayerChara(40, 50);
 	public static DebugShowText debugShowText = new DebugShowText();
@@ -66,9 +68,18 @@ public class Model {
 	 */
 	public static void init(){
 		playerChara.init();
-		for (AbstractBlock b : blockList){
+		Iterator<AbstractBlock> blockIterator = blockList.iterator();
+		while (blockIterator.hasNext()) {
+			AbstractBlock b = blockIterator.next();
+			if(b instanceof FloorClearBlock){
+				blockIterator.remove();
+				break;
+			}
 			b.init();
 		}
+		/*for (AbstractBlock b : ){
+			b.init();
+		}*/
 		for (AbstractChara e : enemyList) {
 			e.init();
 		}
