@@ -8,6 +8,7 @@ public class ImageConstants {
 	// 画像
 	public static final int IMAGE_ENEMY_MAX			= 	7;
 	public static final int IMAGE_BLOCK_MAX			= 	4;
+	public static final int IMAGE_TEXT_MAX			= 	2;
 
 	public static final int IMAGE_ENEMY_SLIME		=	0;
 	public static final int IMAGE_ENEMY_GHOST		=	1;
@@ -21,4 +22,7 @@ public class ImageConstants {
 	public static final int IMAGE_BLOCK_NOMAL		=	1;
 	public static final int IMAGE_BLOCK_GOAL		=	2;
 	public static final int IMAGE_BLOCK_FLOORCLEAR	=	3;
+	
+	public static final int IMAGE_TEXT_WORLD1		=	0;
+	public static final int IMAGE_TEXT_CLEAR		=	1;
 }

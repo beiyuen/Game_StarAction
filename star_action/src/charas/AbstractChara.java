@@ -9,8 +9,8 @@ import java.awt.Image;
 import javax.swing.JPanel;
 
 import charas.blocks.AbstractBlock;
-import charas.blocks.WorldClearBlock;
 import charas.blocks.GoalBlock;
+import charas.blocks.WorldClearBlock;
 import star_action.Model;
 
 public abstract class AbstractChara extends JPanel {
@@ -109,14 +109,18 @@ public abstract class AbstractChara extends JPanel {
 		int hitl = 0;
 		int hith = 0;
 		int hitd = 0;
-		boolean hitGoal = false;
+		int hitGoal = 0;
 		Dimension hx, hy;
 		for (AbstractBlock b : Model.getBlockList()){
 			if(b instanceof GoalBlock){
-				hitGoal = ((GoalBlock)b).hitGoal(this);
+				if(((GoalBlock)b).hitGoal(this)){
+					hitGoal = 1;
+				}
 			}
 			else if(b instanceof WorldClearBlock){
-				hitGoal = ((WorldClearBlock)b).hitGoal(this);
+				if( ((WorldClearBlock)b).hitGoal(this)){
+					hitGoal = 2;
+				}
 			}
 			else {
 				hx = b.hitx(this);
@@ -156,8 +160,11 @@ public abstract class AbstractChara extends JPanel {
 		hitRight 	= hitr == 1 ? true:false;
 		hitHead 	= hith == 1 ? true:false;
 		hitLeg 		= hitd == 1 ? true:false;
-		if(hitGoal){
+		if(hitGoal == 1){
 			Model.nextStage();
+		}
+		else if(hitGoal == 2){
+			Model.nextWorld();
 		}
 	}
 

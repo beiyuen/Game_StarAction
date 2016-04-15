@@ -22,6 +22,7 @@ public class ReferenceItems {
 	private static Image[]	blockImage;
 	private static Image	needleImage;
 	private static Image	playerCharaImage;
+	private static Image[]	textImage;
 
 	// 効果音データ用変数
 	private static File[] soundSe;
@@ -29,6 +30,7 @@ public class ReferenceItems {
 	private static AudioInputStream[] audioInputStream;
 	private static AudioFormat[]     audioFormat;
 	private static DataLine.Info[]   info;
+	
 
 
 
@@ -36,7 +38,7 @@ public class ReferenceItems {
 	public static void Load() throws IOException, UnsupportedAudioFileException, LineUnavailableException{
 		enemyImage = new Image[IMAGE_ENEMY_MAX];
 		blockImage = new Image[IMAGE_BLOCK_MAX];
-
+		textImage = new Image[IMAGE_TEXT_MAX];
 
 		enemyImage[IMAGE_ENEMY_SLIME] = Toolkit.getDefaultToolkit().createImage("image/enemy2.png");
 		enemyImage[IMAGE_ENEMY_GHOST] = Toolkit.getDefaultToolkit().createImage("image/enemy.png");
@@ -52,6 +54,9 @@ public class ReferenceItems {
 		blockImage[IMAGE_BLOCK_FLOORCLEAR] = Toolkit.getDefaultToolkit().createImage("image/worldClearBlock.png");
 		needleImage = Toolkit.getDefaultToolkit().createImage("image/needle.png");
 		playerCharaImage = Toolkit.getDefaultToolkit().createImage("image/otamesi.png");
+		
+		textImage[IMAGE_TEXT_WORLD1] = Toolkit.getDefaultToolkit().createImage("image/textWorld1.png");
+		textImage[IMAGE_TEXT_CLEAR] = Toolkit.getDefaultToolkit().createImage("image/textClear.png");
 
 
 
@@ -88,6 +93,10 @@ public class ReferenceItems {
 
 	public static Image getPlayerCharaImage(){
 		return playerCharaImage;
+	}
+	
+	public static Image getTexteImage(int i){
+		return textImage[i];
 	}
 
 	public static File getSoundSe(int i){

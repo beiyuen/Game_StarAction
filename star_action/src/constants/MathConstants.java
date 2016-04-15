@@ -16,6 +16,7 @@ public class MathConstants {
 	public static final int GAMESTATUS_DIE 			= 	2;
 	public static final int GAMESTATUS_ENDING		= 	3;
 	public static final int GAMESTATUS_STAGECHANGE	= 	4;
+	public static final int GAMESTATUS_WORLDCHANGE	= 	5;
 
 	public static final int BLOCK_SIZE				=	50;
 	public final static int DELAY 					=	20;

@@ -9,12 +9,13 @@ import charas.AbstractChara;
 import charas.Needle;
 import charas.PlayerChara;
 import charas.blocks.AbstractBlock;
-import charas.blocks.WorldClearBlock;
 import charas.blocks.HardBlock;
+import charas.blocks.WorldClearBlock;
 import charas.enemys.AbstractEnemy;
 import charas.enemys.GhostEnemy;
 import charas.enemys.NomalEnemy;
 import slide.StageChangeSlide;
+import slide.WorldClearSlide;
 import stages.Stage;
 import util.ClickItem;
 import util.DebugShowText;
@@ -28,11 +29,13 @@ public class Model {
 	public static int gameStatus = GAMESTATUS_STAGECHANGE;
 
 	public static int stageNum = 5;
+	public static int worldNum = 1;
 	public static Stage stage = new Stage();
 	public static PlayerChara playerChara = new PlayerChara(40, 50);
 	public static DebugShowText debugShowText = new DebugShowText();
 
 	public static StageChangeSlide stageChangeSlide = new StageChangeSlide();
+	public static WorldClearSlide worldClearSlide = new WorldClearSlide(worldNum-1);
 
 	public static ArrayList<AbstractBlock> getBlockList() {return blockList;}
 	public static ArrayList<AbstractEnemy> getEnemyList() {return enemyList;}
@@ -153,6 +156,10 @@ public class Model {
 			playerChara.move();
 		}
 		scroll();
+		if(Model.getGameStatus() == GAMESTATUS_WORLDCHANGE){
+			worldClearSlide.calcAnimation();
+			worldClearSlide.move();
+		}
 
 		debugShowText.run(playerChara.xPosition, playerChara.yPosition);
 	}
@@ -160,12 +167,30 @@ public class Model {
 	 * 次のステージに行くための処理
 	 */
 	public static void nextStage() {
-		// TODO 自動生成されたメソッド・スタブ
 		setStageNum(stageNum+1);
 		stageChangeSlide.setText(stageNum);
 		setGameStatus(GAMESTATUS_STAGECHANGE);
 		setStage(stageNum);
 		playerChara.init();
+	}
+	/**
+	 * 次のワールドに行くための処理
+	 */
+	public static void nextWorld(){
+		Iterator<AbstractBlock> blockIterator = blockList.iterator();
+		while (blockIterator.hasNext()) {
+			AbstractBlock b = blockIterator.next();
+			if(b instanceof WorldClearBlock){
+				blockIterator.remove();
+				break;
+			}
+			b.init();
+		}
+		setGameStatus(GAMESTATUS_WORLDCHANGE);
+		if(stageNum < 10){
+			
+		//	setStage(stageNum);
+		}
 	}
 	/**
 	 * 新しいステージをセット。これにより敵やブロックの位置情報を更新
@@ -198,6 +223,9 @@ public class Model {
 	}
 	public static ArrayList<AbstractEnemy> getPlaceEnemyList() {
 		return placeEnemyList;
+	}
+	public static WorldClearSlide getWorldClearSlide() {
+		return worldClearSlide;
 	}
 	public static boolean isScrollable() {
 		return scrollable;

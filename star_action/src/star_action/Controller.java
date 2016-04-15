@@ -100,7 +100,16 @@ public class Controller {
 					break;
 				}
 				break;
+			case GAMESTATUS_WORLDCHANGE:
+				switch (evt.getKeyCode()) {
+				case KeyEvent.VK_ENTER:
+					Model.nextStage();
+					break;
+				}
+				break;
+			
 			}
+			
 
 
 		}

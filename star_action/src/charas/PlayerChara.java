@@ -78,12 +78,15 @@ public class PlayerChara extends AbstractChara {
 				}
 			}
 		}
-		checkDeath();
-		for (Needle n : Model.getNeedleList()){
-			if (!n.isDeath() && n.isHit(this)){
-				Model.death();
+		if(Model.getGameStatus() != GAMESTATUS_WORLDCHANGE){
+			checkDeath();
+			for (Needle n : Model.getNeedleList()){
+				if (!n.isDeath() && n.isHit(this)){
+					Model.death();
+				}
 			}
 		}
+		
 		// ブロックとの当たり判定をし、hitRight, hitLeft, hitHead, hitLeg を変更
 		isHitBlock();
 		

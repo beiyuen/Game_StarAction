@@ -51,6 +51,10 @@ public class ViewPanel extends JPanel {
 						break;
 					case GAMESTATUS_STAGECHANGE:
 						break;
+					case GAMESTATUS_WORLDCHANGE:
+						Model.run();
+						repaint();
+						break;
 				}
 				repaint();
 			}
@@ -95,7 +99,6 @@ public class ViewPanel extends JPanel {
 						e.draw(offScreen);
 					}
 				}
-			//	Model.getGoalBlock().draw(offScreen);
 				Model.getClickItem().draw(offScreen);
 				debugShowText.draw(offScreen);
 				break;
@@ -123,7 +126,6 @@ public class ViewPanel extends JPanel {
 						e.draw(offScreen);
 					}
 				}
-			//	Model.getGoalBlock().draw(offScreen);
 				Model.getClickItem().draw(offScreen);
 				debugShowText.draw(offScreen);
 				offScreen.drawImage(gameoverImage, 0,0,1000,500, this);
@@ -134,6 +136,36 @@ public class ViewPanel extends JPanel {
 
 			case GAMESTATUS_STAGECHANGE:
 				Model.getStageChangeSlide().draw(offScreen);
+				break;
+			
+			
+			case GAMESTATUS_WORLDCHANGE:
+				drawSky(offScreen);
+				playerChara.draw(offScreen);// draw関数が悪い?
+				for (AbstractBlock b : Model.getBlockList()) {
+					b.draw(offScreen);
+				}
+				for (AbstractEnemy e : Model.getEnemyList()) {
+					if(!e.isDeath()){
+						e.draw(offScreen);
+					}
+				}
+				for (Needle n : Model.getNeedleList()) {
+					if(!n.isDeath()){
+						n.draw(offScreen);
+					}
+				}
+				for (AbstractBlock b : Model.getPlaceBlockList()) {
+					b.draw(offScreen);
+				}
+				for (AbstractEnemy e : Model.getPlaceEnemyList()) {
+					if(!e.isDeath()){
+						e.draw(offScreen);
+					}
+				}
+				Model.getClickItem().draw(offScreen);
+				debugShowText.draw(offScreen);
+				Model.getWorldClearSlide().draw(offScreen);
 				break;
 			}
 			g.drawImage(offImage,0,0,this);
