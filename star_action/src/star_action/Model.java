@@ -1,5 +1,6 @@
 package star_action;
 
+import static constants.CharaConstants.*;
 import static constants.MathConstants.*;
 
 import java.util.ArrayList;
@@ -276,13 +277,26 @@ public class Model {
 	 */
 	public static void placement(int x, int y){
 		switch (placementMode) {
-		case 0:
+		case PLACEMENT_BLOCK:
+			double px = x *  BLOCK_SIZE + BLOCK_SIZE / 2;
+			double py = y *  BLOCK_SIZE + BLOCK_SIZE / 2;
+			for (AbstractEnemy e : enemyList) {
+				if(e.isHitPoint(px, py)){
+					System.out.println("だめ");
+					return;
+				}
+			}
+			for (AbstractEnemy e : placeEnemyList) {
+				if(e.isHitPoint(px, py)){
+					return;
+				}
+			}
 			placeBlockList.add(new HardBlock(x,y));
 			break;
-		case 1:
+		case PLACEMENT_SLIME:
 			placeEnemyList.add(new NomalEnemy(x,y));
 			break;
-		case 2:
+		case PLACEMENT_GHOST:
 			placeEnemyList.add(new GhostEnemy(x,y));
 			break;
 		}

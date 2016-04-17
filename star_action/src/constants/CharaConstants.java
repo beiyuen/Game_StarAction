@@ -50,6 +50,11 @@ public class CharaConstants {
 	public static final int BOSS1_STATE_4		=	4;
 	public static final int BOSS1_STATE_5		=	5;
 	public static final int BOSS1_STATE_CHANGE	=	1;
+	
+	// 設置
+	public static final int PLACEMENT_BLOCK		=	0;
+	public static final int PLACEMENT_SLIME		=	1;
+	public static final int PLACEMENT_GHOST		=	2;
 
 	private CharaConstants(){
 	}

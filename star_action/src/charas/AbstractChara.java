@@ -60,6 +60,15 @@ public abstract class AbstractChara extends JPanel {
 		return Math.abs(c.xPosition - xPosition) <= c.width / 2 + width / 2
 				&& Math.abs(c.yPosition - yPosition) <= c.height / 2 + height / 2;
 	}
+	/**
+	 * 点との当たり判定を返す。当たっていたらtrue,当たっていなかったらfalseを返す
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean isHitPoint(double x, double y){
+		return (x >= xPosition - width / 2 && x <= xPosition + width / 2 && y >= yPosition - height / 2 && y <= yPosition + height / 2);
+	}
 
 	// ジャンプ
 	public void jump() {
