@@ -31,5 +31,7 @@ public class StageConstants {
 	public static final int R = NEEDLE_BLOCK_RIGHT;
 	public static final int L = NEEDLE_BLOCK_LEFT;
 	public static final int D = NEEDLE_BLOCK_DOWN;
+	
+	public static final int s1 = SIGNBOARD_1;
 
 }

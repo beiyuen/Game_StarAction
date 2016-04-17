@@ -9,6 +9,7 @@ public class ImageConstants {
 	public static final int IMAGE_ENEMY_MAX			= 	7;
 	public static final int IMAGE_BLOCK_MAX			= 	4;
 	public static final int IMAGE_TEXT_MAX			= 	2;
+	public static final int IMAGE_SIGNBOARD_MAX		= 	1;
 
 	public static final int IMAGE_ENEMY_SLIME		=	0;
 	public static final int IMAGE_ENEMY_GHOST		=	1;
@@ -25,4 +26,6 @@ public class ImageConstants {
 	
 	public static final int IMAGE_TEXT_WORLD1		=	0;
 	public static final int IMAGE_TEXT_CLEAR		=	1;
+	
+	public static final int IMAGE_SIGNBOARD_1		= 	0;
 }

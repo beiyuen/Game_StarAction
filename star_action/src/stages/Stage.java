@@ -19,6 +19,8 @@ import charas.enemys.MoveEnemy;
 import charas.enemys.NomalEnemy;
 import charas.enemys.ShootEnemy;
 import charas.enemys.WalkEnemy;
+import charas.signboards.AbstractSignboard;
+import charas.signboards.SignBoard;
 public class Stage {
 
 	public int currentStageNum; //現在のステージ数
@@ -30,6 +32,7 @@ public class Stage {
 	public ArrayList<AbstractBlock> blockList = new ArrayList<AbstractBlock>();
 	public ArrayList<AbstractEnemy> enemyList = new ArrayList<AbstractEnemy>();
 	public ArrayList<Needle> needleList = new ArrayList<Needle>();
+	public ArrayList<AbstractSignboard> signboardList = new ArrayList<AbstractSignboard>();
 	public GoalBlock goalBlock;
 
 	 int[][] map;
@@ -120,6 +123,10 @@ public class Stage {
 					case k: // ボス
 						enemyList.add(new Boss1(j, i));
 						break;
+						
+					case s1: // 看板
+						signboardList.add(new SignBoard(j, i, IMAGE_SIGNBOARD_1));
+						break;
 				}
 			}
 		}
@@ -135,6 +142,7 @@ public class Stage {
 	public ArrayList<AbstractBlock> getBlockList(){return blockList;}
 	public ArrayList<AbstractEnemy> getEnemyList() {return enemyList;}
 	public ArrayList<Needle> getNeedleList() {return needleList;}
+	public ArrayList<AbstractSignboard> getSignboardList() {return signboardList;}
 	public GoalBlock getGoalBlock(){return goalBlock;}
 	public int[] getClickableNum(){return currentClickableNum.clone();}
 

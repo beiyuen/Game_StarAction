@@ -34,6 +34,9 @@ public class CharaConstants {
 	public static final int ENEMY_JUMP			=	104;
 	public static final int ENEMY_MOVE			=	105;
 	public static final int ENEMY_KING			=	106;
+	
+	public static final int SIGNBOARD_1			=	200;
+	public static final int SIGNBOARD_2			=	201;
 
 
 	// 当たり判定

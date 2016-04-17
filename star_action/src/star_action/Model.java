@@ -14,6 +14,7 @@ import charas.blocks.WorldClearBlock;
 import charas.enemys.AbstractEnemy;
 import charas.enemys.GhostEnemy;
 import charas.enemys.NomalEnemy;
+import charas.signboards.AbstractSignboard;
 import slide.EndingSlide;
 import slide.OpeningSlide;
 import slide.StageChangeSlide;
@@ -28,9 +29,11 @@ public class Model {
 	public static ArrayList<Needle> needleList = null;
 	public static ArrayList<AbstractBlock> placeBlockList = new ArrayList<AbstractBlock>();
 	public static ArrayList<AbstractEnemy> placeEnemyList = new ArrayList<AbstractEnemy>();
+	public static ArrayList<AbstractSignboard> signboardList = new ArrayList<AbstractSignboard>();
+
 	public static int gameStatus = GAMESTATUS_OPENING;
 
-	public static int stageNum = 5;
+	public static int stageNum = 1;
 	public static int worldNum = 1;
 	public static Stage stage = new Stage();
 	public static PlayerChara playerChara = new PlayerChara(40, 50);
@@ -47,6 +50,9 @@ public class Model {
 	public static int getGameStatus() {	return gameStatus;}
 	public static int getStageNum() {	return stageNum;}
 	public static PlayerChara getPlayerChara() {	return playerChara;}
+	public static ArrayList<AbstractSignboard> getSignboardList() {
+		return signboardList;
+	}
 	public static StageChangeSlide getStageChangeSlide() {	return stageChangeSlide;}
 
 	public static int[] clickableNum = null;
@@ -80,6 +86,9 @@ public class Model {
 	 */
 	public static void init(){
 		playerChara.init();
+		for(AbstractSignboard s: signboardList){
+			s.init();
+		}
 		Iterator<AbstractBlock> blockIterator = blockList.iterator();
 		while (blockIterator.hasNext()) {
 			AbstractBlock b = blockIterator.next();
@@ -119,6 +128,10 @@ public class Model {
 			double speed = playerChara.getxSpeed();
 			if (xPosition + xSpeed + playerChara.getWidth() / 2 > GAME_WIDTH - 400) {
 				playerChara.scroll(speed);
+				for(AbstractSignboard s: signboardList){
+					s.scroll(speed);
+				}
+				
 				for (AbstractBlock b : blockList){
 					b.scroll(speed);
 				}
@@ -216,6 +229,7 @@ public class Model {
 		blockList = stage.getBlockList();
 		enemyList = stage.getEnemyList();
 		needleList = stage.getNeedleList();
+		signboardList = stage.getSignboardList();
 		clickableNum = stage.getClickableNum();
 		scrollable = stage.getScrollable();
 		clickItem = new ClickItem();

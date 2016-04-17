@@ -25,6 +25,7 @@ public class ReferenceItems {
 	private static Image[]	textImage;
 	private static Image	openingImage;
 	private static Image	endingImage;
+	private static Image[]	signboardImage;
 	
 	// 効果音データ用変数
 	private static File[] soundSe;
@@ -41,6 +42,7 @@ public class ReferenceItems {
 		enemyImage = new Image[IMAGE_ENEMY_MAX];
 		blockImage = new Image[IMAGE_BLOCK_MAX];
 		textImage = new Image[IMAGE_TEXT_MAX];
+		signboardImage = new Image[IMAGE_SIGNBOARD_MAX];
 
 		enemyImage[IMAGE_ENEMY_SLIME] = Toolkit.getDefaultToolkit().createImage("image/enemy2.png");
 		enemyImage[IMAGE_ENEMY_GHOST] = Toolkit.getDefaultToolkit().createImage("image/enemy.png");
@@ -59,6 +61,8 @@ public class ReferenceItems {
 		
 		textImage[IMAGE_TEXT_WORLD1] = Toolkit.getDefaultToolkit().createImage("image/textWorld1.png");
 		textImage[IMAGE_TEXT_CLEAR] = Toolkit.getDefaultToolkit().createImage("image/textClear.png");
+		
+		signboardImage[IMAGE_SIGNBOARD_1] = Toolkit.getDefaultToolkit().createImage("image/signboard1.png");
 
 		openingImage = Toolkit.getDefaultToolkit().createImage("image/Title.png");
 		endingImage = Toolkit.getDefaultToolkit().createImage("image/Ending.png");
@@ -108,6 +112,10 @@ public class ReferenceItems {
 
 	public static Image getEndingImage() {
 		return endingImage;
+	}
+
+	public static Image getSignboardImage(int i) {
+		return signboardImage[i];
 	}
 
 	public static File getSoundSe(int i){

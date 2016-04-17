@@ -14,6 +14,7 @@ import charas.Needle;
 import charas.PlayerChara;
 import charas.blocks.AbstractBlock;
 import charas.enemys.AbstractEnemy;
+import charas.signboards.AbstractSignboard;
 import util.DebugShowText;
 
 public class ViewPanel extends JPanel {
@@ -78,6 +79,9 @@ public class ViewPanel extends JPanel {
 
 			case GAMESTATUS_PLAYING:	//各キャラ、ブロック、右上の画像を描画
 				drawSky(offScreen);
+				for (AbstractSignboard s : Model.getSignboardList()) {
+					s.draw(offScreen);
+				}
 				playerChara.draw(offScreen);// draw関数が悪い?
 				for (AbstractBlock b : Model.getBlockList()) {
 					b.draw(offScreen);
@@ -106,6 +110,9 @@ public class ViewPanel extends JPanel {
 
 			case GAMESTATUS_DIE:
 				drawSky(offScreen);
+				for (AbstractSignboard s : Model.getSignboardList()) {
+					s.draw(offScreen);
+				}
 				for (AbstractBlock b : Model.getBlockList()) {
 					b.draw(offScreen);
 				}
@@ -143,6 +150,9 @@ public class ViewPanel extends JPanel {
 			
 			case GAMESTATUS_WORLDCHANGE:
 				drawSky(offScreen);
+				for (AbstractSignboard s : Model.getSignboardList()) {
+					s.draw(offScreen);
+				}
 				playerChara.draw(offScreen);// draw関数が悪い?
 				for (AbstractBlock b : Model.getBlockList()) {
 					b.draw(offScreen);
