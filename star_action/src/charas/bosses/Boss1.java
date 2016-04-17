@@ -4,16 +4,12 @@ import static constants.CharaConstants.*;
 import static constants.MathConstants.*;
 import static constants.SoundCnstants.*;
 
-import java.awt.Graphics;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import charas.PlayerChara;
-import charas.Shot;
 import charas.blocks.AbstractBlock;
 import charas.blocks.WorldClearBlock;
 import star_action.Model;
@@ -21,26 +17,24 @@ import util.Sound;
 
 public class Boss1 extends AbstractBoss {
 
-	public ArrayList<Shot> bullet = new ArrayList<Shot>();
 	BossAction action = new BossAction();
-
+	boolean jumping;
 	public Boss1(int x, int y) {
 		super(x, y);
-		hp = 5;
+		hp = 3;
 		init();
 	}
 
 	public void init(){
 		super.init();
 		death = false;
-		bullet.clear();
 		goAway = false;
 		count = 0;
-		xSpeed = -6;
+		xSpeed = 0;
 		state = BOSS1_STATE_1;
 		hitLeg = false;
-		treadedNum = 4;
-		
+		treadedNum = 0;
+		jumping = false;
 	}
 
 	private void nextState(){
@@ -53,25 +47,8 @@ public class Boss1 extends AbstractBoss {
 
 	public void calcAcceleration(){
 		isHitBlock();
-		if(hitLeg && state != BOSS1_STATE_4){
-		}
+		checkDeath();
 		calcBossAction();
-		// ショットの動作
-		Iterator<Shot> bulletIterator = bullet.iterator();// ショットを移動させる
-		while (bulletIterator.hasNext()) { // 次の要素がある限りループ
-			Shot s = bulletIterator.next();// 次の要素を取得
-			s.calcAcceleration();
-			for (AbstractBlock b : Model.getPlaceBlockList()) {
-				if(b.isHit(s)){
-					bulletIterator.remove();
-					break;
-				}
-			}
-			
-			if(s.isOutOfFrame()){
-				bulletIterator.remove();
-			}
-		}
 	}
 
 	public void death() {
@@ -81,17 +58,14 @@ public class Boss1 extends AbstractBoss {
 	}
 
 	public int isHitPlayerChara(PlayerChara c) {
-		for (Shot s : bullet) {
-			if (s.isHit(c)) {
-				return HIT_MISS;
-			}
-		}
 
-		if (treadedNum < hp // やられる回数を定義
+		if (treadedNum < hp 
 				&& Math.abs(c.xPosition + c.xSpeed - xPosition) < c.width / 2 + width / 2
 				&& Math.abs(c.yPosition + c.ySpeed - yPosition) < c.height / 2 + height / 2
 				&& Math.sin((Math.atan2(c.yPosition - yPosition, c.xPosition - xPosition))) <= -1 / Math.sqrt(2.0)) {
-
+			if(jumping){
+				return HIT_MISS;
+			}
 			if (xPosition < 500) {
 				xSpeed = 15;
 			}
@@ -102,123 +76,58 @@ public class Boss1 extends AbstractBoss {
 			if (!goAway) {
 				nextState();
 				treadedNum++;
-				
 				try {
 					Sound.soundSE(SOUND_SE_TREAD, 0.6);
 				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 					e.printStackTrace();
 				}
-				// Mario.sound("stamp.wav", 0.6);
-				if (state == BOSS1_STATE_4 || state == BOSS1_STATE_5){
-					bullet.clear();
-				}
 				if(treadedNum == hp){
-				//	System.out.println(state + "  " + treadedNum + "   " + hp);		
 					death();
 				}
-					
 			}
-			else {
-				
-			}
-			goAway = true;// 走って壁に逃げる時
-			count = 0;
+			goAway = true;
+			setCount(0);
 			hitLeg = false;
 			return HIT_TREAD;
-			
+
 		} else{
 			return super.isHitPlayerChara(c);
 		}
-			
+
 	}
 	/**
 	 * 画面の両端にぶつかっているかを判定,goAwayによって処理を変える
 	 */
 	public void isHitBlock(){
-		// 壁に当たった時の反応など
-				switch (state) {
-				case BOSS1_STATE_1:
-				case BOSS1_STATE_2:
-					if (xSpeed == 0){
-						xSpeed++;
-					}
 
-					if (xPosition + xSpeed < 70 || xPosition + xSpeed > GAME_WIDTH - 70) {
-						if (!goAway)
-							xSpeed *= -1;
-						else if (goAway) {
-							xSpeed = 0;
-							goAway = false;
-						}
-					}
-					break;
-				case BOSS1_STATE_3:
-				case BOSS1_STATE_4:
-					if (xPosition + xSpeed < 70) {
-						xPosition = 80;
-						xSpeed *= -1;
-						if (goAway) {
-							if (state == BOSS1_STATE_4) {
-								xSpeed = r.nextInt(4) + 1;
-								ySpeed = -5;
-							}
-							goAway = false;
-						}
-					}
-					else if (xPosition + xSpeed > GAME_WIDTH - 70) {
-						xPosition = GAME_WIDTH - 80;
-						xSpeed *= -1;
-						if (goAway) {
-							if (state == BOSS1_STATE_4) {
-								xSpeed = r.nextInt(4) - 9;
-								ySpeed = -5;
-							}
-							goAway = false;
-						}
-					}
-					break;
-				case BOSS1_STATE_5:
-					if (goAway && (xPosition < 70 || xPosition > GAME_WIDTH - 70)) {
-						for (AbstractBlock b : Model.getBlockList()) {
-							b.setDeath(true);
-						}
-						goAway = false;
-						try {
-							Sound.soundSE(SOUND_SE_SURPRISE, 0.4);
-						} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
-							e.printStackTrace();
-						}
-						
-						// Mario.sound("surprise.wav", 0.6);
-					}
-					break;
-				}
-	/*	if(yPosition >= GAME_HEIGHT - 84){
-			yPosition = GAME_HEIGHT - 83;
-			hitLeg = true;
+		if (xPosition + xSpeed < 70 || xPosition + xSpeed > GAME_WIDTH - 120) {
+			if (!goAway)
+				xSpeed *= -1;
+			else if (goAway) {
+				xSpeed = 0;
+				goAway = false;
+			}
 		}
-		else {
-			hitLeg = false;
-		}*/
+
 	}
 	
+	public void checkDeath() {
+		if(yPosition > GAME_HEIGHT + 50){
+			death();
+		}
+	}
+
 	public void calcBossAction(){
 		if (!goAway) {
 			switch (state) {
 			case BOSS1_STATE_1:
-				action.pattern1();
+				action.pattern1(1.0);
 				break;
 			case BOSS1_STATE_2:
-				action.pattern2();
+				action.pattern1(1.2);
 				break;
 			case BOSS1_STATE_3:
-				action.pattern3();
-				break;
-			case BOSS1_STATE_4:
-				action.pattern4();
-				break;
-			case BOSS1_STATE_5:
-				action.pattern5();
+				action.pattern1(1.4);
 				break;
 			}
 			count++;
@@ -229,176 +138,65 @@ public class Boss1 extends AbstractBoss {
 		super.calcYAcceleration();
 	}
 
-	public void calcXAcceleration(double a) {}
 
-	public void calcYAcceleration() {// 重力関係
-		// 通常時
-		if (!goAway) {
-			switch (state) {
-			case 0:
-			case 1:
-				super.calcYAcceleration();
-				break;
-			case 2:
-				if (yPosition > GAME_HEIGHT - 84) {
-					yPosition = GAME_HEIGHT - 87;
-					ySpeed = 0;
-					count = -40;
-					action.flag = 2;
-				}
-				break;
-			case 3:
-			case 4:
-				if (yPosition > GAME_HEIGHT - 84) {
-					yPosition = GAME_HEIGHT - 87;
-					ySpeed *= -1;
-				} else if (yPosition < 50) {
-					yPosition = 55;
-					ySpeed *= -1;
-				}
-				break;
-			}
-		// 避難時	
-		}
-		else {
-			super.calcYAcceleration();				
-		}
-	}
-
-	public void move(){
-		super.move();
-		for(Shot s: bullet){
-			s.move();
-		}
-	}
-
-	public void draw(Graphics g){
-		super.draw(g);
-		for (Shot shot : bullet) {
-			shot.draw(g);
-		}
-	}
-
-	
-	
 	/**
 	 * ボスの動きを定義した内部クラス。hitLegがtrueの時はy方向の動作に対し重力が発生せず、falseの時は重力が発生する
 	 * @author kitahara
 	 *
 	 */
 	class BossAction{
-		public int flag=0;
 		public BossAction(){
 		}
-		
+
 		public void patternAway(){
-			pattern1();
+			if(getyPosition() > GAME_HEIGHT - 84){
+				hitLeg = true;
+				setyPosition(GAME_HEIGHT - 87);
+				changeYSpeed();
+			}
 		}
 		/**
 		 * 横移動をするのみ、床に降りたらhitLegを常にtrueにする
 		 * @param c
 		 */
-		public void pattern1(){
-			if(getyPosition() > GAME_HEIGHT - 84){
-				hitLeg = true;
-				setyPosition(GAME_HEIGHT - 87);
-				changeYSpeed();
+		public void pattern1(double d){
+			if(count == 0){
+				jumping = true;
+				setySpeed(-15 * d);
 			}
-		}
-		/**
-		 * 地面を横移動し、一定時間経過したら飛び跳ねる。着地後の横移動後の向きはプレイヤーとの距離によって変化
-		 * @param c
-		 */
-		public void pattern2(){
-			xSpeed = Math.signum(xSpeed)*7;
-			//c.xPosition += c.xSpeed;
-			if(count%45 == 10){
-				jump();
-				hitLeg = false;
-			}
-			else if(getyPosition() > GAME_HEIGHT - 84){
-				hitLeg = true;
-				setyPosition(GAME_HEIGHT - 87);
-				changeYSpeed();
-			}
-		}
-		/**
-		 * 空中を横移動しながら主人公に向かって弾を撃つ。一定時間経過するか、プレイヤーのx座標がボスのx座標と近かったら落下
-		 * @param c
-		 */
-		public void pattern3(){
-			double px = Model.getPlayerChara().getxPosition();
-			// 最初に壁をよじ登る処理
-			if(count==1){
-				hitLeg = true;
-				setxSpeed(0.0);
-				setySpeed(-4.0);
-				flag=0;
-			}
-			// 空中に浮かんだあと、そのy座標上で横移動する
-			else if(count%140==40){
-				setySpeed(0.0);
-				if(xPosition < px){
-					setxSpeed(2.0);
-				}
-				else{
-					setxSpeed(-2.0);
-				}
-			}
-			// 一定時間経過するか、プレイヤーのx座標がボスのx座標と近かったら落下
-			else if(flag == 0 &&((count%140 > 40 && xPosition-75 < px && xPosition+75 > px )|| count==140)){
-				hitLeg = false;
-				flag = 1;//落下
-				setxSpeed(0.0);
+			else if(count == 55){
+				setxPosition(Model.getPlayerChara().getxPosition());
+				setyPosition(-100);
+				setySpeed(15*d);
 			}
 			
-			if(getyPosition() > GAME_HEIGHT - 84){
-				hitLeg = true;
-				setyPosition(GAME_HEIGHT - 87);
-				setCount(-40);
-				changeYSpeed();
+			else if(yPosition > GAME_HEIGHT -84 && yPosition < GAME_HEIGHT + 20){
+				boolean ground = false;
+				for (AbstractBlock b : Model.getBlockList()) {
+					if(b.hity(Boss1.this).height == 1){
+						ground = true;
+						break;
+					}
+					
+				}
+				System.out.println(ground);
+				// 着地点が存在したら
+				if(ground){
+					jumping = false;
+					hitLeg = true;
+					setyPosition(GAME_HEIGHT - 87);
+					changeYSpeed();
+					setCount(200);
+				}
+				
 			}
-			// 落下中
-			//else if(flag==1){
-			//	c.ySpeed+=2.2;
-			//}
+			else if(count == 240){
+				setCount(-1);
+			}
 			
-			if(count>0 && count%40==35){
-					bullet.add(new Shot( (int)(xPosition), (int)(yPosition),1.0,
-							Math.atan2(Model.getPlayerChara().getyPosition()-yPosition,px-xPosition)));
-					//Mario.sound("shoot.wav",0.4);
-			}
 		}
-		/**
-		 * x方向、y方向に決められた動きで動き、一定時間ごとに６方向に弾を撃つ
-		 * @param c
-		 */
-		public void pattern4(){//ショットを打つ
-			hitLeg = true;
-			if(count%35==20){
-				for(int i =0;i<6;i++)
-					bullet.add(new Shot( (int)(xPosition), (int)(yPosition),3.0,(count+i*60)*Math.PI/180));
-				//Mario.sound("shoot.wav",0.4);
-			}
-			if (yPosition < 50 || yPosition > GAME_HEIGHT - 84) {
-				setySpeed(ySpeed * -1);
-			}
-		}
-		/**
-		 * 壁沿いで縦移動のみ行う
-		 * @param c
-		 */
-		public void pattern5(){//縦移動
-			if(count==0){
-				hitLeg = true;
-				setxSpeed(0.0);
-				setySpeed(-5);
-			}
-			if (yPosition < 50 || yPosition > GAME_HEIGHT - 84) {
-				setySpeed(ySpeed * -1);
-			}
-		}
+
 	}
-	
-	
+
+
 }

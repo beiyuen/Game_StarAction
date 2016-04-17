@@ -33,10 +33,15 @@ public class CharaConstants {
 	public static final int ENEMY_WALK			=	103;
 	public static final int ENEMY_JUMP			=	104;
 	public static final int ENEMY_MOVE			=	105;
-	public static final int ENEMY_KING			=	106;
+	public static final int ENEMY_KING1			=	106;
+	public static final int ENEMY_KING2			=	107;
 	
 	public static final int SIGNBOARD_1			=	200;
 	public static final int SIGNBOARD_2			=	201;
+	public static final int SIGNBOARD_3			=	202;
+	public static final int SIGNBOARD_4			=	203;
+	public static final int SIGNBOARD_5			=	204;
+	public static final int SIGNBOARD_6			=	205;
 
 
 	// 当たり判定
@@ -47,8 +52,12 @@ public class CharaConstants {
 	public static final int BOSS1_STATE_1		=	1;
 	public static final int BOSS1_STATE_2		=	2;
 	public static final int BOSS1_STATE_3		=	3;
-	public static final int BOSS1_STATE_4		=	4;
-	public static final int BOSS1_STATE_5		=	5;
+	
+	public static final int BOSS2_STATE_1		=	1;
+	public static final int BOSS2_STATE_2		=	2;
+	public static final int BOSS2_STATE_3		=	3;
+	public static final int BOSS2_STATE_4		=	4;
+	public static final int BOSS2_STATE_5		=	5;
 	public static final int BOSS1_STATE_CHANGE	=	1;
 	
 	// 設置

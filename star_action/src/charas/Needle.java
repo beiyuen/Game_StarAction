@@ -10,7 +10,6 @@ import charas.enemys.WalkEnemy;
 
 
 public class Needle extends AbstractChara {
-    public static int SIZE = 50;
 
 	 public Needle(int x, int y, int i) {
 		 super(x,y,50,50,"image/needle.png");

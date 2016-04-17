@@ -16,7 +16,8 @@ public class StageConstants {
 	public static final int n = BLOCK_NOMAL;
 
 	public static final int e = ENEMY_SLIME;
-	public static final int k = ENEMY_KING;
+	public static final int k1 = ENEMY_KING1;
+	public static final int k2 = ENEMY_KING2;
 	public static final int G = ENEMY_GHOST;
 	public static final int w = ENEMY_WALK;
 	public static final int m = ENEMY_MOVE;
@@ -33,5 +34,10 @@ public class StageConstants {
 	public static final int D = NEEDLE_BLOCK_DOWN;
 	
 	public static final int s1 = SIGNBOARD_1;
+	public static final int s2 = SIGNBOARD_2;
+	public static final int s3 = SIGNBOARD_3;
+	public static final int s4 = SIGNBOARD_4;
+	public static final int s5 = SIGNBOARD_5;
+	public static final int s6 = SIGNBOARD_6;
 
 }

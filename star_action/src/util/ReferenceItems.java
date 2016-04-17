@@ -63,6 +63,11 @@ public class ReferenceItems {
 		textImage[IMAGE_TEXT_CLEAR] = Toolkit.getDefaultToolkit().createImage("image/textClear.png");
 		
 		signboardImage[IMAGE_SIGNBOARD_1] = Toolkit.getDefaultToolkit().createImage("image/signboard1.png");
+		signboardImage[IMAGE_SIGNBOARD_2] = Toolkit.getDefaultToolkit().createImage("image/signboard2.png");
+		signboardImage[IMAGE_SIGNBOARD_3] = Toolkit.getDefaultToolkit().createImage("image/signboard3.png");
+		signboardImage[IMAGE_SIGNBOARD_4] = Toolkit.getDefaultToolkit().createImage("image/signboard4.png");
+		signboardImage[IMAGE_SIGNBOARD_5] = Toolkit.getDefaultToolkit().createImage("image/signboard5.png");
+		//signboardImage[IMAGE_SIGNBOARD_6] = Toolkit.getDefaultToolkit().createImage("image/signboard6.png");
 
 		openingImage = Toolkit.getDefaultToolkit().createImage("image/Title.png");
 		endingImage = Toolkit.getDefaultToolkit().createImage("image/Ending.png");

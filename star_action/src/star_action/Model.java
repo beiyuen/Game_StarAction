@@ -34,7 +34,7 @@ public class Model {
 
 	public static int gameStatus = GAMESTATUS_OPENING;
 
-	public static int stageNum = 1;
+	public static int stageNum = 5;
 	public static int worldNum = 1;
 	public static Stage stage = new Stage();
 	public static PlayerChara playerChara = new PlayerChara(40, 50);
@@ -212,7 +212,7 @@ public class Model {
 		worldClearSlide.init();
 		worldNum++;
 		setGameStatus(GAMESTATUS_WORLDCHANGE);
-		if(stageNum == 5){
+		if(stageNum == 10){
 			gameClear();
 		//	setStage(stageNum);
 		}
@@ -282,7 +282,6 @@ public class Model {
 			double py = y *  BLOCK_SIZE + BLOCK_SIZE / 2;
 			for (AbstractEnemy e : enemyList) {
 				if(e.isHitPoint(px, py)){
-					System.out.println("だめ");
 					return;
 				}
 			}

@@ -3,19 +3,13 @@ package charas.bosses;
 import static constants.CharaConstants.*;
 import static constants.ImageConstants.*;
 import static constants.MathConstants.*;
-import static constants.SoundCnstants.*;
 
 import java.awt.Graphics;
-import java.io.IOException;
-
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 import charas.PlayerChara;
 import charas.blocks.AbstractBlock;
 import charas.enemys.AbstractEnemy;
 import star_action.Model;
-import util.Sound;
 
 public abstract class AbstractBoss extends AbstractEnemy {
 
@@ -43,7 +37,7 @@ public abstract class AbstractBoss extends AbstractEnemy {
 		//goAway = false;
 		count = 0;
 		xSpeed = -6;
-		state = BOSS1_STATE_1;
+		state = BOSS2_STATE_1;
 		hitLeg = false;
 	}
 
@@ -65,34 +59,6 @@ public abstract class AbstractBoss extends AbstractEnemy {
 	}
 
 	public int isHitPlayerChara(PlayerChara c) {
-
-		if (treadedNum < hp // やられる回数を定義
-				&& Math.abs(c.xPosition + c.xSpeed - xPosition) < c.width / 2 + width / 2
-				&& Math.abs(c.yPosition + c.ySpeed - yPosition) < c.height / 2 + height / 2
-				&& Math.sin((Math.atan2(c.yPosition - yPosition, c.xPosition - xPosition))) <= -1 / Math.sqrt(2.0)) {
-
-			if (xPosition < 500) {
-				xSpeed = 15;
-			}
-			else {
-				xSpeed = -15;
-			}
-
-			// 通常時にプレイヤーに踏まれたら
-			if (!goAway ) {
-				System.out.println("boss treaded");
-				state++;
-				treadedNum++;
-				try {
-					Sound.soundSE(SOUND_SE_TREAD, 0.6);
-				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
-					e.printStackTrace();
-				}
-			}
-			goAway  = true;// 走って壁に逃げる時
-			count = 0;
-			return HIT_TREAD;
-		} else
 			return super.isHitPlayerChara(c);
 	}
 

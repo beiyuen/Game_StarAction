@@ -10,7 +10,6 @@ public class PlayerChara extends AbstractChara {
 	private static final long serialVersionUID = 1L;
 
 	public boolean moveRight = false, moveLeft = false, up = false,dash = false;
-	public int  kill;
 	
 	int kabe;//i,imgkind:画像用,kabe:敵用
 
@@ -29,8 +28,8 @@ public class PlayerChara extends AbstractChara {
 
 	//初期化
 	public void init() {
-		xPosition = 3*BLOCK_SIZE;
-		yPosition = 8*BLOCK_SIZE;
+		xPosition = 3 * BLOCK_SIZE;
+		yPosition = 10 * BLOCK_SIZE;
 		xSpeed=0;
 		ySpeed = 0;
 		hitRight = false;

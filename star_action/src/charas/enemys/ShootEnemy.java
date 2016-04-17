@@ -15,6 +15,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import charas.PlayerChara;
 import charas.Shot;
+import charas.blocks.AbstractBlock;
 import star_action.Model;
 import util.Sound;
 
@@ -41,8 +42,8 @@ public class ShootEnemy extends AbstractEnemy {
 	public void calcAcceleration() {
 		if(!death2){
 			super.calcAcceleration();
-
-			shotCount++;
+			
+				shotCount++;
 			//弾を出す
 			if( shotCount %150 == 100 &&xPosition>0 && xPosition < GAME_WIDTH-40){
 				for(int i =0;i<6;i++){
@@ -60,6 +61,12 @@ public class ShootEnemy extends AbstractEnemy {
 			while (bulletIterator.hasNext()) {
 				Shot s = bulletIterator.next();
 				s.calcAcceleration();
+				for (AbstractBlock b : Model.getPlaceBlockList()) {
+					if(b.isHit(s)){
+						bulletIterator.remove();
+						break;
+					}
+				}
 				if(s.isOutOfFrame()){
 					bulletIterator.remove();
 				}

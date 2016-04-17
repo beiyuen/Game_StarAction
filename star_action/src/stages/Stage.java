@@ -13,6 +13,7 @@ import charas.blocks.GoalBlock;
 import charas.blocks.HardBlock;
 import charas.blocks.NomalBlock;
 import charas.bosses.Boss1;
+import charas.bosses.Boss2;
 import charas.enemys.AbstractEnemy;
 import charas.enemys.GhostEnemy;
 import charas.enemys.MoveEnemy;
@@ -25,7 +26,7 @@ public class Stage {
 
 	public int currentStageNum; //現在のステージ数
 	public int currentClickableNum[];
-	int clickableNum[][] = {{10,10,10},{15,0,0},{0,0,0},{0,5,0},{6,0,0},{0,0,0}}; //クリック可能回数
+	int clickableNum[][] = {{10,10,10},{15,0,0},{0,0,0},{30,0,0},{6,0,0},{0,5,0},{0,0,0}}; //クリック可能回数
 	public boolean scrollable[] = {true,true,false,true,false,true};
 	public boolean currentScrollable;
 
@@ -121,13 +122,28 @@ public class Stage {
 					case J: // 静止してジャンプする敵
 						enemyList.add(new MoveEnemy(j, i, 0));
 						break;
-					case k: // ボス
+					case k1: // ボス
 						enemyList.add(new Boss1(j, i));
+						break;
+					case k2: // ボス
+						enemyList.add(new Boss2(j, i));
 						break;
 						
 					case s1: // 看板
 						signboardList.add(new SignBoard(j, i, IMAGE_SIGNBOARD_1));
 						break;
+					case s2: // 看板
+						signboardList.add(new SignBoard(j, i, IMAGE_SIGNBOARD_2));
+						break;
+					case s3: // 看板
+						signboardList.add(new SignBoard(j, i, IMAGE_SIGNBOARD_3));
+						break;
+					case s4: // 看板
+						signboardList.add(new SignBoard(j, i, IMAGE_SIGNBOARD_4));
+						break;	
+					case s5: // 看板
+						signboardList.add(new SignBoard(j, i, IMAGE_SIGNBOARD_5));
+						break;		
 				}
 			}
 		}

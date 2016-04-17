@@ -6,10 +6,10 @@ package constants;
  */
 public class MathConstants {
 
-	public static final int WINDOW_WIDTH 			= 	1000;
-	public static final int WINDOW_HEIGHT 			= 	530;
-	public static final int GAME_WIDTH 				= 	1000;
-	public static final int GAME_HEIGHT 			= 	500;
+	public static final int WINDOW_WIDTH 			= 	900;
+	public static final int WINDOW_HEIGHT 			= 	630;
+	public static final int GAME_WIDTH 				= 	900;
+	public static final int GAME_HEIGHT 			= 	600;
 
 	public static final int GAMESTATUS_OPENING 		= 	0;
 	public static final int GAMESTATUS_PLAYING 		= 	1;
