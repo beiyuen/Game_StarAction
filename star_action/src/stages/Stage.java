@@ -46,6 +46,7 @@ public class Stage {
 		blockList.clear();
 		enemyList.clear();
 		needleList.clear();
+		signboardList.clear();
 		map = StageMap.getStageMap(stageNum);
 
 		for (int i = 0; i < map.length; i++) {
