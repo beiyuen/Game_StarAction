@@ -15,7 +15,9 @@ public class Controller {
 	private static StarActionKeyAdapter keyAdapter = null;
 
 	static class StarActionMouseAdapter extends MouseAdapter{
+
 		public void mouseClicked(MouseEvent evt) {
+			
 			int click = evt.getButton();
 			int gameStatus = Model.getGameStatus();
 			int mode = Model.getplacementMode();

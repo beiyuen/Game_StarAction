@@ -136,7 +136,7 @@ public class ViewPanel extends JPanel {
 				}
 				Model.getClickItem().draw(offScreen);
 				debugShowText.draw(offScreen);
-				offScreen.drawImage(gameoverImage, 0,0,1000,500, this);
+				offScreen.drawImage(gameoverImage, 0,0,900,600, this);
 				break;
 
 			case GAMESTATUS_ENDING:
