@@ -17,6 +17,7 @@ import charas.enemys.GhostEnemy;
 import charas.enemys.NomalEnemy;
 import charas.signboards.AbstractSignboard;
 import slide.EndingSlide;
+import slide.GameoverSlide;
 import slide.OpeningSlide;
 import slide.StageChangeSlide;
 import slide.WorldClearSlide;
@@ -44,6 +45,7 @@ public class Model {
 	public static WorldClearSlide worldClearSlide = new WorldClearSlide(worldNum-1);
 	public static OpeningSlide openingSlide = new OpeningSlide();
 	public static EndingSlide endingSlide = new EndingSlide();
+	public static GameoverSlide gameoverSlide = new GameoverSlide();
 
 	public static ArrayList<AbstractBlock> getBlockList() {return blockList;}
 	public static ArrayList<AbstractEnemy> getEnemyList() {return enemyList;}
@@ -262,6 +264,9 @@ public class Model {
 	}
 	public static EndingSlide getEndingSlide() {
 		return endingSlide;
+	}
+	public static GameoverSlide getGameoverSlide() {
+		return gameoverSlide;
 	}
 	public static boolean isScrollable() {
 		return scrollable;

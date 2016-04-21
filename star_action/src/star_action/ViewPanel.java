@@ -4,7 +4,6 @@ import static constants.MathConstants.*;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
@@ -24,8 +23,6 @@ public class ViewPanel extends JPanel {
 	private Graphics offScreen;
 	private BufferedImage offImage;
 	Color blue = new Color(150, 250, 255);
-
-	public Image gameoverImage =  getToolkit().createImage("image/Gameover.png");
 
 	public PlayerChara playerChara = new PlayerChara(40, 50);
 
@@ -136,7 +133,7 @@ public class ViewPanel extends JPanel {
 				}
 				Model.getClickItem().draw(offScreen);
 				debugShowText.draw(offScreen);
-				offScreen.drawImage(gameoverImage, 0,0,900,600, this);
+				Model.getGameoverSlide().draw(offScreen);
 				break;
 
 			case GAMESTATUS_ENDING:

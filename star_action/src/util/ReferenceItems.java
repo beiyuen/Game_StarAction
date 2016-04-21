@@ -26,6 +26,7 @@ public class ReferenceItems {
 	private static Image	openingImage;
 	private static Image	endingImage;
 	private static Image[]	signboardImage;
+	private static Image	gameoverImage;
 	
 	// 効果音データ用変数
 	private static File[] soundSe;
@@ -70,7 +71,8 @@ public class ReferenceItems {
 		//signboardImage[IMAGE_SIGNBOARD_6] = Toolkit.getDefaultToolkit().createImage("image/signboard6.png");
 
 		openingImage = Toolkit.getDefaultToolkit().createImage("image/Title.png");
-		endingImage = Toolkit.getDefaultToolkit().createImage("image/Ending.png");
+		endingImage = Toolkit.getDefaultToolkit().createImage("image/ending.png");
+		gameoverImage = Toolkit.getDefaultToolkit().createImage("image/gameover.png");
 
 		soundSe = new File[SOUND_SE_MAX];
 		clip = new Clip[SOUND_SE_MAX];
@@ -117,6 +119,10 @@ public class ReferenceItems {
 
 	public static Image getEndingImage() {
 		return endingImage;
+	}
+
+	public static Image getGameoverImage() {
+		return gameoverImage;
 	}
 
 	public static Image getSignboardImage(int i) {
