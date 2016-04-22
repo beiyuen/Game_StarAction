@@ -23,6 +23,7 @@ public class FakeBlock extends AbstractBlock {
 
 	public FakeBlock(int x, int y, int i) {
 		super(x, y , i);
+		removable = true;
 		// TODO 自動生成されたコンストラクター・スタブ
 	}
 	void death() {

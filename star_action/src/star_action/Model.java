@@ -35,7 +35,7 @@ public class Model {
 
 	public static int gameStatus = GAMESTATUS_OPENING;
 
-	public static int stageNum = 5;
+	public static int stageNum = 9;
 	public static int worldNum = 1;
 	public static Stage stage = new Stage();
 	public static PlayerChara playerChara = new PlayerChara(40, 50);

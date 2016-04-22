@@ -110,12 +110,12 @@ public class PlayerChara extends AbstractChara {
 	public void calcXAcceleration(double a) {
 		// 右を押していたとき
 		if (moveRight && !hitRight){
-			if(dash && xSpeed <= 16 && hitLeg){
+			if(dash && xSpeed <= 16){
 				xSpeed += 2;				
 			}
-			else if(dash && xSpeed <= 16 && !hitLeg){
+			/*else if(dash && xSpeed <= 16 && !hitLeg){
 				xSpeed += 0.7;//等速にするための処理
-			}
+			}*/
 			else if(dash==false && xSpeed <= 6){
 				xSpeed += 1.5;
 			}
@@ -125,12 +125,12 @@ public class PlayerChara extends AbstractChara {
 		}
 		// 左を押していたとき
 		else if (moveLeft && !hitLeft){
-			if(dash&& xSpeed >= -16 && hitLeg){
+			if(dash&& xSpeed >= -16){
 				xSpeed -= 2;
 			}
-			else if(dash&& xSpeed >= -16 && !hitLeg){
+			/*else if(dash&& xSpeed >= -16 && !hitLeg){
 				xSpeed -= 0.7;
-			}
+			}*/
 			else if(dash==false && xSpeed >= -6){
 				xSpeed -= 1.5;
 			}
