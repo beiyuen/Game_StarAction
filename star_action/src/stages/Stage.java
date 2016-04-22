@@ -22,11 +22,16 @@ import charas.enemys.ShootEnemy;
 import charas.enemys.WalkEnemy;
 import charas.signboards.AbstractSignboard;
 import charas.signboards.SignBoard;
+/**
+ * ステージ情報を保持するクラスです
+ * @author kitahara
+ *
+ */
 public class Stage {
 
 	public int currentStageNum; //現在のステージ数
 	public int currentClickableNum[];
-	int clickableNum[][] = {{10,10,10},{15,0,0},{0,0,0},{30,0,0},{6,0,0},{20,5,0},{0,5,0},{16,0,0},{0,0,0},{6,0,0}}; //クリック可能回数
+	int clickableNum[][] = {{10,10,10},{15,15,15},{0,0,0},{30,0,0},{6,0,0},{20,5,0},{0,5,0},{16,0,0},{0,0,0},{6,0,0}}; //クリック可能回数
 	public boolean scrollable[] = {true,true,false,true,false,true,true,true,true,false};
 	public boolean currentScrollable;
 

@@ -10,21 +10,27 @@ import javax.swing.JPanel;
 
 import util.Text;
 
-public class StageChangeSlide extends JPanel{
+/**
+ * ステージ間に表示するスライドです
+ * 
+ * @author kitahara
+ *
+ */
+public class StageChangeSlide extends JPanel {
 
-	private Font font = new Font("serif", Font.BOLD,24);
+	private Font font = new Font("serif", Font.BOLD, 24);
 	private Text text;
-	
-	public StageChangeSlide(){
-		
+
+	public StageChangeSlide() {
+
 		text = new Text(300, 200, "STAGE 1", font, Color.WHITE);
 	}
-	
-	public void setText(int i){
+
+	public void setText(int i) {
 		text.setText("STAGE " + String.valueOf(i));
 	}
-	
-	public void draw(Graphics g){
+
+	public void draw(Graphics g) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 		text.draw(g);

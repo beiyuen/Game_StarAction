@@ -13,23 +13,30 @@ import charas.blocks.GoalBlock;
 import charas.blocks.WorldClearBlock;
 import star_action.Model;
 
+/**
+ * ブロック、トゲ、プレイヤーキャラ、敵、ボスの基礎となるクラスです
+ * 
+ * @author kitahara
+ *
+ */
 public abstract class AbstractChara extends JPanel {
-	public double xPosition, yPosition; //位置
+	public double xPosition, yPosition; // 位置
 	public double initX, initY;
-	public double xSpeed, ySpeed; //スピード
-	public int width; //縦横サイズ
+	public double xSpeed, ySpeed; // スピード
+	public int width; // 縦横サイズ
 	public int height;
-	public Image image;  //画像
+	public Image image; // 画像
 	public boolean hitRight = false, hitLeft = false, hitHead = false, hitLeg = false;
 	public boolean death;
 	public int imageDrawWidth = 1, imageDrawHeight = 1;
 	public int imageColumn = 1, imageLine = 1;
 	public int imageKind = 0;
 	public int imageCount = 0;
-	
-	public AbstractChara(){}
 
-	//x,yはマップ座標
+	public AbstractChara() {
+	}
+
+	// x,yはマップ座標
 	public AbstractChara(int x, int y, int w, int h, String c) {
 		xPosition = (x + 0.5) * BLOCK_SIZE;
 		yPosition = (y + 0.5) * BLOCK_SIZE;
@@ -45,7 +52,7 @@ public abstract class AbstractChara extends JPanel {
 		death = false;
 	}
 
-	public void init(){
+	public void init() {
 		xPosition = initX;
 		yPosition = initY;
 		death = false;
@@ -53,6 +60,7 @@ public abstract class AbstractChara extends JPanel {
 
 	/**
 	 * 対象キャラ(c)との当たり判定を返す。当たっていたらtrue,当たっていなかったらfalseを返す
+	 * 
 	 * @param c
 	 * @return
 	 */
@@ -60,14 +68,17 @@ public abstract class AbstractChara extends JPanel {
 		return Math.abs(c.xPosition - xPosition) <= c.width / 2 + width / 2
 				&& Math.abs(c.yPosition - yPosition) <= c.height / 2 + height / 2;
 	}
+
 	/**
 	 * 点との当たり判定を返す。当たっていたらtrue,当たっていなかったらfalseを返す
+	 * 
 	 * @param x
 	 * @param y
 	 * @return
 	 */
-	public boolean isHitPoint(double x, double y){
-		return (x >= xPosition - width / 2 && x <= xPosition + width / 2 && y >= yPosition - height / 2 && y <= yPosition + height / 2);
+	public boolean isHitPoint(double x, double y) {
+		return (x >= xPosition - width / 2 && x <= xPosition + width / 2 && y >= yPosition - height / 2
+				&& y <= yPosition + height / 2);
 	}
 
 	// ジャンプ
@@ -82,10 +93,9 @@ public abstract class AbstractChara extends JPanel {
 		calcYAcceleration();
 		calcXAcceleration(0.7);
 		isHitBlock();
-		if(hitLeft || hitRight){
+		if (hitLeft || hitRight) {
 			changeXSpeed();
-		}
-		else if(hitHead || hitLeg){
+		} else if (hitHead || hitLeg) {
 			changeYSpeed();
 		}
 
@@ -93,14 +103,17 @@ public abstract class AbstractChara extends JPanel {
 
 	/**
 	 * 減速処理を行う。また、速度が一定以下になったら止まるようにする
+	 * 
 	 * @param a
 	 */
 	public void calcXAcceleration(double a) {
-		if (xSpeed > 0)xSpeed -= a;
-		if (xSpeed < 0)xSpeed += a;
-		//振動防止
-		if (Math.abs(xSpeed) < a)xSpeed = 0;
-
+		if (xSpeed > 0)
+			xSpeed -= a;
+		if (xSpeed < 0)
+			xSpeed += a;
+		// 振動防止
+		if (Math.abs(xSpeed) < a)
+			xSpeed = 0;
 
 	}
 
@@ -108,198 +121,213 @@ public abstract class AbstractChara extends JPanel {
 	 * 空中にいるときはy方向の速度が大きくなるようにする
 	 */
 	public void calcYAcceleration() {
-		if(!hitLeg && ySpeed <= 18) {
+		if (!hitLeg && ySpeed <= 18) {
 			ySpeed += 1.3;
 		}
 	}
 
-	public void isHitBlock(){
+	public void isHitBlock() {
 		int hitr = 0;
 		int hitl = 0;
 		int hith = 0;
 		int hitd = 0;
 		int hitGoal = 0;
 		Dimension hx, hy;
-		for (AbstractBlock b : Model.getBlockList()){
-			if(b instanceof GoalBlock){
-				if(((GoalBlock)b).hitGoal(this)){
+		for (AbstractBlock b : Model.getBlockList()) {
+			if (b instanceof GoalBlock) {
+				if (((GoalBlock) b).hitGoal(this)) {
 					hitGoal = 1;
 				}
-			}
-			else if(b instanceof WorldClearBlock){
-				if( ((WorldClearBlock)b).hitGoal(this)){
+			} else if (b instanceof WorldClearBlock) {
+				if (((WorldClearBlock) b).hitGoal(this)) {
 					hitGoal = 2;
 				}
-			}
-			else {
+			} else {
 				hx = b.hitx(this);
 				hy = b.hity(this);
-				if(hx.width == 1){
+				if (hx.width == 1) {
 					hitl = 1;
 				}
-				if(hx.height == 1){
+				if (hx.height == 1) {
 					hitr = 1;
 				}
-				if(hy.width == 1){
+				if (hy.width == 1) {
 					hith = 1;
 				}
-				if(hy.height == 1){
+				if (hy.height == 1) {
 					hitd = 1;
 				}
 			}
-			
+
 		}
-		for (AbstractBlock b : Model.getPlaceBlockList()){
+		for (AbstractBlock b : Model.getPlaceBlockList()) {
 			hx = b.hitx(this);
 			hy = b.hity(this);
-			if(hx.width == 1){
+			if (hx.width == 1) {
 				hitl = 1;
 			}
-			if(hx.height == 1){
+			if (hx.height == 1) {
 				hitr = 1;
 			}
-			if(hy.width == 1){
+			if (hy.width == 1) {
 				hith = 1;
 			}
-			if(hy.height == 1){
+			if (hy.height == 1) {
 				hitd = 1;
 			}
 		}
-		hitLeft 	= hitl == 1 ? true:false;
-		hitRight 	= hitr == 1 ? true:false;
-		hitHead 	= hith == 1 ? true:false;
-		hitLeg 		= hitd == 1 ? true:false;
-		if(hitGoal == 1){
+		hitLeft = hitl == 1 ? true : false;
+		hitRight = hitr == 1 ? true : false;
+		hitHead = hith == 1 ? true : false;
+		hitLeg = hitd == 1 ? true : false;
+		if (hitGoal == 1) {
 			Model.nextStage();
-		}
-		else if(hitGoal == 2){
+		} else if (hitGoal == 2) {
 			Model.nextWorld();
 		}
 	}
 
-	public void scroll(double speed){
+	public void scroll(double speed) {
 		xPosition -= speed;
 	}
 
 	// 速度変更
 	public abstract void changeXSpeed();
+
 	public abstract void changeYSpeed();
 
 	/**
 	 * 移動処理を行う。x,yのそれぞれの座標に速度を足す
 	 */
-	public void move(){
+	public void move() {
 		xPosition += xSpeed;
 		yPosition += ySpeed;
 	}
 
-	//描画
+	// 描画
 	public void draw(Graphics g) {
 		double sx, sy;
-        sx = (imageKind % imageColumn) * imageDrawWidth;
-        sy = (imageKind / imageColumn) * imageDrawHeight;
+		sx = (imageKind % imageColumn) * imageDrawWidth;
+		sy = (imageKind / imageColumn) * imageDrawHeight;
 
-        g.drawImage(image,(int)(xPosition- width / 2),(int)(yPosition- height / 2),
-				(int)(xPosition+width/2),(int)(yPosition+height/2),
-				(int)(sx),(int)(sy), (int)(sx+imageDrawWidth), (int)(sy+imageDrawHeight),this);
+		g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2), (int) (xPosition + width / 2),
+				(int) (yPosition + height / 2), (int) (sx), (int) (sy), (int) (sx + imageDrawWidth),
+				(int) (sy + imageDrawHeight), this);
 	}
 
 	/**
 	 * xPositionを取得します。
+	 * 
 	 * @return xPosition
 	 */
 	public double getxPosition() {
-	    return xPosition;
+		return xPosition;
 	}
 
 	/**
 	 * xPositionを設定します。
-	 * @param xPosition xPosition
+	 * 
+	 * @param xPosition
+	 *            xPosition
 	 */
 	public void setxPosition(double xPosition) {
-	    this.xPosition = xPosition;
+		this.xPosition = xPosition;
 	}
 
 	/**
 	 * yPositionを取得します。
+	 * 
 	 * @return yPosition
 	 */
 	public double getyPosition() {
-	    return yPosition;
+		return yPosition;
 	}
 
 	/**
 	 * yPositionを設定します。
-	 * @param yPosition yPosition
+	 * 
+	 * @param yPosition
+	 *            yPosition
 	 */
 	public void setyPosition(double yPosition) {
-	    this.yPosition = yPosition;
+		this.yPosition = yPosition;
 	}
 
 	/**
 	 * xSpeedを取得します。
+	 * 
 	 * @return xSpeed
 	 */
 	public double getxSpeed() {
-	    return xSpeed;
+		return xSpeed;
 	}
 
 	/**
 	 * xSpeedを設定します。
-	 * @param xSpeed xSpeed
+	 * 
+	 * @param xSpeed
+	 *            xSpeed
 	 */
 	public void setxSpeed(double xSpeed) {
-	    this.xSpeed = xSpeed;
+		this.xSpeed = xSpeed;
 	}
 
 	/**
 	 * ySpeedを取得します。
+	 * 
 	 * @return ySpeed
 	 */
 	public double getySpeed() {
-	    return ySpeed;
+		return ySpeed;
 	}
 
 	/**
 	 * ySpeedを設定します。
-	 * @param ySpeed ySpeed
+	 * 
+	 * @param ySpeed
+	 *            ySpeed
 	 */
 	public void setySpeed(double ySpeed) {
-	    this.ySpeed = ySpeed;
+		this.ySpeed = ySpeed;
 	}
 
 	/**
 	 * widthを取得します。
+	 * 
 	 * @return width
 	 */
 	public int getWidth() {
-	    return width;
+		return width;
 	}
 
 	/**
 	 * heightを取得します。
+	 * 
 	 * @return height
 	 */
 	public int getHeight() {
-	    return height;
+		return height;
 	}
 
 	/**
 	 * hitLegを取得します。
+	 * 
 	 * @return hitLeg
 	 */
 	public boolean ishitLeg() {
-	    return hitLeg;
+		return hitLeg;
 	}
+
 	/**
 	 * deathを取得します。
+	 * 
 	 * @return
 	 */
-	public boolean isDeath(){
+	public boolean isDeath() {
 		return death;
 	}
 
-	public void setDeath(boolean b){
+	public void setDeath(boolean b) {
 		death = b;
 	}
 }

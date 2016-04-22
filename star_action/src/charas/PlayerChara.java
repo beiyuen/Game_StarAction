@@ -1,57 +1,61 @@
 package charas;
+
 import static constants.CharaConstants.*;
 import static constants.MathConstants.*;
 
 import charas.enemys.AbstractEnemy;
 import star_action.Model;
+import util.ReferenceItems;
 
-// 操作キャラ
+/**
+ * 操作キャラです
+ * 
+ * @author kitahara
+ *
+ */
 public class PlayerChara extends AbstractChara {
 	private static final long serialVersionUID = 1L;
 
-	public boolean moveRight = false, moveLeft = false, up = false,dash = false;
-	
-	int kabe;//i,imgkind:画像用,kabe:敵用
+	public boolean moveRight = false, moveLeft = false, up = false, dash = false;
 
+	int kabe;// i,imgkind:画像用,kabe:敵用
 
 	public PlayerChara(int w, int h) {
-		image = getToolkit().createImage("image/playerChara.png");
+		image = ReferenceItems.getPlayerCharaImage();
 		width = w;
 		height = h;
 		imageDrawWidth = 40;
 		imageDrawHeight = 50;
-		imageColumn = 3;
-		imageLine = 2; //画像の分割数
-		imageKind = 3;
+		imageColumn = 5;
+		imageLine = 2; // 画像の分割数
+		imageKind = 5;
 		init();
 	}
 
-	//初期化
+	// 初期化
 	public void init() {
 		xPosition = 3 * BLOCK_SIZE;
 		yPosition = 10 * BLOCK_SIZE;
-		xSpeed=0;
+		xSpeed = 0;
 		ySpeed = 0;
 		hitRight = false;
 		hitLeft = false;
 		hitLeg = false;
-		imageCount=0;
+		imageCount = 0;
 		imageKind = 3;
 		death = false;
 	}
 
-	//落下時、敵接触時など
+	// 落下時、敵接触時など
 
+	// 衝突処理を追加
+	public void calcAcceleration() {
+		// super.calcAcceleration();
 
-	//衝突処理を追加
-	public void calcAcceleration(){
-	//	super.calcAcceleration();
-
-
-		//敵との当たり判定を計算
-		for (AbstractEnemy e : Model.getEnemyList()){
-			if(!e.isDeath()){
-				switch (e.isHitPlayerChara(this)){
+		// 敵との当たり判定を計算
+		for (AbstractEnemy e : Model.getEnemyList()) {
+			if (!e.isDeath()) {
+				switch (e.isHitPlayerChara(this)) {
 				case HIT_TREAD:
 					tread();
 					break;
@@ -63,9 +67,9 @@ public class PlayerChara extends AbstractChara {
 				}
 			}
 		}
-		for (AbstractEnemy e : Model.getPlaceEnemyList()){
-			if(!e.isDeath()){
-				switch (e.isHitPlayerChara(this)){
+		for (AbstractEnemy e : Model.getPlaceEnemyList()) {
+			if (!e.isDeath()) {
+				switch (e.isHitPlayerChara(this)) {
 				case HIT_TREAD:
 					tread();
 					break;
@@ -77,22 +81,21 @@ public class PlayerChara extends AbstractChara {
 				}
 			}
 		}
-		if(Model.getGameStatus() != GAMESTATUS_WORLDCHANGE){
+		if (Model.getGameStatus() != GAMESTATUS_WORLDCHANGE) {
 			checkDeath();
-			for (Needle n : Model.getNeedleList()){
-				if (!n.isDeath() && n.isHit(this)){
+			for (Needle n : Model.getNeedleList()) {
+				if (!n.isDeath() && n.isHit(this)) {
 					Model.death();
 				}
 			}
 		}
-		
+
 		// ブロックとの当たり判定をし、hitRight, hitLeft, hitHead, hitLeg を変更
 		isHitBlock();
-		
-		if(hitLeft || hitRight){
+
+		if (hitLeft || hitRight) {
 			changeXSpeed();
-		}
-		else if(hitHead || hitLeg){
+		} else if (hitHead || hitLeg) {
 			changeYSpeed();
 		}
 		calcXAcceleration(0.7);
@@ -101,7 +104,7 @@ public class PlayerChara extends AbstractChara {
 
 	private void checkDeath() {
 		// TODO 自動生成されたメソッド・スタブ
-		if(yPosition > GAME_HEIGHT){
+		if (yPosition > GAME_HEIGHT) {
 			Model.death();
 		}
 	}
@@ -109,77 +112,71 @@ public class PlayerChara extends AbstractChara {
 	// 操作およびhit時の挙動
 	public void calcXAcceleration(double a) {
 		// 右を押していたとき
-		if (moveRight && !hitRight){
-			if(dash && xSpeed <= 16){
-				xSpeed += 2;				
-			}
-			/*else if(dash && xSpeed <= 16 && !hitLeg){
-				xSpeed += 0.7;//等速にするための処理
-			}*/
-			else if(dash==false && xSpeed <= 6){
+		if (moveRight && !hitRight) {
+			if (dash && xSpeed <= 16) {
+				xSpeed += 2;
+			} else if (dash == false && xSpeed <= 6) {
 				xSpeed += 1.5;
 			}
-			//System.out.println("dash" + xSpeed);
-			imageCount ++;
-			imageKind = (imageCount % 18) / 6 + 3;//3,4,5番目の画像
+			imageCount++;
+			imageKind = (imageCount % 24) / 6 + 5;// 5,6,7,8番目の画像
 		}
 		// 左を押していたとき
-		else if (moveLeft && !hitLeft){
-			if(dash&& xSpeed >= -16){
+		else if (moveLeft && !hitLeft) {
+			if (dash && xSpeed >= -16) {
 				xSpeed -= 2;
-			}
-			/*else if(dash&& xSpeed >= -16 && !hitLeg){
-				xSpeed -= 0.7;
-			}*/
-			else if(dash==false && xSpeed >= -6){
+			} else if (dash == false && xSpeed >= -6) {
 				xSpeed -= 1.5;
 			}
-			imageCount ++;
-			imageKind = (imageCount % 18) / 6; //0,1,2番目の画像
+			imageCount++;
+			imageKind = (imageCount % 24) / 6; // 0,1,2,3番目の画像
 		}
 
-		//スクロール 各オブジェクトを動かすことで処理
+		if (!hitLeg && imageKind < 5) {
+			imageKind = 4;
+		} else if (!hitLeg && imageKind >= 5) {
+			imageKind = 9;
+		} else if (hitLeg && imageKind == 4) {
+			imageKind = (imageCount % 24) / 6;
+		} else if (hitLeg && imageKind == 9) {
+			imageKind = (imageCount % 24) / 6 + 5;
+		}
 
+		if (xPosition + xSpeed - width / 2 < 0) {
+			xPosition = width / 2;
+			changeXSpeed();
 
-		//後退スクロール不可
-
-			if (xPosition + xSpeed - width / 2 < 0) {
-				xPosition = width / 2;
-				changeXSpeed();
-
-			}
+		}
 
 		super.calcXAcceleration(a);
 
 	}
 
-	 //ジャンプ操作と画像の変更
+	// ジャンプ操作と画像の変更
 	public void calcYAcceleration() {
 		super.calcYAcceleration();
 		// 接地しているときのジャンプ処理
 		if (up && hitLeg && !hitHead) {
 			jump();
-			if(imageKind<3)
-				imageKind = 0;
+			if (imageKind < 5)
+				imageKind = 4;
 			else
-				imageKind = 3;
+				imageKind = 9;
 			hitLeg = false;
-		}
-		else if(!up && hitLeg){
+		} else if (!up && hitLeg) {
 			changeYSpeed();
 		}
 
-	//	System.out.println("xSppd = " + xSpeed + ", ySpeed = " + ySpeed);
-	//	System.out.println("hitLeg = " + hitLeg + ", ySeed = " + ySpeed);
+		// System.out.println("xSppd = " + xSpeed + ", ySpeed = " + ySpeed);
+		// System.out.println("hitLeg = " + hitLeg + ", ySeed = " + ySpeed);
 
 	}
 
 	// 敵を踏んだ時の処理
-	public void tread(){
-		if(up){
+	public void tread() {
+		if (up) {
 			ySpeed = -23;
-		}
-		else {
+		} else {
 			ySpeed = -6;
 		}
 	}

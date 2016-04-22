@@ -12,30 +12,33 @@ import javax.swing.JPanel;
 import util.ReferenceItems;
 import util.Text;
 
-public class WorldClearSlide extends JPanel{
+/**
+ * ワールドクリア時に表示されるスライドです
+ * 
+ * @author kitahara
+ *
+ */
+public class WorldClearSlide extends JPanel {
 
-	private Font font = new Font("serif", Font.BOLD,24);
+	private Font font = new Font("serif", Font.BOLD, 24);
 	private Text text;
 	private int count;
-	
+
 	private Image imageWorld = null;
 	private Image imageClear = null;
-			
-	private double worldX, worldY, clearX, clearY, sin;	
+
+	private double worldX, worldY, clearX, clearY, sin;
 	private double worldXspeed, clearXspeed;
-	
-	private boolean death;
-	
-	public WorldClearSlide(int i){
+
+	public WorldClearSlide(int i) {
 		imageWorld = ReferenceItems.getTexteImage(i);
 		imageClear = ReferenceItems.getTexteImage(IMAGE_TEXT_CLEAR);
 		text = new Text(350, 500, "Press 'Enter' Key to Go Next World", font, Color.BLACK);
 		init();
 	}
-	
-	public void init(){
+
+	public void init() {
 		count = 0;
-		death = false;
 		worldX = -950;
 		worldY = 20;
 		clearX = 1100;
@@ -44,32 +47,31 @@ public class WorldClearSlide extends JPanel{
 		clearXspeed = 0;
 		sin = 0.0;
 	}
-	
-	public void calcAnimation(){
-		count ++;
-		if(count < 80){
+
+	public void calcAnimation() {
+		count++;
+		if (count < 80) {
 			sin += 0.05;
-			worldXspeed = 30*Math.sin(sin);
-			clearXspeed = -30*Math.sin(sin);
-		}
-		else {
+			worldXspeed = 30 * Math.sin(sin);
+			clearXspeed = -30 * Math.sin(sin);
+		} else {
 			worldXspeed = 0;
 			clearXspeed = 0;
 		}
 	}
-	
-	public void move(){
+
+	public void move() {
 		worldX += worldXspeed;
-		clearX += clearXspeed; 
+		clearX += clearXspeed;
 	}
-	
-	public void draw(Graphics g){
-		g.drawImage(imageWorld, (int)(worldX), (int)(worldY), this);
-		g.drawImage(imageClear, (int)(clearX), (int)(clearY), this);
-		if(count > 50){
-			//g.setColor(Color.BLACK);
+
+	public void draw(Graphics g) {
+		g.drawImage(imageWorld, (int) (worldX), (int) (worldY), this);
+		g.drawImage(imageClear, (int) (clearX), (int) (clearY), this);
+		if (count > 50) {
+			// g.setColor(Color.BLACK);
 			text.draw(g);
 		}
-		
+
 	}
 }

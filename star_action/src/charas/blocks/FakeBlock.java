@@ -12,20 +12,20 @@ import charas.AbstractChara;
 import charas.PlayerChara;
 import util.Sound;
 
-
 /**
  * プレイヤーが触れると消えるブロック。乗ることはできない。敵が触れても消えることはない。
+ * 
  * @author kitahara
  *
  */
 public class FakeBlock extends AbstractBlock {
 
-
 	public FakeBlock(int x, int y, int i) {
-		super(x, y , i);
+		super(x, y, i);
 		removable = true;
 		// TODO 自動生成されたコンストラクター・スタブ
 	}
+
 	void death() {
 		death = true;
 		try {
@@ -35,36 +35,35 @@ public class FakeBlock extends AbstractBlock {
 		}
 	}
 
-
 	/**
 	 * キャラがブロックに触れたときの処理。キャラがプレイヤーの場合とその他の場合に分かれる
 	 */
-	public boolean isHit(AbstractChara c){
-		if(c instanceof PlayerChara){
+	public boolean isHit(AbstractChara c) {
+		if (c instanceof PlayerChara) {
 			return hit((PlayerChara) c);
-		}
-		else {
+		} else {
 			return super.isHit(c);
 		}
 	}
 
 	/**
 	 * プレイヤーがブロックに触れたときの処理
+	 * 
 	 * @param c
 	 * @return
 	 */
 	private boolean hit(PlayerChara c) {
-		if(death) return false;
-		if (super.isHit(c)){
-		//	Mario.sound("surprise.wav", 0.6);
+		if (death)
+			return false;
+		if (super.isHit(c)) {
 			death();
 			return false;
 		}
 		return false;
 	}
 
-	public void draw(Graphics g){
-		if(!death){
+	public void draw(Graphics g) {
+		if (!death) {
 			super.draw(g);
 		}
 	}

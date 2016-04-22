@@ -5,12 +5,18 @@ import static constants.ImageConstants.*;
 
 import charas.PlayerChara;
 import star_action.Model;
-
+/**
+ * 左右移動し、プレイヤーが近づくとジャンプする敵。左右移動の速度が0なら、
+ * 左右移動せず制止する
+ * 
+ * @author kitahara
+ *
+ */
 public class MoveEnemy extends AbstractEnemy {
 	public boolean jump;
-	
+
 	public MoveEnemy(int x, int y, double xs) {
-		super(x,y,40,50,IMAGE_ENEMY_MOVE);
+		super(x, y, 40, 50, IMAGE_ENEMY_MOVE);
 		xSpeed = xs;
 		imageLine = 2;
 		imageColumn = 5;
@@ -21,45 +27,44 @@ public class MoveEnemy extends AbstractEnemy {
 
 	// 呼び出され用
 	public void calcAcceleration() {
-		if(Model.getPlayerChara().isDeath()){
+		if (Model.getPlayerChara().isDeath()) {
 			setJump(false);
 		}
 		isHitBlock();
 		checkDeath();
-		if(hitLeft || hitRight){
+		if (hitLeft || hitRight) {
 			changeXSpeed();
-		}
-		else if(hitHead || hitLeg){
+		} else if (hitHead || hitLeg) {
 			changeYSpeed();
-			//System.out.println("changeXSpeed:" + ySpeed);
+			// System.out.println("changeXSpeed:" + ySpeed);
 		}
-		//System.out.println("ジャンプ前 imageKind:" + imagekind);
-		if(jump){
+		// System.out.println("ジャンプ前 imageKind:" + imagekind);
+		if (jump) {
 			jump();
-		//	System.out.println("ジャンプ後 imageKind:" + imagekind);
+			// System.out.println("ジャンプ後 imageKind:" + imagekind);
 		}
 
 		calcXAcceleration(0.7);
 		calcYAcceleration();
 
-
 	}
 
 	public int isHitPlayerChara(PlayerChara c) {
 		// プレイヤーと接触しているとき
-		if(isHit(c)){
-			if(Math.sin((Math.atan2(c.yPosition-ySpeed-yPosition, c.xPosition-xSpeed-xPosition))) <= -1/Math.sqrt(2.0)) {
+		if (isHit(c)) {
+			if (Math.sin((Math.atan2(c.yPosition - ySpeed - yPosition, c.xPosition - xSpeed - xPosition))) <= -1
+					/ Math.sqrt(2.0)) {
 				death();
 				return HIT_TREAD;
 			}
 			return HIT_MISS;
 		}
 		// プレイヤーが近づいてきたとき
-		else if (Math.sqrt((xPosition-c.xPosition-c.xSpeed)*(xPosition-c.xPosition-c.xSpeed)+
-				(yPosition-c.yPosition-c.ySpeed)*(yPosition-c.yPosition-c.ySpeed))<=100){
+		else if (Math.sqrt((xPosition - c.xPosition - c.xSpeed) * (xPosition - c.xPosition - c.xSpeed)
+				+ (yPosition - c.yPosition - c.ySpeed) * (yPosition - c.yPosition - c.ySpeed)) <= 100) {
 			setJump(true);
 			jump();
-			//System.out.println("近づいた");
+			// System.out.println("近づいた");
 		}
 		// その他
 		else {
@@ -74,50 +79,47 @@ public class MoveEnemy extends AbstractEnemy {
 	}
 
 	public void calcXAcceleration(double a) {
-		if(hitLeg){
-			imageCount ++;
-			if(xSpeed<0){
-				imageKind=(imageCount%28)/7;//0,1,2,3番目の画像
-			}
-			else if(xSpeed>0){
-				imageKind=(imageCount%28)/7+5; //5,6,7,8番目の画像
-			}
-			else {
+		if (hitLeg) {
+			imageCount++;
+			if (xSpeed < 0) {
+				imageKind = (imageCount % 28) / 7;// 0,1,2,3番目の画像
+			} else if (xSpeed > 0) {
+				imageKind = (imageCount % 28) / 7 + 5; // 5,6,7,8番目の画像
+			} else {
 				// ジャンプ時の画像
 				double pcx = Model.getPlayerChara().getxPosition();
-				if(xPosition>=pcx){
-					imageKind=1;
-				}
-				else if(xPosition<pcx){
-					imageKind=5;
+				if (xPosition >= pcx) {
+					imageKind = 1;
+				} else if (xPosition < pcx) {
+					imageKind = 5;
 				}
 			}
 		}
 	}
 
-		public void calcYAcceleration(){
-				if(!hitLeg) ySpeed += 1.3;
-		}
+	public void calcYAcceleration() {
+		if (!hitLeg)
+			ySpeed += 1.3;
+	}
 
-	public void jump(){
+	public void jump() {
 		// ジャンプ
-	//	System.out.println("hitLeg :" + hitLeg);
-		if (hitLeg){
+		// System.out.println("hitLeg :" + hitLeg);
+		if (hitLeg) {
 			ySpeed = -19;
-		//	System.out.println(ySpeed);
+			// System.out.println(ySpeed);
 			hitLeg = false;
 			double pcx = Model.getPlayerChara().getxPosition();
-			if(xPosition>=pcx){
+			if (xPosition >= pcx) {
 				imageKind = 4;
-			}
-			else{
+			} else {
 				imageKind = 9;
 			}
 		}
 
 	}
 
-	public void changeXSpeed(){
+	public void changeXSpeed() {
 		super.changeXSpeed();
 	}
 }

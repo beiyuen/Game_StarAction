@@ -10,22 +10,28 @@ import javax.swing.JPanel;
 import util.ReferenceItems;
 import util.Text;
 
-public class EndingSlide extends JPanel{
+/**
+ * ゲームクリア時に表示されるスライドです
+ * 
+ * @author kitahara
+ *
+ */
+public class EndingSlide extends JPanel {
 
-	private Font font = new Font("serif", Font.BOLD,24);
+	private Font font = new Font("serif", Font.BOLD, 24);
 	private Text text;
 	private Image image = null;
-	
-	public EndingSlide(){
+
+	public EndingSlide() {
 		image = ReferenceItems.getEndingImage();
 		text = new Text(300, 200, "Press 'Enter' Key to Back Title", font, Color.WHITE);
 	}
-	
-	public void setText(int i){
+
+	public void setText(int i) {
 		text.setText("STAGE " + String.valueOf(i));
 	}
-	
-	public void draw(Graphics g){
+
+	public void draw(Graphics g) {
 		g.drawImage(image, 0, 0, this);
 		text.draw(g);
 	}

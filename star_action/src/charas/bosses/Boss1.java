@@ -14,18 +14,24 @@ import charas.blocks.AbstractBlock;
 import charas.blocks.WorldClearBlock;
 import star_action.Model;
 import util.Sound;
-
+/**
+ * ワールド1のボス。踏みつけ攻撃のみ行う
+ * 
+ * @author kitahara
+ *
+ */
 public class Boss1 extends AbstractBoss {
 
 	BossAction action = new BossAction();
 	boolean jumping;
+
 	public Boss1(int x, int y) {
 		super(x, y);
 		hp = 3;
 		init();
 	}
 
-	public void init(){
+	public void init() {
 		super.init();
 		death = false;
 		goAway = false;
@@ -37,7 +43,7 @@ public class Boss1 extends AbstractBoss {
 		jumping = false;
 	}
 
-	private void nextState(){
+	private void nextState() {
 		state++;
 	}
 
@@ -45,7 +51,7 @@ public class Boss1 extends AbstractBoss {
 		this.count = count;
 	}
 
-	public void calcAcceleration(){
+	public void calcAcceleration() {
 		isHitBlock();
 		checkDeath();
 		calcBossAction();
@@ -59,17 +65,15 @@ public class Boss1 extends AbstractBoss {
 
 	public int isHitPlayerChara(PlayerChara c) {
 
-		if (treadedNum < hp 
-				&& Math.abs(c.xPosition + c.xSpeed - xPosition) < c.width / 2 + width / 2
+		if (treadedNum < hp && Math.abs(c.xPosition + c.xSpeed - xPosition) < c.width / 2 + width / 2
 				&& Math.abs(c.yPosition + c.ySpeed - yPosition) < c.height / 2 + height / 2
 				&& Math.sin((Math.atan2(c.yPosition - yPosition, c.xPosition - xPosition))) <= -1 / Math.sqrt(2.0)) {
-			if(jumping){
+			if (jumping) {
 				return HIT_MISS;
 			}
 			if (xPosition < 500) {
 				xSpeed = 15;
-			}
-			else {
+			} else {
 				xSpeed = -15;
 			}
 			// 通常時にプレイヤーに踏まれたら
@@ -81,7 +85,7 @@ public class Boss1 extends AbstractBoss {
 				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 					e.printStackTrace();
 				}
-				if(treadedNum == hp){
+				if (treadedNum == hp) {
 					death();
 				}
 			}
@@ -90,15 +94,16 @@ public class Boss1 extends AbstractBoss {
 			hitLeg = false;
 			return HIT_TREAD;
 
-		} else{
+		} else {
 			return super.isHitPlayerChara(c);
 		}
 
 	}
+
 	/**
 	 * 画面の両端にぶつかっているかを判定,goAwayによって処理を変える
 	 */
-	public void isHitBlock(){
+	public void isHitBlock() {
 
 		if (xPosition + xSpeed < 70 || xPosition + xSpeed > GAME_WIDTH - 120) {
 			if (!goAway)
@@ -110,14 +115,14 @@ public class Boss1 extends AbstractBoss {
 		}
 
 	}
-	
+
 	public void checkDeath() {
-		if(yPosition > GAME_HEIGHT + 50){
+		if (yPosition > GAME_HEIGHT + 50) {
 			death();
 		}
 	}
 
-	public void calcBossAction(){
+	public void calcBossAction() {
 		if (!goAway) {
 			switch (state) {
 			case BOSS1_STATE_1:
@@ -131,72 +136,70 @@ public class Boss1 extends AbstractBoss {
 				break;
 			}
 			count++;
-		}
-		else{
+		} else {
 			action.patternAway();
 		}
 		super.calcYAcceleration();
 	}
 
-
 	/**
 	 * ボスの動きを定義した内部クラス。hitLegがtrueの時はy方向の動作に対し重力が発生せず、falseの時は重力が発生する
+	 * 
 	 * @author kitahara
 	 *
 	 */
-	class BossAction{
-		public BossAction(){
+	class BossAction {
+		public BossAction() {
 		}
 
-		public void patternAway(){
-			if(getyPosition() > GAME_HEIGHT - 84){
+		public void patternAway() {
+			if (getyPosition() > GAME_HEIGHT - 84) {
 				hitLeg = true;
 				setyPosition(GAME_HEIGHT - 87);
 				changeYSpeed();
 			}
 		}
+
 		/**
 		 * 横移動をするのみ、床に降りたらhitLegを常にtrueにする
+		 * 
 		 * @param c
 		 */
-		public void pattern1(double d){
-			if(count == 0){
+		public void pattern1(double d) {
+			if (count == 0) {
 				jumping = true;
 				setySpeed(-15 * d);
-			}
-			else if(count == 55){
+			} else if (count == 55) {
 				setxPosition(Model.getPlayerChara().getxPosition());
 				setyPosition(-100);
-				setySpeed(15*d);
+				setySpeed(15 * d);
 			}
-			
-			else if(yPosition > GAME_HEIGHT -84 && yPosition < GAME_HEIGHT + 20){
+
+			else if (yPosition > GAME_HEIGHT - 84 && yPosition < GAME_HEIGHT + 20) {
 				boolean ground = false;
 				for (AbstractBlock b : Model.getBlockList()) {
-					if(b.hity(Boss1.this).height == 1){
+					if (b.hity(Boss1.this).height == 1) {
 						ground = true;
 						break;
 					}
-					
+
 				}
 				System.out.println(ground);
 				// 着地点が存在したら
-				if(ground){
+				if (ground) {
 					jumping = false;
 					hitLeg = true;
 					setyPosition(GAME_HEIGHT - 87);
 					changeYSpeed();
 					setCount(200);
 				}
-				
-			}
-			else if(count == 240){
+
+			} else if (count == 240) {
 				setCount(-1);
 			}
-			
+
 		}
 
 	}
-
 
 }

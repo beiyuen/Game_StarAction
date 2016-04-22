@@ -1,7 +1,10 @@
 package charas.blocks;
+
 import static constants.ImageConstants.*;
+
 /**
  * このゲームでの普通のブロック。右クリックで消すことができる。消えていないうちは、プレイヤー、敵、どちらが触れても消えることはない。
+ * 
  * @author kitahara
  *
  */

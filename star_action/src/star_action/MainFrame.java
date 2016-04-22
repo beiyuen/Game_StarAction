@@ -10,12 +10,16 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 
 import util.ReferenceItems;
-
+/**
+ * ゲーム本体です
+ * @author kitahara
+ *
+ */
 public class MainFrame extends JFrame {
 
 	private ViewPanel viewPanel;
 
-	public MainFrame() throws IOException, UnsupportedAudioFileException, LineUnavailableException{
+	public MainFrame() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
 		ReferenceItems.Load();
 		Model.setStage(Model.getStageNum());
 		viewPanel = ViewPanel.getViewPanel();

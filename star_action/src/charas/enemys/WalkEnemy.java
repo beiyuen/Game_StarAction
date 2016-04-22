@@ -15,9 +15,11 @@ import charas.PlayerChara;
 import charas.blocks.AbstractBlock;
 import star_action.Model;
 import util.Sound;
+
 /**
  * 地面を歩く敵。プレイヤーが触れると、その時にこの敵が触れているブロックとトゲを破壊する。この敵はy方向の移動をしないので、
- * ブロックが消えても落ちることはない。また、この敵をプレイヤーは倒せない。
+ * ブロックが消えても落ちることはない。また、この敵をプレイヤーは倒せない
+ * 
  * @author kitahara
  *
  */
@@ -37,23 +39,22 @@ public class WalkEnemy extends AbstractEnemy {
 	public int isHitPlayerChara(PlayerChara c) {
 		if (isHit(c)) {
 			isHit = true;
-		}
-		else {
+		} else {
 			isHit = false;
 		}
 		return HIT_NOT;
 	}
+
 	@Override
 	public void calcAcceleration() {
-		if(Model.getGameStatus() == GAMESTATUS_DIE){
+		if (Model.getGameStatus() == GAMESTATUS_DIE) {
 			isHit = false;
 		}
 		calcXAcceleration(0.7);
 		isHitBlock();
-		if(hitLeft || hitRight){
+		if (hitLeft || hitRight) {
 			changeXSpeed();
-		}
-		else if(hitHead || hitLeg){
+		} else if (hitHead || hitLeg) {
 			changeYSpeed();
 		}
 	}
@@ -62,9 +63,9 @@ public class WalkEnemy extends AbstractEnemy {
 	public void calcXAcceleration(double a) {
 		super.calcXAcceleration(a);
 
-		if(isHit){
+		if (isHit) {
 			for (AbstractBlock b : Model.getBlockList()) {
-				if(b.isHit(this) && !b.isDeath()){
+				if (b.isHit(this) && !b.isDeath()) {
 					b.setDeath(true);
 					try {
 						Sound.soundSE(SOUND_SE_SURPRISE, 0.2);
@@ -73,8 +74,8 @@ public class WalkEnemy extends AbstractEnemy {
 					}
 				}
 			}
-			for(Needle n : Model.getNeedleList() ){
-				if(n.isHit(this) && !n.isDeath()){
+			for (Needle n : Model.getNeedleList()) {
+				if (n.isHit(this) && !n.isDeath()) {
 					n.setDeath(true);
 					try {
 						Sound.soundSE(SOUND_SE_SURPRISE, 0.2);
@@ -88,7 +89,7 @@ public class WalkEnemy extends AbstractEnemy {
 		if (xSpeed < 0) {
 			imageCount++;
 			imageKind = (imageCount % 32) / 8;// 0,1,2,3番目の画像
-		} else if (xSpeed  > 0) {
+		} else if (xSpeed > 0) {
 			imageCount++;
 			imageKind = (imageCount % 32) / 8 + 4; // 4,5,6,7番目の画像
 		}

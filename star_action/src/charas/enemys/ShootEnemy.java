@@ -18,7 +18,12 @@ import charas.Shot;
 import charas.blocks.AbstractBlock;
 import star_action.Model;
 import util.Sound;
-
+/**
+ * 弾を撃つ敵。打った球はこの敵が倒されても存在し続ける
+ * 
+ * @author kitahara
+ *
+ */
 public class ShootEnemy extends AbstractEnemy {
 	public ArrayList<Shot> bullet = new ArrayList<Shot>();
 	Iterator<Shot> bulletIterator = null;
@@ -26,13 +31,13 @@ public class ShootEnemy extends AbstractEnemy {
 	boolean death2;
 
 	public ShootEnemy(int x, int y) {
-		super(x,y,30,30,IMAGE_ENEMY_SHOT);
+		super(x, y, 30, 30, IMAGE_ENEMY_SHOT);
 		xSpeed = 0.0;
 		shotCount = 0;
 		death2 = false;
 	}
 
-	public void init(){
+	public void init() {
 		super.init();
 		bullet.clear();
 		death2 = false;
@@ -40,15 +45,18 @@ public class ShootEnemy extends AbstractEnemy {
 
 	@Override
 	public void calcAcceleration() {
-		if(!death2){
+		if (!death2) {
 			super.calcAcceleration();
-			
-				shotCount++;
-			//弾を出す
-			if( shotCount %150 == 100 &&xPosition>0 && xPosition < GAME_WIDTH-40){
-				for(int i =0;i<6;i++){
-					bullet.add(new Shot( (int)(xPosition+1), (int)(yPosition-13),3.0,
-							Math.atan2(yPosition-Model.getPlayerChara().getyPosition(),xPosition-Model.getPlayerChara().getxPosition())+(i*60)*Math.PI/180));
+
+			shotCount++;
+			// 弾を出す
+			if (shotCount % 150 == 100 && xPosition > 0 && xPosition < GAME_WIDTH - 40) {
+				for (int i = 0; i < 6; i++) {
+					bullet.add(
+							new Shot((int) (xPosition + 1), (int) (yPosition - 13), 3.0,
+									Math.atan2(yPosition - Model.getPlayerChara().getyPosition(),
+											xPosition - Model.getPlayerChara().getxPosition())
+											+ (i * 60) * Math.PI / 180));
 				}
 				// 音鳴らす
 				try {
@@ -62,12 +70,12 @@ public class ShootEnemy extends AbstractEnemy {
 				Shot s = bulletIterator.next();
 				s.calcAcceleration();
 				for (AbstractBlock b : Model.getPlaceBlockList()) {
-					if(b.isHit(s)){
+					if (b.isHit(s)) {
 						bulletIterator.remove();
 						break;
 					}
 				}
-				if(s.isOutOfFrame()){
+				if (s.isOutOfFrame()) {
 					bulletIterator.remove();
 				}
 			}
@@ -75,21 +83,20 @@ public class ShootEnemy extends AbstractEnemy {
 
 	}
 
-
-	public int isHitPlayerChara(PlayerChara c){
-		for(Shot s: bullet){
-			if(s.isHitPlayerChara(c) == HIT_MISS){
+	public int isHitPlayerChara(PlayerChara c) {
+		for (Shot s : bullet) {
+			if (s.isHitPlayerChara(c) == HIT_MISS) {
 				return HIT_MISS;
 			}
 		}
-		if(!death2){
+		if (!death2) {
 			return super.isHitPlayerChara(c);
 		}
 		return HIT_NOT;
 	}
 
 	@Override
-	public void death(){
+	public void death() {
 		death2 = true;
 		try {
 			Sound.soundSE(SOUND_SE_TREAD, 0.6);
@@ -99,32 +106,35 @@ public class ShootEnemy extends AbstractEnemy {
 	}
 
 	@Override
-	public void calcXAcceleration(double a) {}
+	public void calcXAcceleration(double a) {
+	}
 
 	@Override
 	public void scroll(double speed) {
 		super.scroll(speed);
-		for(Shot s: bullet){
+		for (Shot s : bullet) {
 			s.scroll(speed);
 		}
 	}
+
 	@Override
-	public void move(){
-		if(!death2){
+	public void move() {
+		if (!death2) {
 			super.move();
 		}
 
-		for(Shot s: bullet){
+		for (Shot s : bullet) {
 			s.move();
 		}
 	}
+
 	@Override
 	public void draw(Graphics g) {
-		if(!death2){
-			g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2),
-					(int) width, (int) height, this);
+		if (!death2) {
+			g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2), (int) width, (int) height,
+					this);
 		}
-		for(Shot b : bullet){
+		for (Shot b : bullet) {
 			b.draw(g);
 		}
 	}
