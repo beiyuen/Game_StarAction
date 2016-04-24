@@ -73,11 +73,11 @@ public class AbstractBlock extends AbstractChara {
 	// 接触判定
 	public boolean isHit(AbstractChara c) {
 		if (c instanceof WalkEnemy) {
-			return Math.abs(c.xPosition - xPosition) <= c.width / 2 + width / 2
-					&& Math.abs(c.yPosition - yPosition) <= c.height / 2 + height / 2;
+			return Math.abs(c.getxPosition() - xPosition) <= c.getWidth() / 2 + width / 2
+					&& Math.abs(c.getyPosition() - yPosition) <= c.getHeight() / 2 + height / 2;
 		} else {
-			return !death && Math.abs(c.xPosition - xPosition) <= c.width / 2 + width / 2
-					&& Math.abs(c.yPosition - yPosition) <= c.height / 2 + height / 2;
+			return !death && Math.abs(c.getxPosition() - xPosition) <= c.getWidth() / 2 + width / 2
+					&& Math.abs(c.getyPosition() - yPosition) <= c.getHeight() / 2 + height / 2;
 		}
 	}
 
@@ -86,35 +86,41 @@ public class AbstractBlock extends AbstractChara {
 		boolean x = isHit(c);
 		int hitr = 0;
 		int hitl = 0;
-		double prex = c.xPosition - c.xSpeed - xPosition;
+		double cx = c.getxPosition();
+		double cy = c.getyPosition();
+		double cxsp = c.getxSpeed();
+		double cysp = c.getySpeed();
+		double prex = cx - cxsp - xPosition;
 		if (x) {
 			double precos = Math
-					.cos(Math.atan2(c.yPosition - c.ySpeed - yPosition, c.xPosition - c.xSpeed - xPosition));
-			double cos = Math.cos(Math.atan2(c.yPosition - yPosition, c.xPosition - xPosition));
+					.cos(Math.atan2(cy - cysp - yPosition, cx - cxsp - xPosition));
+			double cos = Math.cos(Math.atan2(cy - yPosition, cx - xPosition));
 			if (cos >= Math.cos(30 * Math.PI / 180.0)) {
 				hitl = 1;
 				isHitx = false;
-				c.xPosition = xPosition + (c.width / 2 + BLOCK_SIZE / 2);
+				c.setxPosition(xPosition + (c.getWidth() / 2 + BLOCK_SIZE / 2));
+				//cx = xPosition + (c.getWidth() / 2 + BLOCK_SIZE / 2);
 			}
 
-			else if (prex > (c.width / 2 + BLOCK_SIZE / 2) && precos >= Math.cos(60 * Math.PI / 180.0)
-					&& c.xSpeed < 0) {
-				if (!c.hitLeg && !c.hitHead) {
+			else if (prex > (c.getWidth() / 2 + BLOCK_SIZE / 2) && precos >= Math.cos(60 * Math.PI / 180.0)
+					&& cxsp < 0) {
+				if (!c.ishitLeg() && !c.isHitHead()) {
 					hitl = 1;
 					isHitx = true;
-					c.xPosition = xPosition + (c.width / 2 + BLOCK_SIZE / 2);
+					c.setxPosition(xPosition + (c.getWidth() / 2 + BLOCK_SIZE / 2));
+					//cx = xPosition + (c.getWidth() / 2 + BLOCK_SIZE / 2);
 				}
 
 			} else if (cos <= Math.cos(150 * Math.PI / 180.0)) {
 				hitr = 1;
 				isHitx = false;
-				c.xPosition = xPosition - (c.width / 2 + BLOCK_SIZE / 2);
-			} else if (prex < -(c.width / 2 + BLOCK_SIZE / 2) && precos <= Math.cos(120 * Math.PI / 180.0)
-					&& c.xSpeed > 0) {
-				if (!c.hitLeg && !c.hitHead) {
+				c.setxPosition(xPosition - (c.getWidth() / 2 + BLOCK_SIZE / 2));
+			} else if (prex < -(c.getWidth() / 2 + BLOCK_SIZE / 2) && precos <= Math.cos(120 * Math.PI / 180.0)
+					&& cxsp > 0) {
+				if (!c.ishitLeg() && !c.isHitHead()) {
 					hitr = 1;
 					isHitx = true;
-					c.xPosition = xPosition - (c.width / 2 + BLOCK_SIZE / 2);
+					c.setxPosition(xPosition - (c.getWidth() / 2 + BLOCK_SIZE / 2));
 				}
 			} else {
 				isHitx = false;
@@ -131,32 +137,36 @@ public class AbstractBlock extends AbstractChara {
 		boolean x = isHit(c);
 		int hith = 0;
 		int hitl = 0;
-		double prey = c.yPosition - c.ySpeed - yPosition;
-		double curr = c.yPosition - yPosition;
+		double cx = c.getxPosition();
+		double cy = c.getyPosition();
+		double cxsp = c.getxSpeed();
+		double cysp = c.getySpeed();
+		double prey = cy - cysp - yPosition;
+		double curr = cy - yPosition;
 		if (x) {
 
 			
-			double sin = Math.sin(Math.atan2(c.yPosition - yPosition, c.xPosition - xPosition));
+			double sin = Math.sin(Math.atan2(cy - yPosition, cx - xPosition));
 			double presin = Math
-					.sin(Math.atan2(c.yPosition - c.ySpeed - yPosition, c.xPosition - c.xSpeed - xPosition));
+					.sin(Math.atan2(cy - cysp - yPosition, cx - cxsp - xPosition));
 			if (sin <= Math.sin(-60 * Math.PI / 180.0)) {
 				hitl = 1;
-				c.yPosition = yPosition - (c.height / 2 + BLOCK_SIZE / 2);
-			} else if (prey <= -(c.height / 2 + BLOCK_SIZE / 2) && presin <= Math.sin(-40 * Math.PI / 180.0)
-					&& c.ySpeed >= 2) {
-				if (!c.hitLeft && !c.hitRight && !c.hitLeg && !isHitx) {
+				c.setyPosition(yPosition - (c.getHeight() / 2 + BLOCK_SIZE / 2));
+			} else if (prey <= -(c.getHeight() / 2 + BLOCK_SIZE / 2) && presin <= Math.sin(-40 * Math.PI / 180.0)
+					&& cysp >= 2) {
+				if (!c.isHitLeft() && !c.isHitRight() && !c.ishitLeg() && !isHitx) {
 					hitl = 1;
-					c.yPosition = yPosition - (c.height / 2 + BLOCK_SIZE / 2);
+					c.setyPosition(yPosition - (c.getHeight() / 2 + BLOCK_SIZE / 2));
 				}
 
 			} else if (sin >= Math.sin(60 * Math.PI / 180.0)) {
 				hith = 1;
-				c.yPosition = yPosition + (c.height / 2 + BLOCK_SIZE / 2);
-			} else if (prey > (c.height / 2 + BLOCK_SIZE / 2) && presin >= Math.sin(35 * Math.PI / 180.0)
-					&& c.ySpeed < 0) {
-				if (!c.hitLeft && !c.hitRight && !isHitx) {
+				c.setyPosition(yPosition + (c.getHeight() / 2 + BLOCK_SIZE / 2));
+			} else if (prey > (c.getHeight() / 2 + BLOCK_SIZE / 2) && presin >= Math.sin(35 * Math.PI / 180.0)
+					&& cysp < 0) {
+				if (!c.isHitLeft() && !c.isHitRight() && !isHitx) {
 					hith = 1;
-					c.yPosition = yPosition + (c.height / 2 + BLOCK_SIZE / 2);
+					c.setyPosition(yPosition + (c.getHeight() / 2 + BLOCK_SIZE / 2));
 				}
 			}
 		} else {

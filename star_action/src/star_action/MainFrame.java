@@ -21,18 +21,19 @@ public class MainFrame extends JFrame {
 
 	public MainFrame() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
 		ReferenceItems.Load();
-		Model.setStage(Model.getStageNum());
-		viewPanel = ViewPanel.getViewPanel();
-		this.getContentPane().add(viewPanel);
-		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-		this.setTitle("star_action");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		addMouseListener(Controller.getMouseAdapter());
-		addKeyListener(Controller.getKeyAdapter());
-		requestFocus();
-		this.validate();
-		this.setVisible(true);
-		System.out.println("width: " + viewPanel.getWidth() + " height: " + viewPanel.getHeight());
+		if(ReferenceItems.isLoaded()){
+			Model.setStage();
+			viewPanel = ViewPanel.getViewPanel();
+			this.getContentPane().add(viewPanel);
+			this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+			this.setTitle("STAR ACTION");
+			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			addMouseListener(Controller.getMouseAdapter());
+			addKeyListener(Controller.getKeyAdapter());
+			requestFocus();
+			this.validate();
+			this.setVisible(true);
+		}
 	}
 
 	public void paintComponent(Graphics g) {

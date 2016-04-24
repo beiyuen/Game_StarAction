@@ -52,7 +52,7 @@ public class MoveEnemy extends AbstractEnemy {
 	public int isHitPlayerChara(PlayerChara c) {
 		// プレイヤーと接触しているとき
 		if (isHit(c)) {
-			if (Math.sin((Math.atan2(c.yPosition - ySpeed - yPosition, c.xPosition - xSpeed - xPosition))) <= -1
+			if (Math.sin((Math.atan2(c.getyPosition() - ySpeed - yPosition, c.getxPosition() - xSpeed - xPosition))) <= -1
 					/ Math.sqrt(2.0)) {
 				death();
 				return HIT_TREAD;
@@ -60,8 +60,8 @@ public class MoveEnemy extends AbstractEnemy {
 			return HIT_MISS;
 		}
 		// プレイヤーが近づいてきたとき
-		else if (Math.sqrt((xPosition - c.xPosition - c.xSpeed) * (xPosition - c.xPosition - c.xSpeed)
-				+ (yPosition - c.yPosition - c.ySpeed) * (yPosition - c.yPosition - c.ySpeed)) <= 100) {
+		else if (Math.sqrt((xPosition - c.getxPosition() - c.getxSpeed()) * (xPosition - c.getxPosition() - c.getxSpeed())
+				+ (yPosition - c.getyPosition() - c.getySpeed()) * (yPosition - c.getyPosition() - c.getySpeed())) <= 100) {
 			setJump(true);
 			jump();
 			// System.out.println("近づいた");

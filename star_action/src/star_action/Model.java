@@ -26,7 +26,7 @@ import util.ClickItem;
 import util.DebugShowText;
 /**
  * ゲーム内のすべてのデータを保持しているクラスです
- * 
+ *
  * @author kitahara
  *
  */
@@ -40,8 +40,8 @@ public class Model {
 
 	public static int gameStatus = GAMESTATUS_OPENING;
 
-	public static int stageNum = 1;
-	public static int worldNum = 1;
+	public static int stageNum = 5;
+	public static int worldNum = 2;
 	public static Stage stage = new Stage();
 	public static PlayerChara playerChara = new PlayerChara(40, 50);
 	public static DebugShowText debugShowText = new DebugShowText();
@@ -104,9 +104,14 @@ public class Model {
 	public static void setGameStatus(int i) {
 		gameStatus = i;
 	}
-
+	/**
+	 * オープニング画面からゲーム画面へ遷移するときに呼ばれる。ワールド、ステージの値を初期化する
+	 */
 	public static void gameInit() {
-
+		setStageNum(1);
+		setWorldNum(1);
+		setStage();
+		stageChangeSlide.setText(worldNum, stageNum);
 	}
 
 	/**
@@ -143,7 +148,7 @@ public class Model {
 	}
 
 	/**
-	 * プレイヤーのx座標が一定以上になったときに右へ移動した場合に画面をスクロール
+	 * プレイヤーのx座標が一定以上になったときに右へ移動した場合に画面をスクロール。反対方向へはスクロールしない
 	 */
 	private static void scroll() {
 		if (scrollable) {
@@ -206,7 +211,7 @@ public class Model {
 			worldClearSlide.move();
 		}
 
-		debugShowText.run(playerChara.xPosition, playerChara.yPosition);
+		//debugShowText.run(playerChara.xPosition, playerChara.yPosition);
 	}
 
 	/**
@@ -214,10 +219,9 @@ public class Model {
 	 */
 	public static void nextStage() {
 		setStageNum(stageNum + 1);
-		stageChangeSlide.setText(stageNum);
+		stageChangeSlide.setText(worldNum, stageNum);
 		setGameStatus(GAMESTATUS_STAGECHANGE);
-		setStage(stageNum);
-		playerChara.init();
+		setStage();		
 	}
 
 	/**
@@ -233,31 +237,38 @@ public class Model {
 			}
 			b.init();
 		}
-		if (stageNum == 10) {
+		if (((worldNum - 1) * 5 + stageNum) == 10) {
 			gameClear();
 			return;
 		}
 		worldClearSlide.init();
 		worldNum++;
+		setStageNum(0);
 		setGameStatus(GAMESTATUS_WORLDCHANGE);
 
 	}
 
+	public static void setWorldNum(int worldNum) {
+		Model.worldNum = worldNum;
+	}
+	/**
+	 * 全ステージをクリアしたときに呼ばれるメソッド。gameStatusを変更する
+	 */
 	public static void gameClear() {
 		setGameStatus(GAMESTATUS_ENDING);
 	}
 
 	/**
 	 * 新しいステージをセット。これにより敵やブロックの位置情報を更新
-	 * 
-	 * @param i
+	 *
 	 */
-	public static void setStage(int i) {
-		stage.setStage(i);
+	public static void setStage() {
+		stage.setStage((worldNum-1) * 5 + stageNum);
 		blockList = stage.getBlockList();
 		enemyList = stage.getEnemyList();
 		needleList = stage.getNeedleList();
 		signboardList = stage.getSignboardList();
+		playerChara.init();
 		clickableNum = stage.getClickableNum();
 		scrollable = stage.getScrollable();
 		clickItem = new ClickItem();
@@ -315,9 +326,9 @@ public class Model {
 
 	/**
 	 * 左クリックしたときにブロックや敵を配置する
-	 * 
-	 * @param x
-	 * @param y
+	 *
+	 * @param x : 配置位置のx座標(×ブロックサイズ)
+	 * @param y : 配置位置のy座標(×ブロックサイズ)
 	 */
 	public static void placement(int x, int y) {
 		switch (placementMode) {
@@ -349,9 +360,9 @@ public class Model {
 
 	/**
 	 * 引数の位置に存在するブロックを削除する。具体的にはdeath変数をtrueにしているだけなので、リストから削除されているわけではない
-	 * 
-	 * @param x
-	 * @param y
+	 *
+	 * @param x : 削除位置のx座標(×ブロックサイズ)
+	 * @param y : 配置位置のy座標(×ブロックサイズ)
 	 */
 	public static void removeBlock(int x, int y) {
 		for (AbstractBlock b : blockList) {

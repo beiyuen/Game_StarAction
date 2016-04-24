@@ -1,7 +1,5 @@
 package charas;
 
-import static constants.MathConstants.*;
-
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -20,38 +18,26 @@ import star_action.Model;
  *
  */
 public abstract class AbstractChara extends JPanel {
-	public double xPosition, yPosition; // 位置
-	public double initX, initY;
-	public double xSpeed, ySpeed; // スピード
-	public int width; // 縦横サイズ
-	public int height;
-	public Image image; // 画像
-	public boolean hitRight = false, hitLeft = false, hitHead = false, hitLeg = false;
-	public boolean death;
-	public int imageDrawWidth = 1, imageDrawHeight = 1;
-	public int imageColumn = 1, imageLine = 1;
-	public int imageKind = 0;
-	public int imageCount = 0;
+	protected double xPosition, yPosition; // 位置
+	protected double initX, initY;			// ステージ開始時の初期位置
+	protected double xSpeed, ySpeed; 		// スピード
+	protected int width, height; 			// 縦横サイズ
+	protected boolean hitRight = false;	// キャラの右側がブロックに当たっているか 
+	protected boolean hitLeft = false;		// キャラの左側がブロックに当たっているか 
+	protected boolean hitHead = false;		// キャラの上側がブロックに当たっているか 
+	protected boolean hitLeg = false;		// キャラの下側がブロックに当たっているか 
+	protected boolean death;				// 死亡判定
+	protected Image image; 				// 画像
+	protected int imageDrawWidth = 1, imageDrawHeight = 1;	// 画像描画時のサイズ
+	protected int imageColumn = 1;			// 画像の行方向の分割数 
+	protected int imageLine = 1;			// 画像の列方向の分割数
+	protected int imageKind = 0;			// 現在表示する画像番号
+	protected int imageCount = 0;			// 画像番号を計算するときに必要な値
 
-	public AbstractChara() {
-	}
-
-	// x,yはマップ座標
-	public AbstractChara(int x, int y, int w, int h, String c) {
-		xPosition = (x + 0.5) * BLOCK_SIZE;
-		yPosition = (y + 0.5) * BLOCK_SIZE;
-		initX = xPosition;
-		initY = yPosition;
-		xSpeed = 0;
-		ySpeed = 0;
-		width = w;
-		height = h;
-		image = getToolkit().createImage(c);
-		imageDrawWidth = 50;
-		imageDrawHeight = 50;
-		death = false;
-	}
-
+	public AbstractChara() {}
+	/**
+	 * ステージ開始時の状態にする
+	 */
 	public void init() {
 		xPosition = initX;
 		yPosition = initY;
@@ -65,8 +51,8 @@ public abstract class AbstractChara extends JPanel {
 	 * @return
 	 */
 	public boolean isHit(AbstractChara c) {
-		return Math.abs(c.xPosition - xPosition) <= c.width / 2 + width / 2
-				&& Math.abs(c.yPosition - yPosition) <= c.height / 2 + height / 2;
+		return Math.abs(c.getxPosition() - xPosition) <= c.getWidth() / 2 + width / 2
+				&& Math.abs(c.getyPosition() - yPosition) <= c.getHeight() / 2 + height / 2;
 	}
 
 	/**
@@ -81,17 +67,22 @@ public abstract class AbstractChara extends JPanel {
 				&& y <= yPosition + height / 2);
 	}
 
-	// ジャンプ
+	/**
+	 * 地面についていればジャンプする
+	 */
 	public void jump() {
 		if (hitLeg)
 			ySpeed -= 20 + Math.abs(xSpeed) / 5;
 	}
 
-	// 呼び出され用
+	/**
+	 * 速度変更、当たり判定処理を行う
+	 */
 	public void calcAcceleration() {
-
+		// x, y 方向の加速度と速度の計算
 		calcYAcceleration();
 		calcXAcceleration(0.7);
+		// ブロックとの衝突判定, 衝突方向により速度変更を行う
 		isHitBlock();
 		if (hitLeft || hitRight) {
 			changeXSpeed();
@@ -316,6 +307,18 @@ public abstract class AbstractChara extends JPanel {
 	 */
 	public boolean ishitLeg() {
 		return hitLeg;
+	}
+
+	public boolean isHitHead() {
+		return hitHead;
+	}
+
+	public boolean isHitRight() {
+		return hitRight;
+	}
+
+	public boolean isHitLeft() {
+		return hitLeft;
 	}
 
 	/**

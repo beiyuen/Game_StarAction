@@ -25,7 +25,7 @@ public class NomalEnemy extends AbstractEnemy {
 	public int isHitPlayerChara(PlayerChara c) {
 		boolean hit = super.isHit(c);
 		if (hit) {
-			if (Math.sin((Math.atan2(c.yPosition - yPosition, c.xPosition - xPosition))) <= -1 / Math.sqrt(2.0)) {
+			if (Math.sin((Math.atan2(c.getyPosition() - yPosition, c.getxPosition() - xPosition))) <= -1 / Math.sqrt(2.0)) {
 				// ここから下を変える
 				death();
 				return HIT_TREAD;

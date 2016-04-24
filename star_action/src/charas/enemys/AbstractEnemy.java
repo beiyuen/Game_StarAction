@@ -17,7 +17,7 @@ import util.Sound;
 
 /**
  * 敵の抽象的なクラス。すべての敵はこのクラスのサブクラス。敵は基本的にプレイヤーが上から踏むことで倒すことができる。
- * 
+ *
  * @author kitahara
  *
  */
@@ -80,14 +80,14 @@ public abstract class AbstractEnemy extends AbstractChara {
 	/**
 	 * PlayerCharaと敵の当たり判定。上から当たったらHIT_TREAD,それ以外の角度から当たったらHIT_MISS,
 	 * 当たっていなかったらHIT_NOT
-	 * 
+	 *
 	 * @param c
 	 * @return
 	 */
 	public int isHitPlayerChara(PlayerChara c) {
 		boolean hit = super.isHit(c);
 		if (hit) {
-			if (Math.sin((Math.atan2(c.yPosition - yPosition, c.xPosition - xPosition))) <= -1 / Math.sqrt(2.0)) {
+			if (Math.sin((Math.atan2(c.getyPosition() - yPosition, c.getxPosition() - xPosition))) <= -1 / Math.sqrt(2.0)) {
 				// ここから下を変える
 				death();
 				return HIT_TREAD;

@@ -1,8 +1,11 @@
 package charas;
 
+import static constants.MathConstants.*;
+
 import java.awt.Graphics;
 
 import charas.enemys.WalkEnemy;
+import util.ReferenceItems;
 
 /**
  * プレイヤーが当たるとゲームオーバーになるトゲです
@@ -13,7 +16,16 @@ import charas.enemys.WalkEnemy;
 public class Needle extends AbstractChara {
 
 	public Needle(int x, int y, int i) {
-		super(x, y, 50, 50, "image/needle.png");
+		width = BLOCK_SIZE;
+		height = BLOCK_SIZE;
+		xPosition = x * BLOCK_SIZE + BLOCK_SIZE / 2;
+		yPosition = y * BLOCK_SIZE + BLOCK_SIZE / 2;
+		initX = xPosition;
+		initY = yPosition;
+		xSpeed = 0;
+		ySpeed = 0;
+		image = ReferenceItems.getNeedleImage();
+		death = false;
 		imageKind = i;
 		imageDrawWidth = 50;
 		imageDrawHeight = 50;

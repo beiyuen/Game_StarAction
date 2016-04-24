@@ -66,6 +66,6 @@ public abstract class AbstractBoss extends AbstractEnemy {
 			imageCount++;
 			imageKind = (imageCount % 8) / imageLine + imageColumn; // 4,5,6,7番目の画像
 		}
-		//super.draw(g);
+		super.draw(g);
 	}
 }

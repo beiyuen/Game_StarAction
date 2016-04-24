@@ -4,6 +4,7 @@ import static constants.ImageConstants.*;
 import static constants.SoundCnstants.*;
 
 import java.awt.Image;
+import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,8 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
+import star_action.ViewPanel;
 /**
  * 画像データ、サウンドデータを読み込むクラスです
  * 
@@ -40,8 +43,12 @@ public class ReferenceItems {
 	private static AudioInputStream[] audioInputStream;
 	private static AudioFormat[] audioFormat;
 	private static DataLine.Info[] info;
+	private static boolean loaded = false;
+	private static MediaTracker tracker = new MediaTracker(ViewPanel.getViewPanel());
 
 	public static void Load() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+		int count = 0;
+		
 		enemyImage = new Image[IMAGE_ENEMY_MAX];
 		blockImage = new Image[IMAGE_BLOCK_MAX];
 		textImage = new Image[IMAGE_TEXT_MAX];
@@ -59,8 +66,6 @@ public class ReferenceItems {
 		blockImage[IMAGE_BLOCK_NOMAL] = Toolkit.getDefaultToolkit().createImage("image/block.png");
 		blockImage[IMAGE_BLOCK_GOAL] = Toolkit.getDefaultToolkit().createImage("image/goal.png");
 		blockImage[IMAGE_BLOCK_FLOORCLEAR] = Toolkit.getDefaultToolkit().createImage("image/worldClearBlock.png");
-		needleImage = Toolkit.getDefaultToolkit().createImage("image/needle.png");
-		playerCharaImage = Toolkit.getDefaultToolkit().createImage("image/playerChara.png");
 
 		textImage[IMAGE_TEXT_WORLD1] = Toolkit.getDefaultToolkit().createImage("image/textWorld1.png");
 		textImage[IMAGE_TEXT_CLEAR] = Toolkit.getDefaultToolkit().createImage("image/textClear.png");
@@ -70,8 +75,9 @@ public class ReferenceItems {
 		signboardImage[IMAGE_SIGNBOARD_3] = Toolkit.getDefaultToolkit().createImage("image/signboard3.png");
 		signboardImage[IMAGE_SIGNBOARD_4] = Toolkit.getDefaultToolkit().createImage("image/signboard4.png");
 		signboardImage[IMAGE_SIGNBOARD_5] = Toolkit.getDefaultToolkit().createImage("image/signboard5.png");
-		// signboardImage[IMAGE_SIGNBOARD_6] =
-		// Toolkit.getDefaultToolkit().createImage("image/signboard6.png");
+		
+		needleImage = Toolkit.getDefaultToolkit().createImage("image/needle.png");
+		playerCharaImage = Toolkit.getDefaultToolkit().createImage("image/playerChara.png");
 
 		openingImage = Toolkit.getDefaultToolkit().createImage("image/title.png");
 		endingImage = Toolkit.getDefaultToolkit().createImage("image/ending.png");
@@ -95,7 +101,35 @@ public class ReferenceItems {
 			clip[i] = (Clip) AudioSystem.getLine(info[i]);
 			clip[i].open(audioInputStream[i]);
 		}
-		System.out.println("file loaded");
+		// メディアトラッカーに追加
+		for(Image image : enemyImage){
+			tracker.addImage(image, count);
+			count++;
+		}
+		for(Image image : blockImage){
+			tracker.addImage(image, count);
+			count++;
+		}
+		for(Image image : signboardImage){
+			tracker.addImage(image, count);
+			count++;
+		}
+		for(Image image : enemyImage){
+			tracker.addImage(image, count);
+			count++;
+		}
+		tracker.addImage(needleImage, count++);
+		tracker.addImage(playerCharaImage, count++);
+		tracker.addImage(openingImage, count++);
+		tracker.addImage(endingImage, count++);
+		tracker.addImage(gameoverImage, count++);
+		tracker.addImage(clickBoxImage, count++);
+		System.out.println("load start");
+		try {
+			  tracker.waitForAll(1000);
+			  loaded = true;
+			} catch (InterruptedException e) {
+			}
 	}
 
 	public static Image getEnemyImage(int i) {
@@ -140,6 +174,10 @@ public class ReferenceItems {
 
 	public static File getSoundSe(int i) {
 		return soundSe[i];
+	}
+
+	public static boolean isLoaded() {
+		return loaded;
 	}
 
 	public static Clip getClip(int i) {

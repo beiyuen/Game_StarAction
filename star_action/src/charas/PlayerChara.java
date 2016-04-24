@@ -9,16 +9,14 @@ import util.ReferenceItems;
 
 /**
  * 操作キャラです
- * 
+ *
  * @author kitahara
  *
  */
 public class PlayerChara extends AbstractChara {
 	private static final long serialVersionUID = 1L;
 
-	public boolean moveRight = false, moveLeft = false, up = false, dash = false;
-
-	int kabe;// i,imgkind:画像用,kabe:敵用
+	public boolean moveRight = false, moveLeft = false, moveUp = false, dash = false;
 
 	public PlayerChara(int w, int h) {
 		image = ReferenceItems.getPlayerCharaImage();
@@ -156,14 +154,14 @@ public class PlayerChara extends AbstractChara {
 	public void calcYAcceleration() {
 		super.calcYAcceleration();
 		// 接地しているときのジャンプ処理
-		if (up && hitLeg && !hitHead) {
+		if (moveUp && hitLeg && !hitHead) {
 			jump();
 			if (imageKind < 5)
 				imageKind = 4;
 			else
 				imageKind = 9;
 			hitLeg = false;
-		} else if (!up && hitLeg) {
+		} else if (!moveUp && hitLeg) {
 			changeYSpeed();
 		}
 
@@ -174,7 +172,7 @@ public class PlayerChara extends AbstractChara {
 
 	// 敵を踏んだ時の処理
 	public void tread() {
-		if (up) {
+		if (moveUp) {
 			ySpeed = -23;
 		} else {
 			ySpeed = -6;
@@ -198,6 +196,38 @@ public class PlayerChara extends AbstractChara {
 		death = true;
 		xSpeed = 0.0;
 		ySpeed = 0.0;
+	}
+
+	public boolean isMoveRight() {
+		return moveRight;
+	}
+
+	public void setMoveRight(boolean moveRight) {
+		this.moveRight = moveRight;
+	}
+
+	public boolean isMoveLeft() {
+		return moveLeft;
+	}
+
+	public void setMoveLeft(boolean moveLeft) {
+		this.moveLeft = moveLeft;
+	}
+
+	public boolean isMoveUp() {
+		return moveUp;
+	}
+
+	public void setMoveUp(boolean moveUp) {
+		this.moveUp = moveUp;
+	}
+
+	public boolean isDash() {
+		return dash;
+	}
+
+	public void setDash(boolean dash) {
+		this.dash = dash;
 	}
 
 }

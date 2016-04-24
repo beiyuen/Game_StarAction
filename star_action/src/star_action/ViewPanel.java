@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import charas.Needle;
-import charas.PlayerChara;
 import charas.blocks.AbstractBlock;
 import charas.enemys.AbstractEnemy;
 import charas.signboards.AbstractSignboard;
@@ -29,14 +28,10 @@ public class ViewPanel extends JPanel {
 	private BufferedImage offImage;
 	Color blue = new Color(150, 250, 255);
 
-	public PlayerChara playerChara = new PlayerChara(40, 50);
-
 	public DebugShowText debugShowText;
 
 	private ViewPanel() {
 		offImage = new BufferedImage(GAME_WIDTH, GAME_HEIGHT, BufferedImage.TYPE_INT_BGR);
-		debugShowText = Model.debugShowText;
-		playerChara = Model.playerChara;
 		timer = new Timer(DELAY, e -> {
 			switch (Model.getGameStatus()) {
 			case GAMESTATUS_OPENING:
@@ -45,7 +40,6 @@ public class ViewPanel extends JPanel {
 			case GAMESTATUS_PLAYING:
 				Model.run();
 				repaint();
-				// System.out.println("timer : run");
 				break;
 			case GAMESTATUS_DIE:
 				Model.run();
@@ -83,7 +77,7 @@ public class ViewPanel extends JPanel {
 			for (AbstractSignboard s : Model.getSignboardList()) {
 				s.draw(offScreen);
 			}
-			playerChara.draw(offScreen);// draw関数が悪い?
+			Model.getPlayerChara().draw(offScreen);// draw関数が悪い?
 			for (AbstractBlock b : Model.getBlockList()) {
 				b.draw(offScreen);
 			}
@@ -153,7 +147,7 @@ public class ViewPanel extends JPanel {
 			for (AbstractSignboard s : Model.getSignboardList()) {
 				s.draw(offScreen);
 			}
-			playerChara.draw(offScreen);// draw関数が悪い?
+			Model.getPlayerChara().draw(offScreen);// draw関数が悪い?
 			for (AbstractBlock b : Model.getBlockList()) {
 				b.draw(offScreen);
 			}

@@ -93,9 +93,9 @@ public class Boss2 extends AbstractBoss {
 		}
 
 		if (treadedNum < hp // やられる回数を定義
-				&& Math.abs(c.xPosition + c.xSpeed - xPosition) < c.width / 2 + width / 2
-				&& Math.abs(c.yPosition + c.ySpeed - yPosition) < c.height / 2 + height / 2
-				&& Math.sin((Math.atan2(c.yPosition - yPosition, c.xPosition - xPosition))) <= -1 / Math.sqrt(2.0)) {
+				&& Math.abs(c.getxPosition() + c.getxSpeed() - xPosition) < c.getWidth() / 2 + width / 2
+				&& Math.abs(c.getyPosition() + c.getySpeed() - yPosition) < c.getHeight() / 2 + height / 2
+				&& Math.sin((Math.atan2(c.getyPosition() - yPosition, c.getxPosition() - xPosition))) <= -1 / Math.sqrt(2.0)) {
 
 			if (xPosition < 500) {
 				xSpeed = 15;
@@ -147,7 +147,7 @@ public class Boss2 extends AbstractBoss {
 				xSpeed++;
 			}
 
-			if (xPosition + xSpeed < 70 || xPosition + xSpeed > GAME_WIDTH - 70) {
+			if (xPosition + xSpeed < 70 || xPosition + xSpeed > GAME_WIDTH - 120) {
 				if (!goAway)
 					xSpeed *= -1;
 				else if (goAway) {
@@ -168,7 +168,7 @@ public class Boss2 extends AbstractBoss {
 					}
 					goAway = false;
 				}
-			} else if (xPosition + xSpeed > GAME_WIDTH - 70) {
+			} else if (xPosition + xSpeed > GAME_WIDTH - 120) {
 				xPosition = GAME_WIDTH - 80;
 				xSpeed *= -1;
 				if (goAway) {
@@ -181,7 +181,7 @@ public class Boss2 extends AbstractBoss {
 			}
 			break;
 		case BOSS2_STATE_5:
-			if (goAway && (xPosition < 70 || xPosition > GAME_WIDTH - 70)) {
+			if (goAway && (xPosition < 70 || xPosition > GAME_WIDTH - 120)) {
 				for (AbstractBlock b : Model.getBlockList()) {
 					b.setDeath(true);
 				}

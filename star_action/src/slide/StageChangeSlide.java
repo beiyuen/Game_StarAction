@@ -12,7 +12,7 @@ import util.Text;
 
 /**
  * ステージ間に表示するスライドです
- * 
+ *
  * @author kitahara
  *
  */
@@ -23,11 +23,11 @@ public class StageChangeSlide extends JPanel {
 
 	public StageChangeSlide() {
 
-		text = new Text(300, 200, "STAGE 1", font, Color.WHITE);
+		text = new Text(300, 200, "WORLD 1-1", font, Color.WHITE);
 	}
 
-	public void setText(int i) {
-		text.setText("STAGE " + String.valueOf(i));
+	public void setText(int world, int stage) {
+		text.setText("WORLD " + String.valueOf(world) + "-" + String.valueOf(stage));
 	}
 
 	public void draw(Graphics g) {

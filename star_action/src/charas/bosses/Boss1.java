@@ -65,9 +65,9 @@ public class Boss1 extends AbstractBoss {
 
 	public int isHitPlayerChara(PlayerChara c) {
 
-		if (treadedNum < hp && Math.abs(c.xPosition + c.xSpeed - xPosition) < c.width / 2 + width / 2
-				&& Math.abs(c.yPosition + c.ySpeed - yPosition) < c.height / 2 + height / 2
-				&& Math.sin((Math.atan2(c.yPosition - yPosition, c.xPosition - xPosition))) <= -1 / Math.sqrt(2.0)) {
+		if (treadedNum < hp && Math.abs(c.getxPosition() + c.getxSpeed() - xPosition) < c.getWidth() / 2 + width / 2
+				&& Math.abs(c.getyPosition() + c.getySpeed() - yPosition) < c.getHeight() / 2 + height / 2
+				&& Math.sin((Math.atan2(c.getyPosition() - yPosition, c.getxPosition() - xPosition))) <= -1 / Math.sqrt(2.0)) {
 			if (jumping) {
 				return HIT_MISS;
 			}
@@ -118,6 +118,11 @@ public class Boss1 extends AbstractBoss {
 
 	public void checkDeath() {
 		if (yPosition > GAME_HEIGHT + 50) {
+			try {
+				Sound.soundSE(SOUND_SE_SURPRISE, 0.6);
+			} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+				e.printStackTrace();
+			}
 			death();
 		}
 	}
