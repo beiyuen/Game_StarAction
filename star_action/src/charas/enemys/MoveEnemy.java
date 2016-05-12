@@ -16,13 +16,14 @@ public class MoveEnemy extends AbstractEnemy {
 	public boolean jump;
 
 	public MoveEnemy(int x, int y, double xs) {
-		super(x, y, 40, 50, IMAGE_ENEMY_MOVE);
+		super(x, y, 30, 40, IMAGE_ENEMY_MOVE);
 		xSpeed = xs;
 		imageLine = 2;
 		imageColumn = 5;
-		imageDrawWidth = 40;
-		imageDrawHeight = 50;
+		imageDrawWidth = 30;
+		imageDrawHeight = 40;
 		jump = false;
+		hitLeg = true;
 	}
 
 	// 呼び出され用
@@ -30,6 +31,8 @@ public class MoveEnemy extends AbstractEnemy {
 		if (Model.getPlayerChara().isDeath()) {
 			setJump(false);
 		}
+		calcXAcceleration(0.7);
+		calcYAcceleration();
 		isHitBlock();
 		checkDeath();
 		if (hitLeft || hitRight) {
@@ -44,8 +47,7 @@ public class MoveEnemy extends AbstractEnemy {
 			// System.out.println("ジャンプ後 imageKind:" + imagekind);
 		}
 
-		calcXAcceleration(0.7);
-		calcYAcceleration();
+	
 
 	}
 

@@ -27,11 +27,13 @@ public class WalkEnemy extends AbstractEnemy {
 	boolean isHit;
 
 	public WalkEnemy(int x, int y) {
-		super(x, y, 40, 50, IMAGE_ENEMY_WALK);
+		super(x, y, 30, 40, IMAGE_ENEMY_WALK);
+		yPosition = (y+1) * BLOCK_SIZE - height/2;
+		initY = yPosition;
 		imageColumn = 4;
 		imageLine = 2;
-		imageDrawWidth = 40;
-		imageDrawHeight = 50;
+		imageDrawWidth = 30;
+		imageDrawHeight = 40;
 		isHit = false;
 	}
 

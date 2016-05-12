@@ -22,8 +22,8 @@ public class PlayerChara extends AbstractChara {
 		image = ReferenceItems.getPlayerCharaImage();
 		width = 30;
 		height = 40;
-		imageDrawWidth = 40;
-		imageDrawHeight = 50;
+		imageDrawWidth = 30;
+		imageDrawHeight = 40;
 		imageColumn = 5;
 		imageLine = 2; // 画像の分割数
 		imageKind = 5;

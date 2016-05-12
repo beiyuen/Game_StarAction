@@ -88,7 +88,7 @@ public abstract class AbstractEnemy extends AbstractChara {
 	public int isHitPlayerChara(PlayerChara c) {
 		boolean hit = super.isHit(c);
 		if (hit) {
-			if (Math.sin((Math.atan2(c.getyPosition() - yPosition, c.getxPosition() - xPosition))) <= -1 / Math.sqrt(2.0)) {
+			if (Math.sin((Math.atan2(c.getyPosition() - yPosition, c.getxPosition() - xPosition))) <= Math.sin(-40 * Math.PI/180)) {
 				// ここから下を変える
 				death();
 				return HIT_TREAD;
@@ -102,7 +102,7 @@ public abstract class AbstractEnemy extends AbstractChara {
 	public void calcXAcceleration(double a) {
 		// ランダムで速度0になったときに加速
 		if (xSpeed == 0)
-			xSpeed = Math.random() * 4;
+			xSpeed = 1;
 	}
 
 	@Override

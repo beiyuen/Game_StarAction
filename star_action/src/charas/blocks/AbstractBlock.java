@@ -13,7 +13,7 @@ import util.ReferenceItems;
 
 /**
  * 通常ゲームでは普通のブロック。プレイヤーが触れても、敵が触れても消えることはない。また、このブロックは右クリックで消すことはできない。
- * 
+ *
  * @author kitahara
  *
  */
@@ -96,21 +96,16 @@ public class AbstractBlock extends AbstractChara {
 
 	// 接触かつ直前にx方向に接触していない場合に位置、速度を調整
 	public Dimension hitx(AbstractChara c) {
-		boolean x = isHit(c);
+	//	boolean x = isHit(c);
 		int hitr = 0;
 		int hitl = 0;
 		double cx = c.getxPosition();
 		double cy = c.getyPosition();
 		double cxsp = c.getxSpeed();
 		double cysp = c.getySpeed();
-		double prex = cx - cxsp - xPosition;
 		double nextMaxX = cx + c.getWidth()/2 +  cxsp;
 		double nextMinX = cx - c.getWidth()/2 +  cxsp;
 		double cos = Math.cos(Math.atan2(cy - yPosition, cx - xPosition));
-		double saleft = (xPosition + width/2) - (cx - c.getWidth()/2);
-		double saright = (cx + c.getWidth()/2) - (xPosition - width/2);
-		double sahead = Math.abs((yPosition - height/2) - (cy + c.getHeight()/2));
-		double saleg = Math.abs(cy - c.getHeight()/2 - (yPosition + height/2));
 		// 対象キャラと離れすぎているとき,当たり判定を計算しない
 		if(Math.abs( cx + cxsp - xPosition ) > 100 || Math.abs(cy + cysp - yPosition) > 100 ){
 			hitX.setSize(hitl, hitr);
@@ -124,12 +119,12 @@ public class AbstractBlock extends AbstractChara {
 				// 現在どの壁にもぶつかっていないとき
 			//	if(!c.isHitLeft() && !c.isHitRight()){
 					// 右方向に移動時(右側の壁にぶつかる)
-					if(cxsp > 1 && nextMaxX - (xPosition - width/2) <= XSPEED_MAX){
+					if(cxsp > 0 && nextMaxX - (xPosition - width/2) <= XSPEED_MAX){
 						hitr = 1;
 						c.setxPosition(xPosition - (c.getWidth() / 2 + BLOCK_SIZE / 2));
 						//c.changeXSpeed();
 						if(c instanceof PlayerChara)System.out.println("hitRight  " + c.getxPosition() + "  " + c.getxSpeed());
-						
+
 					}
 					// 左方向に移動時
 					else if(cxsp < 0 && (xPosition + width/2) - nextMinX < XSPEED_MAX){
@@ -141,7 +136,7 @@ public class AbstractBlock extends AbstractChara {
 			//	}
 				//else System.out.println("else  " + ((int)cx - c.getWidth()/2 - ((int)xPosition + width/2)));
 			}
-			
+
 			// 現在右側の壁にぶつかっているとき
 			if(c.isHitRight() && /*(saright <sahead || saright <saleg )*/cxsp < 3 && (int)cy + c.getHeight()/2 != (int)yPosition - BLOCK_SIZE/2){
 				if((int)cx + c.getWidth()/2 == (int)xPosition - width/2){
@@ -176,7 +171,7 @@ public class AbstractBlock extends AbstractChara {
 				else if(c instanceof PlayerChara)System.out.println("hitleft222  " + ((int)cx - c.getWidth()/2 - ((int)xPosition + width/2)));
 			}
 			else if(c instanceof PlayerChara)System.out.println("hitelse  " + ((int)cx - c.getWidth()/2 - ((int)xPosition + width/2)));
-			
+
 
 		}
 		/*if (isHitMove(c) && (cos >= Math.cos(30 * Math.PI / 180.0) || cos <= Math.cos(150 * Math.PI / 180.0))) {
@@ -188,7 +183,7 @@ public class AbstractBlock extends AbstractChara {
 					c.setxPosition(xPosition - (c.getWidth() / 2 + BLOCK_SIZE / 2) -1);
 					//c.changeXSpeed();
 					if(c instanceof PlayerChara)System.out.println("hitRight  " + c.getxPosition() + "  " + c.getxSpeed());
-					
+
 				}
 				// 左方向に移動時
 				else if(cxsp < 0 && (xPosition + width/2) - nextMinX < XSPEED_MAX){
@@ -217,7 +212,7 @@ public class AbstractBlock extends AbstractChara {
 
 		}
 		else if(isHitMove(c) && cy + c.getHeight()/2 != yPosition - BLOCK_SIZE/2){
-			
+
 		}*/
 		// 現在のフレームでぶつかっているとき
 		/*else if(c instanceof PlayerChara){
@@ -232,11 +227,11 @@ public class AbstractBlock extends AbstractChara {
 				if(c instanceof PlayerChara)System.out.println("hitLeft3  " + c.getxPosition() + "  " + c.getxSpeed());
 			}
 		}*/
-		
+
 		else if(isHitMove(c)){
 			if(c instanceof PlayerChara)System.out.println("hitsonota  x:" + c.getxPosition() + " , y:" + c.getyPosition() + "  , hitleg:" + c.ishitLeg() + "  " + c.getxSpeed());
 		}
-		
+
 		/*if (x) {
 			double precos = Math
 					.cos(Math.atan2(cy - cysp - yPosition, cx - cxsp - xPosition));
@@ -270,12 +265,12 @@ public class AbstractBlock extends AbstractChara {
 			}
 		}
 		else if(isHitMove(c)){
-			
+
 		}
 		else {
 			isHitx = false;
 		}*/
-		
+
 		hitX.setSize(hitl, hitr);
 		return hitX;
 
@@ -289,8 +284,6 @@ public class AbstractBlock extends AbstractChara {
 		double cy = c.getyPosition();
 		double cxsp = c.getxSpeed();
 		double cysp = c.getySpeed();
-		double prey = cy - cysp - yPosition;
-		double curr = cy - yPosition;
 		double nextMaxY = cy + c.getHeight()/2 +  cysp;
 		double nextMinY = cy - c.getHeight()/2 +  cysp;
 		// 対象キャラと離れすぎているとき,当たり判定を計算しない
@@ -310,8 +303,8 @@ public class AbstractBlock extends AbstractChara {
 				hitl = 1;
 				if(c instanceof Boss1)System.out.println("leg2" + c.getyPosition() + "  " + cysp);
 			}
-			
-			
+
+
 		}
 		// 現フレームで壁とぶつかっていないとき
 		else if(!c.ishitLeg() && !nowHit && !isHitLeft() && !isHitRight()){
@@ -321,7 +314,7 @@ public class AbstractBlock extends AbstractChara {
 					c.setyPosition(yPosition - (c.getHeight() / 2 + BLOCK_SIZE / 2));
 					c.changeYSpeed();
 					if(c instanceof Boss1)System.out.println("hitleg  " + c.getyPosition() + "  " + c.getySpeed());
-					
+
 				}
 				else if(cysp < 0 && (yPosition + height/2) - nextMinY < 22 && (cx + c.getWidth()/2 != xPosition - width/2) && (cx - c.getWidth()/2 != xPosition + width/2)){
 					hith = 1;
@@ -343,7 +336,7 @@ public class AbstractBlock extends AbstractChara {
 	 }*/
 		/*if (x) {
 
-			
+
 			double sin = Math.sin(Math.atan2(cy - yPosition, cx - xPosition));
 			double presin = Math
 					.sin(Math.atan2(cy - cysp - yPosition, cx - cxsp - xPosition));

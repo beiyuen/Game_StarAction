@@ -108,7 +108,7 @@ public class Model {
 	 * オープニング画面からゲーム画面へ遷移するときに呼ばれる。ワールド、ステージの値を初期化する
 	 */
 	public static void gameInit() {
-		setStageNum(3);
+		setStageNum(1);
 		setWorldNum(1);
 		setStage();
 		stageChangeSlide.setText(worldNum, stageNum);

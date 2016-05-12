@@ -33,7 +33,7 @@ public class WorldClearSlide extends JPanel {
 	public WorldClearSlide(int i) {
 		imageWorld = ReferenceItems.getTexteImage(i);
 		imageClear = ReferenceItems.getTexteImage(IMAGE_TEXT_CLEAR);
-		text = new Text(250, 500, "Press 'Enter' Key to Go Next World", font, Color.BLACK);
+		text = new Text(250, 500, "Press 'Enter' Key to Go to the Next World", font, Color.BLACK);
 		init();
 	}
 
