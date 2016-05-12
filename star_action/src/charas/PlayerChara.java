@@ -20,8 +20,8 @@ public class PlayerChara extends AbstractChara {
 
 	public PlayerChara(int w, int h) {
 		image = ReferenceItems.getPlayerCharaImage();
-		width = w;
-		height = h;
+		width = 30;
+		height = 40;
 		imageDrawWidth = 40;
 		imageDrawHeight = 50;
 		imageColumn = 5;
@@ -89,6 +89,8 @@ public class PlayerChara extends AbstractChara {
 		}
 
 		// ブロックとの当たり判定をし、hitRight, hitLeft, hitHead, hitLeg を変更
+		calcXAcceleration(0.7);
+		calcYAcceleration();
 		isHitBlock();
 
 		if (hitLeft || hitRight) {
@@ -96,8 +98,7 @@ public class PlayerChara extends AbstractChara {
 		} else if (hitHead || hitLeg) {
 			changeYSpeed();
 		}
-		calcXAcceleration(0.7);
-		calcYAcceleration();
+
 	}
 
 	private void checkDeath() {
@@ -110,21 +111,33 @@ public class PlayerChara extends AbstractChara {
 	// 操作およびhit時の挙動
 	public void calcXAcceleration(double a) {
 		// 右を押していたとき
-		if (moveRight && !hitRight) {
-			if (dash && xSpeed <= 16) {
+		if (moveRight /*&& !hitRight*/) {
+			if (dash && xSpeed < XSPEED_MAX) {
 				xSpeed += 2;
-			} else if (dash == false && xSpeed <= 6) {
+				if(xSpeed > XSPEED_MAX){
+					xSpeed = XSPEED_MAX;
+				}
+			} else if (dash == false && xSpeed <= 6.0) {
 				xSpeed += 1.5;
+				if(xSpeed > 6.0){
+					xSpeed = 6.0;
+				}
 			}
 			imageCount++;
 			imageKind = (imageCount % 24) / 6 + 5;// 5,6,7,8番目の画像
 		}
 		// 左を押していたとき
-		else if (moveLeft && !hitLeft) {
-			if (dash && xSpeed >= -16) {
+		else if (moveLeft /*&& !hitLeft*/) {
+			if (dash && xSpeed > -XSPEED_MAX) {
 				xSpeed -= 2;
-			} else if (dash == false && xSpeed >= -6) {
+				if(xSpeed < -XSPEED_MAX){
+					xSpeed = -XSPEED_MAX;
+				}
+			} else if (dash == false && xSpeed > -6.0) {
 				xSpeed -= 1.5;
+				if(xSpeed < -6.0){
+					xSpeed = -6.0;
+				}
 			}
 			imageCount++;
 			imageKind = (imageCount % 24) / 6; // 0,1,2,3番目の画像
@@ -161,6 +174,7 @@ public class PlayerChara extends AbstractChara {
 			else
 				imageKind = 9;
 			hitLeg = false;
+		// ジャンプして地面についたとき	
 		} else if (!moveUp && hitLeg) {
 			changeYSpeed();
 		}
@@ -168,6 +182,15 @@ public class PlayerChara extends AbstractChara {
 		// System.out.println("xSppd = " + xSpeed + ", ySpeed = " + ySpeed);
 		// System.out.println("hitLeg = " + hitLeg + ", ySeed = " + ySpeed);
 
+	}
+	
+	@Override
+	public void move() {
+		xPosition += xSpeed;
+		if(!ishitLeg() || !isHitHead()){
+			yPosition += ySpeed;
+		}
+		
 	}
 
 	// 敵を踏んだ時の処理

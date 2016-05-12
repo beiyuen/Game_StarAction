@@ -82,7 +82,6 @@ public class Boss2 extends AbstractBoss {
 	public void death() {
 		Model.getBlockList().add(new WorldClearBlock(9, 5));
 		death = true;
-		System.out.println("enemy.death");
 	}
 
 	public int isHitPlayerChara(PlayerChara c) {
@@ -91,38 +90,34 @@ public class Boss2 extends AbstractBoss {
 				return HIT_MISS;
 			}
 		}
-
-		if (treadedNum < hp // やられる回数を定義
+		// プレイヤーが上から踏みつけたとき
+		if (treadedNum < hp
 				&& Math.abs(c.getxPosition() + c.getxSpeed() - xPosition) < c.getWidth() / 2 + width / 2
 				&& Math.abs(c.getyPosition() + c.getySpeed() - yPosition) < c.getHeight() / 2 + height / 2
 				&& Math.sin((Math.atan2(c.getyPosition() - yPosition, c.getxPosition() - xPosition))) <= -1 / Math.sqrt(2.0)) {
-
+			// 横に逃げるために速度変化を行う
 			if (xPosition < 500) {
 				xSpeed = 15;
 			} else {
 				xSpeed = -15;
 			}
-			// 通常時にプレイヤーに踏まれたら
+			// 踏まれたのが逃げている途中でなければ
 			if (!goAway) {
 				nextState();
-				treadedNum++;
-
+				treadedNum++;// 踏まれた回数が1増える
+				// 踏まれた時の効果音
 				try {
 					Sound.soundSE(SOUND_SE_TREAD, 0.6);
 				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 					e.printStackTrace();
 				}
-				// Mario.sound("stamp.wav", 0.6);
 				if (state == BOSS2_STATE_4 || state == BOSS2_STATE_5) {
 					bullet.clear();
 				}
+				// 踏まれた数 == HPなら死亡
 				if (treadedNum == hp) {
-					// System.out.println(state + " " + treadedNum + " " + hp);
 					death();
 				}
-
-			} else {
-
 			}
 			goAway = true;// 走って壁に逃げる時
 			count = 0;
@@ -143,13 +138,11 @@ public class Boss2 extends AbstractBoss {
 		switch (state) {
 		case BOSS2_STATE_1:
 		case BOSS2_STATE_2:
-			if (xSpeed == 0) {
-				xSpeed++;
-			}
-
 			if (xPosition + xSpeed < 70 || xPosition + xSpeed > GAME_WIDTH - 120) {
-				if (!goAway)
+				xPosition = xPosition < 300 ? 80 : GAME_WIDTH - 130;
+				if (!goAway){
 					xSpeed *= -1;
+					}
 				else if (goAway) {
 					xSpeed = 0;
 					goAway = false;
@@ -169,7 +162,7 @@ public class Boss2 extends AbstractBoss {
 					goAway = false;
 				}
 			} else if (xPosition + xSpeed > GAME_WIDTH - 120) {
-				xPosition = GAME_WIDTH - 80;
+				xPosition = GAME_WIDTH - 130;
 				xSpeed *= -1;
 				if (goAway) {
 					if (state == BOSS2_STATE_4) {
@@ -307,8 +300,9 @@ public class Boss2 extends AbstractBoss {
 		 * @param c
 		 */
 		public void pattern2() {
-			xSpeed = Math.signum(xSpeed) * 7;
-			// c.xPosition += c.xSpeed;
+			if(count == 0){
+				setxSpeed(7);
+			}
 			if (count % 45 == 10) {
 				jump();
 				hitLeg = false;

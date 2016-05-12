@@ -40,8 +40,8 @@ public class Model {
 
 	public static int gameStatus = GAMESTATUS_OPENING;
 
-	public static int stageNum = 5;
-	public static int worldNum = 2;
+	public static int stageNum = 1;
+	public static int worldNum = 1;
 	public static Stage stage = new Stage();
 	public static PlayerChara playerChara = new PlayerChara(40, 50);
 	public static DebugShowText debugShowText = new DebugShowText();
@@ -108,7 +108,7 @@ public class Model {
 	 * オープニング画面からゲーム画面へ遷移するときに呼ばれる。ワールド、ステージの値を初期化する
 	 */
 	public static void gameInit() {
-		setStageNum(1);
+		setStageNum(3);
 		setWorldNum(1);
 		setStage();
 		stageChangeSlide.setText(worldNum, stageNum);
@@ -221,7 +221,7 @@ public class Model {
 		setStageNum(stageNum + 1);
 		stageChangeSlide.setText(worldNum, stageNum);
 		setGameStatus(GAMESTATUS_STAGECHANGE);
-		setStage();		
+		setStage();
 	}
 
 	/**

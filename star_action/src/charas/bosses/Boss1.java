@@ -115,7 +115,9 @@ public class Boss1 extends AbstractBoss {
 		}
 
 	}
-
+	/**
+	 * 画面の下端より下にいたら死亡処理を行う
+	 */
 	public void checkDeath() {
 		if (yPosition > GAME_HEIGHT + 50) {
 			try {
@@ -174,12 +176,12 @@ public class Boss1 extends AbstractBoss {
 			if (count == 0) {
 				jumping = true;
 				setySpeed(-15 * d);
-			} else if (count == 55) {
+			} 
+			else if (count == 55) {
 				setxPosition(Model.getPlayerChara().getxPosition());
 				setyPosition(-100);
 				setySpeed(15 * d);
 			}
-
 			else if (yPosition > GAME_HEIGHT - 84 && yPosition < GAME_HEIGHT + 20) {
 				boolean ground = false;
 				for (AbstractBlock b : Model.getBlockList()) {
@@ -188,8 +190,9 @@ public class Boss1 extends AbstractBoss {
 						break;
 					}
 
+				
 				}
-				System.out.println(ground);
+				//System.out.println(ground + " y :" + yPosition + " ysp :" + ySpeed);
 				// 着地点が存在したら
 				if (ground) {
 					jumping = false;
@@ -202,7 +205,7 @@ public class Boss1 extends AbstractBoss {
 			} else if (count == 240) {
 				setCount(-1);
 			}
-
+System.out.println(count);
 		}
 
 	}

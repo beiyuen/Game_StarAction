@@ -38,12 +38,6 @@ public abstract class AbstractBoss extends AbstractEnemy {
 	}
 
 	public void calcAcceleration() {
-		isHitBlock();
-		if (hitLeg) {
-			changeYSpeed();
-		}
-		calcYAcceleration();
-		calcXAcceleration(0.7);
 	}
 
 	public void death() {

@@ -60,7 +60,8 @@ public abstract class AbstractEnemy extends AbstractChara {
 		checkDeath();
 		if (hitLeft || hitRight) {
 			changeXSpeed();
-		} else if (hitHead || hitLeg) {
+		}
+		if (hitHead || hitLeg) {
 			changeYSpeed();
 		}
 

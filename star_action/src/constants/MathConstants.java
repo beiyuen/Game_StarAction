@@ -19,7 +19,11 @@ public class MathConstants {
 	public static final int GAMESTATUS_WORLDCHANGE	= 	5;
 
 	public static final int BLOCK_SIZE				=	50;
-	public final static int DELAY 					=	20;
+	public static final int DELAY 					=	20;
+	
+	public static final double YSPEED_MAX			=	19.0;
+	public static final double XSPEED_MAX			=	16.0;
+	
 
 	private MathConstants(){
 	}

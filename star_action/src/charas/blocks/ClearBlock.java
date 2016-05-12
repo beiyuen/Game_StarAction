@@ -1,5 +1,6 @@
 package charas.blocks;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 
 import charas.AbstractChara;
@@ -33,7 +34,25 @@ public class ClearBlock extends AbstractBlock {
 			return super.isHit(c);
 		}
 	}
+	
+	@Override
+	public Dimension hitx(AbstractChara c) {
+		if(c instanceof PlayerChara){
+			hitX.setSize(0, 0);
+			return hitX;
+		}
+		return super.hitx(c);
+	}
 
+	@Override
+	public Dimension hity(AbstractChara c) {
+		if(c instanceof PlayerChara){
+			hitY.setSize(0, 0);
+			return hitY;
+		}
+		return super.hity(c);
+	}
+	
 	public void draw(Graphics g) {
 
 	}

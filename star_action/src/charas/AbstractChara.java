@@ -1,5 +1,7 @@
 package charas;
 
+import static constants.MathConstants.*;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -10,7 +12,6 @@ import charas.blocks.AbstractBlock;
 import charas.blocks.GoalBlock;
 import charas.blocks.WorldClearBlock;
 import star_action.Model;
-
 /**
  * ブロック、トゲ、プレイヤーキャラ、敵、ボスの基礎となるクラスです
  * 
@@ -72,7 +73,7 @@ public abstract class AbstractChara extends JPanel {
 	 */
 	public void jump() {
 		if (hitLeg)
-			ySpeed -= 20 + Math.abs(xSpeed) / 5;
+			ySpeed = -YSPEED_MAX - Math.abs(xSpeed) / 5;
 	}
 
 	/**
@@ -86,7 +87,8 @@ public abstract class AbstractChara extends JPanel {
 		isHitBlock();
 		if (hitLeft || hitRight) {
 			changeXSpeed();
-		} else if (hitHead || hitLeg) {
+		}
+		if (hitHead || hitLeg) {
 			changeYSpeed();
 		}
 
@@ -112,8 +114,11 @@ public abstract class AbstractChara extends JPanel {
 	 * 空中にいるときはy方向の速度が大きくなるようにする
 	 */
 	public void calcYAcceleration() {
-		if (!hitLeg && ySpeed <= 18) {
+		if (!hitLeg && ySpeed < YSPEED_MAX) {
 			ySpeed += 1.3;
+		}
+		if(ySpeed >= YSPEED_MAX){
+			ySpeed = YSPEED_MAX;
 		}
 	}
 
@@ -136,6 +141,7 @@ public abstract class AbstractChara extends JPanel {
 			} else {
 				hx = b.hitx(this);
 				hy = b.hity(this);
+				
 				if (hx.width == 1) {
 					hitl = 1;
 				}
@@ -154,6 +160,7 @@ public abstract class AbstractChara extends JPanel {
 		for (AbstractBlock b : Model.getPlaceBlockList()) {
 			hx = b.hitx(this);
 			hy = b.hity(this);
+			
 			if (hx.width == 1) {
 				hitl = 1;
 			}

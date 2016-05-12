@@ -38,11 +38,11 @@ public class FakeBlock extends AbstractBlock {
 	/**
 	 * キャラがブロックに触れたときの処理。キャラがプレイヤーの場合とその他の場合に分かれる
 	 */
-	public boolean isHit(AbstractChara c) {
+	public boolean isHitMove(AbstractChara c) {
 		if (c instanceof PlayerChara) {
 			return hit((PlayerChara) c);
 		} else {
-			return super.isHit(c);
+			return super.isHitMove(c);
 		}
 	}
 
