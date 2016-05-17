@@ -29,19 +29,19 @@ import charas.signboards.SignBoard;
  */
 public class Stage {
 
-	public int currentStageNum; //現在のステージ数
-	public int currentClickableNum[];
-	int clickableNum[][] = {{10,10,10},{15,15,15},{0,0,0},{30,0,0},{6,0,0},{20,5,0},{0,5,0},{16,0,0},{0,0,0},{6,0,0}}; //クリック可能回数
-	public boolean scrollable[] = {true,true,false,true,false,true,true,true,true,false};
-	public boolean currentScrollable;
+	private int currentStageNum; 		// 現在のステージ数
+	private int currentClickableNum[];	// 現在のステージでのクリック可能回数
+	private int clickableNum[][] = {{10,10,10},{15,15,15},{0,0,0},{30,0,0},{6,0,0},{20,5,0},{0,5,0},{16,0,0},{0,0,0},{6,0,0}}; //クリック可能回数
+	private boolean scrollable[] = {true,true,false,true,false,true,true,true,true,false}; // 各ステージでのスクロール可能判定
+	private boolean currentScrollable;	// 現在のステージのスクロール可能判定
 
-	public ArrayList<AbstractBlock> blockList = new ArrayList<AbstractBlock>();
-	public ArrayList<AbstractEnemy> enemyList = new ArrayList<AbstractEnemy>();
-	public ArrayList<Needle> needleList = new ArrayList<Needle>();
-	public ArrayList<AbstractSignboard> signboardList = new ArrayList<AbstractSignboard>();
-	public GoalBlock goalBlock;
+	private ArrayList<AbstractBlock> blockList = new ArrayList<AbstractBlock>();
+	private ArrayList<AbstractEnemy> enemyList = new ArrayList<AbstractEnemy>();
+	private ArrayList<Needle> needleList = new ArrayList<Needle>();
+	private ArrayList<AbstractSignboard> signboardList = new ArrayList<AbstractSignboard>();
+	private GoalBlock goalBlock;
 
-	 int[][] map;
+	private int[][] map;
 
 
 

@@ -36,8 +36,8 @@ public class NomalEnemy extends AbstractEnemy {
 	}
 
 	@Override
-	public void calcXAcceleration(double a) {
-		super.calcXAcceleration(a);
+	public void calcXAcceleration() {
+		super.calcXAcceleration();
 
 		if (xSpeed < 0) {
 			imageCount++;

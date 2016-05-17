@@ -16,8 +16,8 @@ public class Sound {
 	/**
 	 * 指定した効果音を 0～1 の音量の範囲で鳴らす。0だと無音。1だと100%の音量。
 	 * 
-	 * @param se
-	 * @param vol
+	 * @param se 効果音
+	 * @param vol 音量
 	 * @throws LineUnavailableException
 	 * @throws IOException
 	 * @throws UnsupportedAudioFileException

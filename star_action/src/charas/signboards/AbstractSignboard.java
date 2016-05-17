@@ -26,21 +26,13 @@ public abstract class AbstractSignboard extends AbstractChara {
 	public void calcAcceleration() {}
 	
 	@Override
-	public void changeXSpeed() {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
+	public void changeXSpeed() {}
 
 	@Override
-	public void changeYSpeed() {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
+	public void changeYSpeed() {}
 	
 	public void draw(Graphics g){
 		g.drawImage(image, (int)(xPosition - 140), (int) (yPosition - 175), this);
-		//g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2),
-		//		(int) width, (int) height, this);
 	}
 
 }

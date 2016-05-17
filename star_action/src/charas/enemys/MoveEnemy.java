@@ -31,7 +31,7 @@ public class MoveEnemy extends AbstractEnemy {
 		if (Model.getPlayerChara().isDeath()) {
 			setJump(false);
 		}
-		calcXAcceleration(0.7);
+		calcXAcceleration();
 		calcYAcceleration();
 		isHitBlock();
 		checkDeath();
@@ -80,7 +80,7 @@ public class MoveEnemy extends AbstractEnemy {
 		jump = b;
 	}
 
-	public void calcXAcceleration(double a) {
+	public void calcXAcceleration() {
 		if (hitLeg) {
 			imageCount++;
 			if (xSpeed < 0) {

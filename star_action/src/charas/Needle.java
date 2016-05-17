@@ -2,8 +2,6 @@ package charas;
 
 import static constants.MathConstants.*;
 
-import java.awt.Graphics;
-
 import charas.enemys.WalkEnemy;
 import util.ReferenceItems;
 
@@ -46,16 +44,6 @@ public class Needle extends AbstractChara {
 					&& Math.abs(c.yPosition - yPosition) <= c.height / 2 + height / 2;
 		}
 		return false;
-	}
-
-	public void draw(Graphics g) {
-		double sx, sy;
-		sx = (imageKind % imageColumn) * imageDrawWidth;
-		sy = (imageKind / imageColumn) * imageDrawHeight;
-
-		g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2), (int) (xPosition + width / 2),
-				(int) (yPosition + height / 2), (int) (sx), (int) (sy), (int) (sx + imageDrawWidth),
-				(int) (sy + imageDrawHeight), this);
 	}
 
 	@Override

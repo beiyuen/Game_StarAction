@@ -106,7 +106,7 @@ public class ShootEnemy extends AbstractEnemy {
 	}
 
 	@Override
-	public void calcXAcceleration(double a) {
+	public void calcXAcceleration() {
 	}
 
 	@Override

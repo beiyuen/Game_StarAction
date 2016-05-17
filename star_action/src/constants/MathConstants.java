@@ -22,7 +22,9 @@ public class MathConstants {
 	public static final int DELAY 					=	20;
 	
 	public static final double YSPEED_MAX			=	19.0;
-	public static final double XSPEED_MAX			=	16.0;
+	public static final double XSPEED_MAX			=	14.0;
+	
+	public static final double DELTA_SPEED			=	0.7;
 	
 
 	private MathConstants(){

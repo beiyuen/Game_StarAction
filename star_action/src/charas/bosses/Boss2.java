@@ -215,7 +215,7 @@ public class Boss2 extends AbstractBoss {
 		super.calcYAcceleration();
 	}
 
-	public void calcXAcceleration(double a) {
+	public void calcXAcceleration() {
 	}
 
 	public void calcYAcceleration() {// 重力関係
@@ -357,7 +357,11 @@ public class Boss2 extends AbstractBoss {
 			if (count > 0 && count % 40 == 35) {
 				bullet.add(new Shot((int) (xPosition), (int) (yPosition), 1.0,
 						Math.atan2(Model.getPlayerChara().getyPosition() - yPosition, px - xPosition)));
-				// Mario.sound("shoot.wav",0.4);
+				try {
+					Sound.soundSE(SOUND_SE_SHOT, 0.3);
+				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 
@@ -371,7 +375,11 @@ public class Boss2 extends AbstractBoss {
 			if (count % 35 == 20) {
 				for (int i = 0; i < 6; i++)
 					bullet.add(new Shot((int) (xPosition), (int) (yPosition), 3.0, (count + i * 60) * Math.PI / 180));
-				// Mario.sound("shoot.wav",0.4);
+				try {
+					Sound.soundSE(SOUND_SE_SHOT, 0.3);
+				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+					e.printStackTrace();
+				}
 			}
 			if (yPosition < 50 || yPosition > GAME_HEIGHT - 84) {
 				setySpeed(ySpeed * -1);

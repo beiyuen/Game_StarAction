@@ -55,7 +55,7 @@ public abstract class AbstractEnemy extends AbstractChara {
 	public void calcAcceleration() {
 
 		calcYAcceleration();
-		calcXAcceleration(0.7);
+		calcXAcceleration();
 		isHitBlock();
 		checkDeath();
 		if (hitLeft || hitRight) {
@@ -99,8 +99,8 @@ public abstract class AbstractEnemy extends AbstractChara {
 	}
 
 	// 移動定義
-	public void calcXAcceleration(double a) {
-		// ランダムで速度0になったときに加速
+	public void calcXAcceleration() {
+		// 初期化時の乱数で速度0になったときに加速
 		if (xSpeed == 0)
 			xSpeed = 1;
 	}

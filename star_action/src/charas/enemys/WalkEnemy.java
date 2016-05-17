@@ -52,7 +52,7 @@ public class WalkEnemy extends AbstractEnemy {
 		if (Model.getGameStatus() == GAMESTATUS_DIE) {
 			isHit = false;
 		}
-		calcXAcceleration(0.7);
+		calcXAcceleration();
 		isHitBlock();
 		if (hitLeft || hitRight) {
 			changeXSpeed();
@@ -62,8 +62,8 @@ public class WalkEnemy extends AbstractEnemy {
 	}
 
 	@Override
-	public void calcXAcceleration(double a) {
-		super.calcXAcceleration(a);
+	public void calcXAcceleration() {
+		super.calcXAcceleration();
 
 		if (isHit) {
 			for (AbstractBlock b : Model.getBlockList()) {

@@ -29,7 +29,7 @@ public class GhostEnemy extends AbstractEnemy {
 	public void calcAcceleration() {
 
 		calcYAcceleration();
-		calcXAcceleration(0.7);
+		calcXAcceleration();
 		isHitBlock();
 		checkDeath();
 		if (hitRight) {
@@ -101,7 +101,7 @@ public class GhostEnemy extends AbstractEnemy {
 		hitRight = hitSide ? true:false;
 	}
 	
-	public void calcXAcceleration(double a) {
+	public void calcXAcceleration() {
 		if (xSpeed == 0) {
 			xSpeed++;
 		}

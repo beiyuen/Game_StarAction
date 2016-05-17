@@ -34,20 +34,26 @@ public class Shot extends AbstractEnemy {
 		}
 	}
 
+	/**
+	 * 等速直線運動をするので、初期化時に決めたxSpeedとySpeedは変更しない
+	 */
 	@Override
 	public void calcAcceleration() {
 	}
 
 	// 移動定義
 	@Override
-	public void calcXAcceleration(double a) {
+	public void calcXAcceleration() {
 
 	}
 
 	@Override
 	public void calcYAcceleration() {
 	}
-
+	/**
+	 * 弾が画面の外に出ているか判定する。画面外ならtrue
+	 * @return
+	 */
 	public boolean isOutOfFrame() {
 		return xPosition > GAME_WIDTH || xPosition < 0 || yPosition > GAME_HEIGHT || yPosition < 0;
 	}

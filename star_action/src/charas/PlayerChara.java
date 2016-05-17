@@ -44,72 +44,73 @@ public class PlayerChara extends AbstractChara {
 		death = false;
 	}
 
-	// 落下時、敵接触時など
-
-	// 衝突処理を追加
 	public void calcAcceleration() {
-		// super.calcAcceleration();
 
 		// 敵との当たり判定を計算
-		for (AbstractEnemy e : Model.getEnemyList()) {
-			if (!e.isDeath()) {
-				switch (e.isHitPlayerChara(this)) {
-				case HIT_TREAD:
-					tread();
-					break;
-				case HIT_MISS:
-					Model.death();
-					break;
-				case HIT_NOT:
-					break;
-				}
-			}
-		}
-		for (AbstractEnemy e : Model.getPlaceEnemyList()) {
-			if (!e.isDeath()) {
-				switch (e.isHitPlayerChara(this)) {
-				case HIT_TREAD:
-					tread();
-					break;
-				case HIT_MISS:
-					Model.death();
-					break;
-				case HIT_NOT:
-					break;
-				}
-			}
-		}
 		if (Model.getGameStatus() != GAMESTATUS_WORLDCHANGE) {
-			checkDeath();
+			for (AbstractEnemy e : Model.getEnemyList()) {
+				if (!e.isDeath()) {
+					switch (e.isHitPlayerChara(this)) {
+					case HIT_TREAD:
+						tread();
+						break;
+					case HIT_MISS:
+						Model.death();
+						break;
+					case HIT_NOT:
+						break;
+					}
+				}
+			}
+			for (AbstractEnemy e : Model.getPlaceEnemyList()) {
+				if (!e.isDeath()) {
+					switch (e.isHitPlayerChara(this)) {
+					case HIT_TREAD:
+						tread();
+						break;
+					case HIT_MISS:
+						Model.death();
+						break;
+					case HIT_NOT:
+						break;
+					}
+				}
+			}
+			// トゲとの当たり判定			
 			for (Needle n : Model.getNeedleList()) {
 				if (!n.isDeath() && n.isHit(this)) {
 					Model.death();
 				}
 			}
+			checkDeath();
 		}
 
-		// ブロックとの当たり判定をし、hitRight, hitLeft, hitHead, hitLeg を変更
-		calcXAcceleration(0.7);
+		// 速度変更
+		calcXAcceleration();
 		calcYAcceleration();
+		moveAngle = Math.atan2(ySpeed, xSpeed);
+		// ブロックとの当たり判定をし、hitRight, hitLeft, hitHead, hitLeg を変更
 		isHitBlock();
-
 		if (hitLeft || hitRight) {
 			changeXSpeed();
-		} else if (hitHead || hitLeg) {
+		}
+		if (hitHead || hitLeg) {
 			changeYSpeed();
+			
 		}
 
 	}
-
+	/**
+	 *  下に落ちたか判定し、落ちていたら死亡処理をする
+	 */
 	private void checkDeath() {
-		// TODO 自動生成されたメソッド・スタブ
 		if (yPosition > GAME_HEIGHT) {
 			Model.death();
 		}
 	}
 
-	// 操作およびhit時の挙動
-	public void calcXAcceleration(double a) {
+	
+	public void calcXAcceleration() {
 		// 右を押していたとき
 		if (moveRight /*&& !hitRight*/) {
 			if (dash && xSpeed < XSPEED_MAX) {
@@ -159,7 +160,7 @@ public class PlayerChara extends AbstractChara {
 
 		}
 
-		super.calcXAcceleration(a);
+		super.calcXAcceleration();
 
 	}
 
@@ -169,31 +170,32 @@ public class PlayerChara extends AbstractChara {
 		// 接地しているときのジャンプ処理
 		if (moveUp && hitLeg && !hitHead) {
 			jump();
-			if (imageKind < 5)
+			if (imageKind < 5){
 				imageKind = 4;
-			else
+			}		
+			else {
 				imageKind = 9;
+			}
 			hitLeg = false;
 		// ジャンプして地面についたとき	
 		} else if (!moveUp && hitLeg) {
 			changeYSpeed();
 		}
 
-		// System.out.println("xSppd = " + xSpeed + ", ySpeed = " + ySpeed);
-		// System.out.println("hitLeg = " + hitLeg + ", ySeed = " + ySpeed);
-
 	}
 	
 	@Override
 	public void move() {
 		xPosition += xSpeed;
-		if(!ishitLeg() || !isHitHead()){
+		if(!isHitLeg() || !isHitHead()){
 			yPosition += ySpeed;
 		}
 		
 	}
 
-	// 敵を踏んだ時の処理
+	/**
+	 *  敵を踏んだ時の処理
+	 */
 	public void tread() {
 		if (moveUp) {
 			ySpeed = -23;
@@ -205,7 +207,6 @@ public class PlayerChara extends AbstractChara {
 	@Override
 	public void changeXSpeed() {
 		xSpeed = 0.0;
-
 	}
 
 	@Override

@@ -22,6 +22,7 @@ public abstract class AbstractChara extends JPanel {
 	protected double xPosition, yPosition; // 位置
 	protected double initX, initY;			// ステージ開始時の初期位置
 	protected double xSpeed, ySpeed; 		// スピード
+	protected double moveAngle;				// 移動する角度
 	protected int width, height; 			// 縦横サイズ
 	protected boolean hitRight = false;	// キャラの右側がブロックに当たっているか 
 	protected boolean hitLeft = false;		// キャラの左側がブロックに当たっているか 
@@ -82,7 +83,8 @@ public abstract class AbstractChara extends JPanel {
 	public void calcAcceleration() {
 		// x, y 方向の加速度と速度の計算
 		calcYAcceleration();
-		calcXAcceleration(0.7);
+		calcXAcceleration();
+		moveAngle = Math.atan2(ySpeed, xSpeed);
 		// ブロックとの衝突判定, 衝突方向により速度変更を行う
 		isHitBlock();
 		if (hitLeft || hitRight) {
@@ -96,17 +98,20 @@ public abstract class AbstractChara extends JPanel {
 
 	/**
 	 * 減速処理を行う。また、速度が一定以下になったら止まるようにする
-	 * 
-	 * @param a
 	 */
-	public void calcXAcceleration(double a) {
-		if (xSpeed > 0)
-			xSpeed -= a;
-		if (xSpeed < 0)
-			xSpeed += a;
+	public void calcXAcceleration() {
+		if (xSpeed > 0){
+			xSpeed -= DELTA_SPEED;
+		}
+			
+		if (xSpeed < 0){
+			xSpeed += DELTA_SPEED;
+		}
+			
 		// 振動防止
-		if (Math.abs(xSpeed) < a)
-			xSpeed = 0;
+		if (Math.abs(xSpeed) < DELTA_SPEED){
+			xSpeed = 0.0;
+		}
 
 	}
 
@@ -129,6 +134,7 @@ public abstract class AbstractChara extends JPanel {
 		int hitd = 0;
 		int hitGoal = 0;
 		Dimension hx, hy;
+		int i = 0;
 		for (AbstractBlock b : Model.getBlockList()) {
 			if (b instanceof GoalBlock) {
 				if (((GoalBlock) b).hitGoal(this)) {
@@ -144,18 +150,27 @@ public abstract class AbstractChara extends JPanel {
 				
 				if (hx.width == 1) {
 					hitl = 1;
+					if(this instanceof PlayerChara){
+						System.out.println(i);
+					}
 				}
 				if (hx.height == 1) {
 					hitr = 1;
+					if(this instanceof PlayerChara){
+						System.out.println(i);
+					}
 				}
 				if (hy.width == 1) {
 					hith = 1;
+					if(this instanceof PlayerChara){
+						System.out.println(i);
+					}
 				}
 				if (hy.height == 1) {
 					hitd = 1;
 				}
 			}
-
+			i+=1;
 		}
 		for (AbstractBlock b : Model.getPlaceBlockList()) {
 			hx = b.hitx(this);
@@ -205,12 +220,15 @@ public abstract class AbstractChara extends JPanel {
 	// 描画
 	public void draw(Graphics g) {
 		double sx, sy;
-		sx = (imageKind % imageColumn) * imageDrawWidth;
-		sy = (imageKind / imageColumn) * imageDrawHeight;
+		if(xPosition < GAME_WIDTH + 100 && xPosition > -100){
+			sx = (imageKind % imageColumn) * imageDrawWidth;
+			sy = (imageKind / imageColumn) * imageDrawHeight;
 
-		g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2), (int) (xPosition + width / 2),
-				(int) (yPosition + height / 2), (int) (sx), (int) (sy), (int) (sx + imageDrawWidth),
-				(int) (sy + imageDrawHeight), this);
+			g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2), (int) (xPosition + width / 2),
+					(int) (yPosition + height / 2), (int) (sx), (int) (sy), (int) (sx + imageDrawWidth),
+					(int) (sy + imageDrawHeight), this);
+		}
+		
 	}
 
 	/**
@@ -307,12 +325,18 @@ public abstract class AbstractChara extends JPanel {
 		return height;
 	}
 
+	public double getMoveAngle() {
+		return moveAngle;
+	}
+	public void setMoveAngle(double moveAngle) {
+		this.moveAngle = moveAngle;
+	}
 	/**
 	 * hitLegを取得します。
 	 * 
 	 * @return hitLeg
 	 */
-	public boolean ishitLeg() {
+	public boolean isHitLeg() {
 		return hitLeg;
 	}
 
