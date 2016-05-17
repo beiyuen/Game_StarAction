@@ -14,7 +14,7 @@ import charas.blocks.WorldClearBlock;
 import star_action.Model;
 /**
  * ブロック、トゲ、プレイヤーキャラ、敵、ボスの基礎となるクラスです
- * 
+ *
  * @author kitahara
  *
  */
@@ -24,14 +24,14 @@ public abstract class AbstractChara extends JPanel {
 	protected double xSpeed, ySpeed; 		// スピード
 	protected double moveAngle;				// 移動する角度
 	protected int width, height; 			// 縦横サイズ
-	protected boolean hitRight = false;	// キャラの右側がブロックに当たっているか 
-	protected boolean hitLeft = false;		// キャラの左側がブロックに当たっているか 
-	protected boolean hitHead = false;		// キャラの上側がブロックに当たっているか 
-	protected boolean hitLeg = false;		// キャラの下側がブロックに当たっているか 
+	protected boolean hitRight = false;	// キャラの右側がブロックに当たっているか
+	protected boolean hitLeft = false;		// キャラの左側がブロックに当たっているか
+	protected boolean hitHead = false;		// キャラの上側がブロックに当たっているか
+	protected boolean hitLeg = false;		// キャラの下側がブロックに当たっているか
 	protected boolean death;				// 死亡判定
 	protected Image image; 				// 画像
 	protected int imageDrawWidth = 1, imageDrawHeight = 1;	// 画像描画時のサイズ
-	protected int imageColumn = 1;			// 画像の行方向の分割数 
+	protected int imageColumn = 1;			// 画像の行方向の分割数
 	protected int imageLine = 1;			// 画像の列方向の分割数
 	protected int imageKind = 0;			// 現在表示する画像番号
 	protected int imageCount = 0;			// 画像番号を計算するときに必要な値
@@ -48,7 +48,7 @@ public abstract class AbstractChara extends JPanel {
 
 	/**
 	 * 対象キャラ(c)との当たり判定を返す。当たっていたらtrue,当たっていなかったらfalseを返す
-	 * 
+	 *
 	 * @param c
 	 * @return
 	 */
@@ -59,7 +59,7 @@ public abstract class AbstractChara extends JPanel {
 
 	/**
 	 * 点との当たり判定を返す。当たっていたらtrue,当たっていなかったらfalseを返す
-	 * 
+	 *
 	 * @param x
 	 * @param y
 	 * @return
@@ -103,11 +103,11 @@ public abstract class AbstractChara extends JPanel {
 		if (xSpeed > 0){
 			xSpeed -= DELTA_SPEED;
 		}
-			
+
 		if (xSpeed < 0){
 			xSpeed += DELTA_SPEED;
 		}
-			
+
 		// 振動防止
 		if (Math.abs(xSpeed) < DELTA_SPEED){
 			xSpeed = 0.0;
@@ -147,24 +147,15 @@ public abstract class AbstractChara extends JPanel {
 			} else {
 				hx = b.hitx(this);
 				hy = b.hity(this);
-				
+
 				if (hx.width == 1) {
 					hitl = 1;
-					if(this instanceof PlayerChara){
-						System.out.println(i);
-					}
 				}
 				if (hx.height == 1) {
 					hitr = 1;
-					if(this instanceof PlayerChara){
-						System.out.println(i);
-					}
 				}
 				if (hy.width == 1) {
 					hith = 1;
-					if(this instanceof PlayerChara){
-						System.out.println(i);
-					}
 				}
 				if (hy.height == 1) {
 					hitd = 1;
@@ -175,7 +166,7 @@ public abstract class AbstractChara extends JPanel {
 		for (AbstractBlock b : Model.getPlaceBlockList()) {
 			hx = b.hitx(this);
 			hy = b.hity(this);
-			
+
 			if (hx.width == 1) {
 				hitl = 1;
 			}
@@ -228,12 +219,12 @@ public abstract class AbstractChara extends JPanel {
 					(int) (yPosition + height / 2), (int) (sx), (int) (sy), (int) (sx + imageDrawWidth),
 					(int) (sy + imageDrawHeight), this);
 		}
-		
+
 	}
 
 	/**
 	 * xPositionを取得します。
-	 * 
+	 *
 	 * @return xPosition
 	 */
 	public double getxPosition() {
@@ -242,7 +233,7 @@ public abstract class AbstractChara extends JPanel {
 
 	/**
 	 * xPositionを設定します。
-	 * 
+	 *
 	 * @param xPosition
 	 *            xPosition
 	 */
@@ -252,7 +243,7 @@ public abstract class AbstractChara extends JPanel {
 
 	/**
 	 * yPositionを取得します。
-	 * 
+	 *
 	 * @return yPosition
 	 */
 	public double getyPosition() {
@@ -261,7 +252,7 @@ public abstract class AbstractChara extends JPanel {
 
 	/**
 	 * yPositionを設定します。
-	 * 
+	 *
 	 * @param yPosition
 	 *            yPosition
 	 */
@@ -271,7 +262,7 @@ public abstract class AbstractChara extends JPanel {
 
 	/**
 	 * xSpeedを取得します。
-	 * 
+	 *
 	 * @return xSpeed
 	 */
 	public double getxSpeed() {
@@ -280,7 +271,7 @@ public abstract class AbstractChara extends JPanel {
 
 	/**
 	 * xSpeedを設定します。
-	 * 
+	 *
 	 * @param xSpeed
 	 *            xSpeed
 	 */
@@ -290,7 +281,7 @@ public abstract class AbstractChara extends JPanel {
 
 	/**
 	 * ySpeedを取得します。
-	 * 
+	 *
 	 * @return ySpeed
 	 */
 	public double getySpeed() {
@@ -299,7 +290,7 @@ public abstract class AbstractChara extends JPanel {
 
 	/**
 	 * ySpeedを設定します。
-	 * 
+	 *
 	 * @param ySpeed
 	 *            ySpeed
 	 */
@@ -309,7 +300,7 @@ public abstract class AbstractChara extends JPanel {
 
 	/**
 	 * widthを取得します。
-	 * 
+	 *
 	 * @return width
 	 */
 	public int getWidth() {
@@ -318,7 +309,7 @@ public abstract class AbstractChara extends JPanel {
 
 	/**
 	 * heightを取得します。
-	 * 
+	 *
 	 * @return height
 	 */
 	public int getHeight() {
@@ -333,7 +324,7 @@ public abstract class AbstractChara extends JPanel {
 	}
 	/**
 	 * hitLegを取得します。
-	 * 
+	 *
 	 * @return hitLeg
 	 */
 	public boolean isHitLeg() {
@@ -354,7 +345,7 @@ public abstract class AbstractChara extends JPanel {
 
 	/**
 	 * deathを取得します。
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isDeath() {

@@ -153,7 +153,7 @@ public class AbstractBlock extends AbstractChara {
 			}
 
 			// 現在右側の壁にぶつかっているとき
-			if(c.isHitRight() && cxsp < 3 && cy + c.getHeight()/2 + cysp > blockMinY){
+			else if(c.isHitRight() && cxsp < 3 && cy + c.getHeight()/2 + cysp > blockMinY){
 				if((int)cx + c.getWidth()/2 == (int)xPosition - width/2  && cy + c.getHeight()/2 != blockMinY){
 					hitr = 1;
 					c.setxPosition(xPosition - (c.getWidth() / 2 + BLOCK_SIZE / 2));
@@ -208,15 +208,15 @@ public class AbstractBlock extends AbstractChara {
 		// 現フレームでブロックとぶつかっていないとき
 		else if(!c.isHitLeg() && !nowHit){
 			if(isHitMove(c)){
-				// 空中から着地するとき　②
+				// 空中から着地するとき②
 				if(cysp > 1 && nextMaxY - (yPosition - height/2) <= YSPEED_MAX && (cx + c.getWidth()/2 != xPosition - width/2) && (cx - c.getWidth()/2 != xPosition + width/2) && cy+c.getHeight()/2 < yPosition- BLOCK_SIZE/2){
 					hitl = 1;
 					c.setyPosition(yPosition - (c.getHeight() / 2 + BLOCK_SIZE / 2));
 					c.changeYSpeed();
 
 				}
-				// 空中で上方向に衝突するとき　③
-				else if(cysp < 0 && (yPosition + height/2) - nextMinY < YSPEED_MAX+3 && (((cx + c.getWidth()/2 != xPosition - width/2) && (cx - c.getWidth()/2 != xPosition + width/2)) && Math.sin(angle) > Math.sin(60 * Math.PI / 180.0))){
+				// 空中で上方向に衝突するとき③
+				else if(cysp < 0 && (yPosition + height/2) - nextMinY < YSPEED_MAX+3 && (((cx + c.getWidth()/2 != xPosition - width/2) && (cx - c.getWidth()/2 != xPosition + width/2)) && Math.sin(angle) > Math.sin(55 * Math.PI / 180.0))){
 					hith = 1;
 					c.setyPosition(yPosition + (c.getHeight() / 2 + BLOCK_SIZE / 2));
 

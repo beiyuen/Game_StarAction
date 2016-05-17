@@ -31,6 +31,7 @@ public class MainFrame extends JFrame {
 			addMouseListener(Controller.getMouseAdapter());
 			addKeyListener(Controller.getKeyAdapter());
 			requestFocus();
+			this.setResizable(false);
 			this.validate();
 			this.setVisible(true);
 		}
