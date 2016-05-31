@@ -17,7 +17,6 @@ import charas.Shot;
 import charas.blocks.AbstractBlock;
 import charas.blocks.WorldClearBlock;
 import star_action.Model;
-import util.Sound;
 /**
  * ワールド2のボス。様々な行動をする
  * 
@@ -107,7 +106,7 @@ public class Boss2 extends AbstractBoss {
 				treadedNum++;// 踏まれた回数が1増える
 				// 踏まれた時の効果音
 				try {
-					Sound.soundSE(SOUND_SE_TREAD, 0.6);
+					sound.soundSE(SOUND_SE_TREAD, 0.6);
 				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 					e.printStackTrace();
 				}
@@ -180,7 +179,7 @@ public class Boss2 extends AbstractBoss {
 				}
 				goAway = false;
 				try {
-					Sound.soundSE(SOUND_SE_SURPRISE, 0.4);
+					sound.soundSE(SOUND_SE_SURPRISE, 0.4);
 				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 					e.printStackTrace();
 				}
@@ -358,7 +357,7 @@ public class Boss2 extends AbstractBoss {
 				bullet.add(new Shot((int) (xPosition), (int) (yPosition), 1.0,
 						Math.atan2(Model.getPlayerChara().getyPosition() - yPosition, px - xPosition)));
 				try {
-					Sound.soundSE(SOUND_SE_SHOT, 0.3);
+					sound.soundSE(SOUND_SE_SHOT, 0.3);
 				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 					e.printStackTrace();
 				}
@@ -376,7 +375,7 @@ public class Boss2 extends AbstractBoss {
 				for (int i = 0; i < 6; i++)
 					bullet.add(new Shot((int) (xPosition), (int) (yPosition), 3.0, (count + i * 60) * Math.PI / 180));
 				try {
-					Sound.soundSE(SOUND_SE_SHOT, 0.3);
+					sound.soundSE(SOUND_SE_SHOT, 0.3);
 				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 					e.printStackTrace();
 				}

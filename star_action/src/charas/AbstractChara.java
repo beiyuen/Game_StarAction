@@ -11,7 +11,9 @@ import javax.swing.JPanel;
 import charas.blocks.AbstractBlock;
 import charas.blocks.GoalBlock;
 import charas.blocks.WorldClearBlock;
+import resource.ReferenceItems;
 import star_action.Model;
+import util.Sound;
 /**
  * ブロック、トゲ、プレイヤーキャラ、敵、ボスの基礎となるクラスです
  *
@@ -35,7 +37,10 @@ public abstract class AbstractChara extends JPanel {
 	protected int imageLine = 1;			// 画像の列方向の分割数
 	protected int imageKind = 0;			// 現在表示する画像番号
 	protected int imageCount = 0;			// 画像番号を計算するときに必要な値
-
+	
+	protected ReferenceItems referenceItems = ReferenceItems.getReferenceItems();
+	protected Sound sound = Sound.getSound();
+	
 	public AbstractChara() {}
 	/**
 	 * ステージ開始時の状態にする

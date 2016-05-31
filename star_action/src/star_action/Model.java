@@ -43,33 +43,105 @@ public class Model {
 	public static int stageNum = 1;
 	public static int worldNum = 1;
 	public static Stage stage = new Stage();
-	public static PlayerChara playerChara = new PlayerChara(40, 50);
-	public static DebugShowText debugShowText = new DebugShowText();
+	public static PlayerChara playerChara = null;
+	public static DebugShowText debugShowText = null;
 
-	public static StageChangeSlide stageChangeSlide = new StageChangeSlide();
-	public static WorldClearSlide worldClearSlide = new WorldClearSlide(worldNum - 1);
-	public static OpeningSlide openingSlide = new OpeningSlide();
-	public static EndingSlide endingSlide = new EndingSlide();
-	public static GameoverSlide gameoverSlide = new GameoverSlide();
+	public static StageChangeSlide stageChangeSlide = null;
+	public static WorldClearSlide worldClearSlide = null;
+	public static OpeningSlide openingSlide = null;
+	public static EndingSlide endingSlide = null;
+	public static GameoverSlide gameoverSlide = null;
+	
+	public static int[] clickableNum = null;
+	public static boolean scrollable = true;
+	public static int placementMode = 0;
+	public static ClickItem clickItem;
+
+
+	/**
+	 * プレイヤーがやられた時のゲーム全体の処理
+	 */
+	public static void death() {
+		setGameStatus(GAMESTATUS_DIE);
+		playerChara.death();
+	}
+
+	/**
+	 * ゲーム起動時に行われる処理(リソースを利用するインスタンスの初期化)
+	 */
+	public static void firstInit(){
+		stageChangeSlide = new StageChangeSlide();
+		worldClearSlide = new WorldClearSlide(worldNum - 1);
+		openingSlide = new OpeningSlide();
+		endingSlide = new EndingSlide();
+		gameoverSlide = new GameoverSlide();
+		playerChara = new PlayerChara(40, 50);
+		debugShowText = new DebugShowText();
+	}
+
+	/**
+	 * 全ステージをクリアしたときに呼ばれるメソッド。gameStatusを変更する
+	 */
+	public static void gameClear() {
+		setGameStatus(GAMESTATUS_ENDING);
+	}
+
+	/**
+	 * オープニング画面からゲーム画面へ遷移するときに呼ばれる。ワールド、ステージの値を初期化する
+	 */
+	public static void gameInit() {
+		setStageNum(1);
+		setWorldNum(1);
+		setStage();
+		stageChangeSlide.setText(worldNum, stageNum);
+	}
 
 	public static ArrayList<AbstractBlock> getBlockList() {
 		return blockList;
+	}
+
+	public static int[] getClickableNum() {
+		return clickableNum;
+	}
+
+	public static ClickItem getClickItem() {
+		return clickItem;
+	}
+
+	public static EndingSlide getEndingSlide() {
+		return endingSlide;
 	}
 
 	public static ArrayList<AbstractEnemy> getEnemyList() {
 		return enemyList;
 	}
 
-	public static ArrayList<Needle> getNeedleList() {
-		return needleList;
+	public static GameoverSlide getGameoverSlide() {
+		return gameoverSlide;
 	}
 
 	public static int getGameStatus() {
 		return gameStatus;
 	}
 
-	public static int getStageNum() {
-		return stageNum;
+	public static ArrayList<Needle> getNeedleList() {
+		return needleList;
+	}
+	
+	public static OpeningSlide getOpeningSlide() {
+		return openingSlide;
+	}
+
+	public static ArrayList<AbstractBlock> getPlaceBlockList() {
+		return placeBlockList;
+	}
+
+	public static ArrayList<AbstractEnemy> getPlaceEnemyList() {
+		return placeEnemyList;
+	}
+
+	public static int getplacementMode() {
+		return placementMode;
 	}
 
 	public static PlayerChara getPlayerChara() {
@@ -83,35 +155,12 @@ public class Model {
 	public static StageChangeSlide getStageChangeSlide() {
 		return stageChangeSlide;
 	}
-
-	public static int[] clickableNum = null;
-	public static boolean scrollable = true;
-	public static int placementMode = 0;
-	public static ClickItem clickItem;
-
-	public static void setStageNum(int i) {
-		stageNum = i;
+	public static int getStageNum() {
+		return stageNum;
 	}
 
-	/**
-	 * プレイヤーがやられた時のゲーム全体の処理
-	 */
-	public static void death() {
-		setGameStatus(GAMESTATUS_DIE);
-		playerChara.death();
-	}
-
-	public static void setGameStatus(int i) {
-		gameStatus = i;
-	}
-	/**
-	 * オープニング画面からゲーム画面へ遷移するときに呼ばれる。ワールド、ステージの値を初期化する
-	 */
-	public static void gameInit() {
-		setStageNum(1);
-		setWorldNum(1);
-		setStage();
-		stageChangeSlide.setText(worldNum, stageNum);
+	public static WorldClearSlide getWorldClearSlide() {
+		return worldClearSlide;
 	}
 
 	/**
@@ -147,71 +196,8 @@ public class Model {
 		clickItem.setText(clickableNum[placementMode]);
 	}
 
-	/**
-	 * プレイヤーのx座標が一定以上になったときに右へ移動した場合に画面をスクロール。反対方向へはスクロールしない
-	 */
-	private static void scroll() {
-		if (scrollable) {
-			double xSpeed = playerChara.getxSpeed();
-			double xPosition = playerChara.getxPosition();
-			double speed = playerChara.getxSpeed();
-			if (xPosition + xSpeed + playerChara.getWidth() / 2 > GAME_WIDTH - 400) {
-				playerChara.scroll(speed);
-				for (AbstractSignboard s : signboardList) {
-					s.scroll(speed);
-				}
-
-				for (AbstractBlock b : blockList) {
-					b.scroll(speed);
-				}
-
-				for (AbstractEnemy e : enemyList) {
-					e.scroll(speed);
-				}
-
-				for (Needle n : needleList) {
-					n.scroll(speed);
-				}
-				for (AbstractBlock b : placeBlockList) {
-					b.scroll(speed);
-				}
-				for (AbstractEnemy e : placeEnemyList) {
-					e.scroll(speed);
-				}
-			}
-		}
-	}
-
-	/**
-	 * 1フレームごとのゲーム全体の処理、各キャラの速度変更、プレイヤーと敵キャラとの当たり判定の実行、各キャラの移動を行う
-	 */
-	public static void run() {
-		if (!playerChara.isDeath()) {
-			playerChara.calcAcceleration();
-		}
-
-		for (AbstractEnemy e : enemyList) {
-			if (!e.isDeath()) {
-				e.calcAcceleration();
-				e.move();
-			}
-		}
-		for (AbstractEnemy e : placeEnemyList) {
-			if (!e.isDeath()) {
-				e.calcAcceleration();
-				e.move();
-			}
-		}
-		if (!playerChara.isDeath()) {
-			playerChara.move();
-		}
-		scroll();
-		if (Model.getGameStatus() == GAMESTATUS_WORLDCHANGE) {
-			worldClearSlide.calcAnimation();
-			worldClearSlide.move();
-		}
-
-		//debugShowText.run(playerChara.xPosition, playerChara.yPosition);
+	public static boolean isScrollable() {
+		return scrollable;
 	}
 
 	/**
@@ -246,82 +232,6 @@ public class Model {
 		setStageNum(0);
 		setGameStatus(GAMESTATUS_WORLDCHANGE);
 
-	}
-
-	public static void setWorldNum(int worldNum) {
-		Model.worldNum = worldNum;
-	}
-	/**
-	 * 全ステージをクリアしたときに呼ばれるメソッド。gameStatusを変更する
-	 */
-	public static void gameClear() {
-		setGameStatus(GAMESTATUS_ENDING);
-	}
-
-	/**
-	 * 新しいステージをセット。これにより敵やブロックの位置情報を更新
-	 *
-	 */
-	public static void setStage() {
-		stage.setStage((worldNum-1) * 5 + stageNum);
-		blockList = stage.getBlockList();
-		enemyList = stage.getEnemyList();
-		needleList = stage.getNeedleList();
-		signboardList = stage.getSignboardList();
-		playerChara.init();
-		clickableNum = stage.getClickableNum();
-		scrollable = stage.getScrollable();
-		clickItem = new ClickItem();
-		placeBlockList.clear();
-		placeEnemyList.clear();
-		placementMode = 0;
-		clickItem.setText(clickableNum[placementMode]);
-	}
-
-	public static int[] getClickableNum() {
-		return clickableNum;
-	}
-
-	public static int getplacementMode() {
-		return placementMode;
-	}
-
-	public static void setplacementMode(int i) {
-		placementMode = i % 3;
-		clickItem.setText(clickableNum[placementMode]);
-		clickItem.setImageKind(placementMode);
-	}
-
-	public static ArrayList<AbstractBlock> getPlaceBlockList() {
-		return placeBlockList;
-	}
-
-	public static ArrayList<AbstractEnemy> getPlaceEnemyList() {
-		return placeEnemyList;
-	}
-
-	public static WorldClearSlide getWorldClearSlide() {
-		return worldClearSlide;
-	}
-
-	public static OpeningSlide getOpeningSlide() {
-		return openingSlide;
-	}
-
-	public static EndingSlide getEndingSlide() {
-		return endingSlide;
-	}
-
-	public static GameoverSlide getGameoverSlide() {
-		return gameoverSlide;
-	}
-
-	public static boolean isScrollable() {
-		return scrollable;
-	}
-
-	public static ClickItem getClickItem() {
-		return clickItem;
 	}
 
 	/**
@@ -370,6 +280,111 @@ public class Model {
 				b.setDeath(true);
 			}
 		}
+	}
+
+	/**
+	 * 1フレームごとのゲーム全体の処理、各キャラの速度変更、プレイヤーと敵キャラとの当たり判定の実行、各キャラの移動を行う
+	 */
+	public static void run() {
+		if (!playerChara.isDeath()) {
+			playerChara.calcAcceleration();
+		}
+
+		for (AbstractEnemy e : enemyList) {
+			if (!e.isDeath()) {
+				e.calcAcceleration();
+				e.move();
+			}
+		}
+		for (AbstractEnemy e : placeEnemyList) {
+			if (!e.isDeath()) {
+				e.calcAcceleration();
+				e.move();
+			}
+		}
+		if (!playerChara.isDeath()) {
+			playerChara.move();
+		}
+		scroll();
+		if (Model.getGameStatus() == GAMESTATUS_WORLDCHANGE) {
+			worldClearSlide.calcAnimation();
+			worldClearSlide.move();
+		}
+
+		//debugShowText.run(playerChara.xPosition, playerChara.yPosition);
+	}
+
+	/**
+	 * プレイヤーのx座標が一定以上になったときに右へ移動した場合に画面をスクロール。反対方向へはスクロールしない
+	 */
+	private static void scroll() {
+		if (scrollable) {
+			double xSpeed = playerChara.getxSpeed();
+			double xPosition = playerChara.getxPosition();
+			double speed = playerChara.getxSpeed();
+			if (xPosition + xSpeed + playerChara.getWidth() / 2 > GAME_WIDTH - 400) {
+				playerChara.scroll(speed);
+				for (AbstractSignboard s : signboardList) {
+					s.scroll(speed);
+				}
+
+				for (AbstractBlock b : blockList) {
+					b.scroll(speed);
+				}
+
+				for (AbstractEnemy e : enemyList) {
+					e.scroll(speed);
+				}
+
+				for (Needle n : needleList) {
+					n.scroll(speed);
+				}
+				for (AbstractBlock b : placeBlockList) {
+					b.scroll(speed);
+				}
+				for (AbstractEnemy e : placeEnemyList) {
+					e.scroll(speed);
+				}
+			}
+		}
+	}
+
+	public static void setGameStatus(int i) {
+		gameStatus = i;
+	}
+
+	public static void setplacementMode(int i) {
+		placementMode = i % 3;
+		clickItem.setText(clickableNum[placementMode]);
+		clickItem.setImageKind(placementMode);
+	}
+
+	/**
+	 * 新しいステージをセット。これにより敵やブロックの位置情報を更新
+	 *
+	 */
+	public static void setStage() {
+		stage.setStage((worldNum-1) * 5 + stageNum);
+		blockList = stage.getBlockList();
+		enemyList = stage.getEnemyList();
+		needleList = stage.getNeedleList();
+		signboardList = stage.getSignboardList();
+		playerChara.init();
+		clickableNum = stage.getClickableNum();
+		scrollable = stage.getScrollable();
+		clickItem = new ClickItem();
+		placeBlockList.clear();
+		placeEnemyList.clear();
+		placementMode = 0;
+		clickItem.setText(clickableNum[placementMode]);
+	}
+
+	public static void setStageNum(int i) {
+		stageNum = i;
+	}
+
+	public static void setWorldNum(int worldNum) {
+		Model.worldNum = worldNum;
 	}
 
 }

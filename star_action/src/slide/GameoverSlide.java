@@ -7,7 +7,7 @@ import java.awt.Image;
 
 import javax.swing.JPanel;
 
-import util.ReferenceItems;
+import resource.ReferenceItems;
 import util.Text;
 
 /**
@@ -21,9 +21,10 @@ public class GameoverSlide extends JPanel {
 	private Font font = new Font("serif", Font.BOLD, 24);
 	private Text text;
 	private Image image = null;
+	private ReferenceItems referenceItems = ReferenceItems.getReferenceItems();
 
 	public GameoverSlide() {
-		image = ReferenceItems.getGameoverImage();
+		image = referenceItems.getGameoverImage();
 		text = new Text(300, 350, "Press 'R' Key to Start Again", font, Color.BLACK);
 	}
 

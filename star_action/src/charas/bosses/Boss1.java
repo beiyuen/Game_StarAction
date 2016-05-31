@@ -13,7 +13,6 @@ import charas.PlayerChara;
 import charas.blocks.AbstractBlock;
 import charas.blocks.WorldClearBlock;
 import star_action.Model;
-import util.Sound;
 /**
  * ワールド1のボス。踏みつけ攻撃のみ行う
  * 
@@ -81,7 +80,7 @@ public class Boss1 extends AbstractBoss {
 				nextState();
 				treadedNum++;
 				try {
-					Sound.soundSE(SOUND_SE_TREAD, 0.6);
+					sound.soundSE(SOUND_SE_TREAD, 0.6);
 				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 					e.printStackTrace();
 				}
@@ -121,7 +120,7 @@ public class Boss1 extends AbstractBoss {
 	public void checkDeath() {
 		if (yPosition > GAME_HEIGHT + 50) {
 			try {
-				Sound.soundSE(SOUND_SE_SURPRISE, 0.6);
+				sound.soundSE(SOUND_SE_SURPRISE, 0.6);
 			} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 				e.printStackTrace();
 			}

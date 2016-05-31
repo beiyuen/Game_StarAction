@@ -5,7 +5,6 @@ import static constants.MathConstants.*;
 
 import charas.enemys.AbstractEnemy;
 import star_action.Model;
-import util.ReferenceItems;
 
 /**
  * 操作キャラです
@@ -19,7 +18,7 @@ public class PlayerChara extends AbstractChara {
 	public boolean moveRight = false, moveLeft = false, moveUp = false, dash = false;
 
 	public PlayerChara(int w, int h) {
-		image = ReferenceItems.getPlayerCharaImage();
+		image = referenceItems.getPlayerCharaImage();
 		width = 30;
 		height = 40;
 		imageDrawWidth = 30;

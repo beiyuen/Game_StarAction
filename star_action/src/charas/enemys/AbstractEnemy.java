@@ -12,8 +12,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import charas.AbstractChara;
 import charas.PlayerChara;
-import util.ReferenceItems;
-import util.Sound;
 
 /**
  * 敵の抽象的なクラス。すべての敵はこのクラスのサブクラス。敵は基本的にプレイヤーが上から踏むことで倒すことができる。
@@ -24,6 +22,19 @@ import util.Sound;
 public abstract class AbstractEnemy extends AbstractChara {
 
 	public Random r;
+	public AbstractEnemy(int x, int y, int w, int h) {
+		r = new Random();
+		xPosition = (x + 0.5) * BLOCK_SIZE;
+		yPosition = (y + 0.5) * BLOCK_SIZE;
+		initX = xPosition;
+		initY = yPosition;
+		xSpeed = (r.nextInt(5) - 2) * 2;
+		ySpeed = 0;
+		width = w;
+		height = h;
+		death = false;
+	
+	}
 
 	/**
 	 *
@@ -48,7 +59,7 @@ public abstract class AbstractEnemy extends AbstractChara {
 		ySpeed = 0;
 		width = w;
 		height = h;
-		image = ReferenceItems.getEnemyImage(c);
+		image = referenceItems.getEnemyImage(c);
 		death = false;
 	}
 
@@ -72,7 +83,7 @@ public abstract class AbstractEnemy extends AbstractChara {
 		death = true;
 		System.out.println("enemy.death");
 		try {
-			Sound.soundSE(SOUND_SE_TREAD, 0.6);
+			sound.soundSE(SOUND_SE_TREAD, 0.6);
 		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		}

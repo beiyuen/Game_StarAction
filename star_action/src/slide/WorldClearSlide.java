@@ -9,7 +9,7 @@ import java.awt.Image;
 
 import javax.swing.JPanel;
 
-import util.ReferenceItems;
+import resource.ReferenceItems;
 import util.Text;
 
 /**
@@ -23,6 +23,7 @@ public class WorldClearSlide extends JPanel {
 	private Font font = new Font("serif", Font.BOLD, 24);
 	private Text text;
 	private int count;
+	private ReferenceItems referenceItems = ReferenceItems.getReferenceItems();
 
 	private Image imageWorld = null;
 	private Image imageClear = null;
@@ -31,8 +32,8 @@ public class WorldClearSlide extends JPanel {
 	private double worldXspeed, clearXspeed;
 
 	public WorldClearSlide(int i) {
-		imageWorld = ReferenceItems.getTexteImage(i);
-		imageClear = ReferenceItems.getTexteImage(IMAGE_TEXT_CLEAR);
+		imageWorld = referenceItems.getTexteImage(i);
+		imageClear = referenceItems.getTexteImage(IMAGE_TEXT_CLEAR);
 		text = new Text(250, 500, "Press 'Enter' Key to Go to the Next World", font, Color.BLACK);
 		init();
 	}

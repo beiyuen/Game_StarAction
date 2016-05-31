@@ -10,7 +10,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import charas.AbstractChara;
 import charas.PlayerChara;
-import util.Sound;
 
 /**
  * プレイヤーが触れると消えるブロック。乗ることはできない。敵が触れても消えることはない。
@@ -19,6 +18,7 @@ import util.Sound;
  *
  */
 public class FakeBlock extends AbstractBlock {
+	
 
 	public FakeBlock(int x, int y, int i) {
 		super(x, y, i);
@@ -29,7 +29,7 @@ public class FakeBlock extends AbstractBlock {
 	void death() {
 		death = true;
 		try {
-			Sound.soundSE(SOUND_SE_SURPRISE, 0.4);
+			sound.soundSE(SOUND_SE_SURPRISE, 0.4);
 		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		}

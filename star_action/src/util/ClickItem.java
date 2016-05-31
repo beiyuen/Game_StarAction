@@ -9,10 +9,11 @@ import java.awt.Image;
 
 import javax.swing.JPanel;
 
+import resource.ReferenceItems;
 import star_action.Model;
 /**
  * 画面クリック時に何を設置できるかを示すアイコンです
- * 
+ *
  * @author kitahara
  *
  */
@@ -22,12 +23,13 @@ public class ClickItem extends JPanel {
 	private Image image = null;
 	private int imageKind;
 	private int width, height;
+	private ReferenceItems referenceItems = ReferenceItems.getReferenceItems();
 
 	public ClickItem() {
 		int place[] = Model.getClickableNum();
 		int clickable = place[Model.getplacementMode()];
 		text = new Text(GAME_WIDTH - 55, 32, String.valueOf(clickable), font, Color.BLACK);
-		image = ReferenceItems.getClickBoxImage();
+		image = referenceItems.getClickBoxImage();
 		imageKind = 0;
 		width = 150;
 		height = 50;

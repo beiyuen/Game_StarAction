@@ -5,7 +5,6 @@ import static constants.MathConstants.*;
 import java.awt.Graphics;
 
 import charas.AbstractChara;
-import util.ReferenceItems;
 
 public abstract class AbstractSignboard extends AbstractChara {
 
@@ -16,7 +15,7 @@ public abstract class AbstractSignboard extends AbstractChara {
 		yPosition = y * BLOCK_SIZE + BLOCK_SIZE /2;
 		initX = xPosition;
 		initY = yPosition;
-		image = ReferenceItems.getSignboardImage(i);
+		image = referenceItems.getSignboardImage(i);
 		imageDrawWidth = 280;
 		imageDrawHeight = 200;
 	}

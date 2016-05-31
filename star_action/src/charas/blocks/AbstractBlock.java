@@ -8,7 +8,6 @@ import java.awt.Graphics;
 import charas.AbstractChara;
 import charas.bosses.Boss1;
 import charas.enemys.WalkEnemy;
-import util.ReferenceItems;
 
 /**
  * 通常ゲームでは普通のブロック。プレイヤーが触れても、敵が触れても消えることはない。また、このブロックは右クリックで消すことはできない。
@@ -31,7 +30,7 @@ public class AbstractBlock extends AbstractChara {
 		initX = xPosition;
 		initY = yPosition;
 		imageNum = i;
-		image = ReferenceItems.getBlockImage(i);
+		image = referenceItems.getBlockImage(i);
 		hitX = new Dimension(0, 0);
 		hitY = new Dimension(0, 0);
 		isHitx = false;
@@ -46,7 +45,7 @@ public class AbstractBlock extends AbstractChara {
 		initX = xPosition;
 		initY = yPosition;
 		imageNum = i;
-		image = ReferenceItems.getBlockImage(i);
+		image = referenceItems.getBlockImage(i);
 		death = false;
 	}
 

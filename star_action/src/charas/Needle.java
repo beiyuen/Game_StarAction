@@ -3,7 +3,6 @@ package charas;
 import static constants.MathConstants.*;
 
 import charas.enemys.WalkEnemy;
-import util.ReferenceItems;
 
 /**
  * プレイヤーが当たるとゲームオーバーになるトゲです
@@ -22,7 +21,7 @@ public class Needle extends AbstractChara {
 		initY = yPosition;
 		xSpeed = 0;
 		ySpeed = 0;
-		image = ReferenceItems.getNeedleImage();
+		image = referenceItems.getNeedleImage();
 		death = false;
 		imageKind = i;
 		imageDrawWidth = 50;

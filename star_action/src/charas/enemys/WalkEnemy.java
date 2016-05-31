@@ -14,7 +14,6 @@ import charas.Needle;
 import charas.PlayerChara;
 import charas.blocks.AbstractBlock;
 import star_action.Model;
-import util.Sound;
 
 /**
  * 地面を歩く敵。プレイヤーが触れると、その時にこの敵が触れているブロックとトゲを破壊する。この敵はy方向の移動をしないので、
@@ -70,7 +69,7 @@ public class WalkEnemy extends AbstractEnemy {
 				if (b.isHit(this) && !b.isDeath()) {
 					b.setDeath(true);
 					try {
-						Sound.soundSE(SOUND_SE_SURPRISE, 0.2);
+						sound.soundSE(SOUND_SE_SURPRISE, 0.2);
 					} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 						e.printStackTrace();
 					}
@@ -80,7 +79,7 @@ public class WalkEnemy extends AbstractEnemy {
 				if (n.isHit(this) && !n.isDeath()) {
 					n.setDeath(true);
 					try {
-						Sound.soundSE(SOUND_SE_SURPRISE, 0.2);
+						sound.soundSE(SOUND_SE_SURPRISE, 0.2);
 					} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 						e.printStackTrace();
 					}

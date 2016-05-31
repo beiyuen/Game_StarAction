@@ -7,7 +7,7 @@ import java.awt.Image;
 
 import javax.swing.JPanel;
 
-import util.ReferenceItems;
+import resource.ReferenceItems;
 import util.Text;
 
 /**
@@ -21,9 +21,10 @@ public class EndingSlide extends JPanel {
 	private Font font = new Font("serif", Font.BOLD, 24);
 	private Text text;
 	private Image image = null;
+	private ReferenceItems referenceItems = ReferenceItems.getReferenceItems();
 
 	public EndingSlide() {
-		image = ReferenceItems.getEndingImage();
+		image = referenceItems.getEndingImage();
 		text = new Text(300, 200, "Press 'Enter' Key to Back Title", font, Color.WHITE);
 	}
 

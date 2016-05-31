@@ -17,7 +17,6 @@ import charas.PlayerChara;
 import charas.Shot;
 import charas.blocks.AbstractBlock;
 import star_action.Model;
-import util.Sound;
 /**
  * 弾を撃つ敵。打った球はこの敵が倒されても存在し続ける
  * 
@@ -60,7 +59,7 @@ public class ShootEnemy extends AbstractEnemy {
 				}
 				// 音鳴らす
 				try {
-					Sound.soundSE(SOUND_SE_SHOT, 0.4);
+					sound.soundSE(SOUND_SE_SHOT, 0.4);
 				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 					e.printStackTrace();
 				}
@@ -99,7 +98,7 @@ public class ShootEnemy extends AbstractEnemy {
 	public void death() {
 		death2 = true;
 		try {
-			Sound.soundSE(SOUND_SE_TREAD, 0.6);
+			sound.soundSE(SOUND_SE_TREAD, 0.6);
 		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		}

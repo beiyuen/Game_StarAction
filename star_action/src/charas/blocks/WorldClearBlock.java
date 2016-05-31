@@ -8,7 +8,7 @@ import charas.PlayerChara;
 public class WorldClearBlock extends AbstractBlock {
 
 	public WorldClearBlock(int x, int y) {
-		super(x, y, 40, 50, IMAGE_BLOCK_FLOORCLEAR);
+		super(x, y, 50, 50, IMAGE_BLOCK_FLOORCLEAR);
 	}
 
 	public boolean hitGoal(AbstractChara c) {
