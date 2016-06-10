@@ -3,13 +3,9 @@ package slide;
 import static constants.ImageConstants.*;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
-import javax.swing.JPanel;
-
-import resource.ReferenceItems;
 import util.Text;
 
 /**
@@ -18,12 +14,8 @@ import util.Text;
  * @author kitahara
  *
  */
-public class WorldClearSlide extends JPanel {
-
-	private Font font = new Font("serif", Font.BOLD, 24);
-	private Text text;
+public class WorldClearSlide extends AbstractSlide {
 	private int count;
-	private ReferenceItems referenceItems = ReferenceItems.getReferenceItems();
 
 	private Image imageWorld = null;
 	private Image imageClear = null;
@@ -32,6 +24,7 @@ public class WorldClearSlide extends JPanel {
 	private double worldXspeed, clearXspeed;
 
 	public WorldClearSlide(int i) {
+		super();
 		imageWorld = referenceItems.getTexteImage(i);
 		imageClear = referenceItems.getTexteImage(IMAGE_TEXT_CLEAR);
 		text = new Text(250, 500, "Press 'Enter' Key to Go to the Next World", font, Color.BLACK);

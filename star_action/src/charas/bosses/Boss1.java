@@ -115,6 +115,7 @@ public class Boss1 extends AbstractBoss {
 		}
 
 	}
+	
 	/**
 	 * 画面の下端より下にいたら死亡処理を行う
 	 */
@@ -189,10 +190,7 @@ public class Boss1 extends AbstractBoss {
 						ground = true;
 						break;
 					}
-
-
 				}
-				//System.out.println(ground + " y :" + yPosition + " ysp :" + ySpeed);
 				// 着地点が存在したら
 				if (ground) {
 					jumping = false;
@@ -205,7 +203,6 @@ public class Boss1 extends AbstractBoss {
 			} else if (count == 240) {
 				setCount(-1);
 			}
-System.out.println(count);
 		}
 
 	}

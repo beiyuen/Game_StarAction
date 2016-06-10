@@ -1,13 +1,8 @@
 package slide;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
 
-import javax.swing.JPanel;
-
-import resource.ReferenceItems;
 import util.Text;
 
 /**
@@ -16,14 +11,10 @@ import util.Text;
  * @author kitahara
  *
  */
-public class GameoverSlide extends JPanel {
-
-	private Font font = new Font("serif", Font.BOLD, 24);
-	private Text text;
-	private Image image = null;
-	private ReferenceItems referenceItems = ReferenceItems.getReferenceItems();
+public class GameoverSlide extends AbstractSlide {
 
 	public GameoverSlide() {
+		super();
 		image = referenceItems.getGameoverImage();
 		text = new Text(300, 350, "Press 'R' Key to Start Again", font, Color.BLACK);
 	}

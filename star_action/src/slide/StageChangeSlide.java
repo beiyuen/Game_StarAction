@@ -3,10 +3,7 @@ package slide;
 import static constants.MathConstants.*;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
-
-import javax.swing.JPanel;
 
 import util.Text;
 
@@ -16,13 +13,10 @@ import util.Text;
  * @author kitahara
  *
  */
-public class StageChangeSlide extends JPanel {
-
-	private Font font = new Font("serif", Font.BOLD, 24);
-	private Text text;
+public class StageChangeSlide extends AbstractSlide {
 
 	public StageChangeSlide() {
-
+		super();
 		text = new Text(300, 200, "WORLD 1-1", font, Color.WHITE);
 	}
 
