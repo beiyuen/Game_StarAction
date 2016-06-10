@@ -16,7 +16,7 @@ import charas.signboards.AbstractSignboard;
 import util.DebugShowText;
 /**
  * 画面への描画を行うパネルです
- * 
+ *
  * @author kitahara
  *
  */
@@ -34,22 +34,22 @@ public class ViewPanel extends JPanel {
 		offImage = new BufferedImage(GAME_WIDTH, GAME_HEIGHT, BufferedImage.TYPE_INT_BGR);
 		timer = new Timer(DELAY, e -> {
 			switch (Model.getGameStatus()) {
-			case GAMESTATUS_OPENING:
+			case Opening:
 				repaint();
 				break;
-			case GAMESTATUS_PLAYING:
+			case Playing:
 				Model.run();
 				repaint();
 				break;
-			case GAMESTATUS_DIE:
+			case Die:
 				Model.run();
 				repaint();
 				break;
-			case GAMESTATUS_ENDING:
+			case Ending:
 				break;
-			case GAMESTATUS_STAGECHANGE:
+			case StageChange:
 				break;
-			case GAMESTATUS_WORLDCHANGE:
+			case WorldChange:
 				Model.run();
 				repaint();
 				break;
@@ -68,11 +68,11 @@ public class ViewPanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		offScreen = offImage.getGraphics();
 		switch (Model.getGameStatus()) {
-		case GAMESTATUS_OPENING:
+		case Opening:
 			Model.getOpeningSlide().draw(offScreen);
 			break;
 
-		case GAMESTATUS_PLAYING: // 各キャラ、ブロック、右上の画像を描画
+		case Playing: // 各キャラ、ブロック、右上の画像を描画
 			drawSky(offScreen);
 			for (AbstractSignboard s : Model.getSignboardList()) {
 				s.draw(offScreen);
@@ -103,7 +103,7 @@ public class ViewPanel extends JPanel {
 			//debugShowText.draw(offScreen);
 			break;
 
-		case GAMESTATUS_DIE:
+		case Die:
 			drawSky(offScreen);
 			for (AbstractSignboard s : Model.getSignboardList()) {
 				s.draw(offScreen);
@@ -134,15 +134,15 @@ public class ViewPanel extends JPanel {
 			Model.getGameoverSlide().draw(offScreen);
 			break;
 
-		case GAMESTATUS_ENDING:
+		case Ending:
 			Model.getEndingSlide().draw(offScreen);
 			break;
 
-		case GAMESTATUS_STAGECHANGE:
+		case StageChange:
 			Model.getStageChangeSlide().draw(offScreen);
 			break;
 
-		case GAMESTATUS_WORLDCHANGE:
+		case WorldChange:
 			drawSky(offScreen);
 			for (AbstractSignboard s : Model.getSignboardList()) {
 				s.draw(offScreen);

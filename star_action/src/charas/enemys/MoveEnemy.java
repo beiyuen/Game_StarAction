@@ -1,14 +1,14 @@
 package charas.enemys;
 
-import static constants.CharaConstants.*;
 import static constants.ImageConstants.*;
 
 import charas.PlayerChara;
+import enums.HitPlayer;
 import star_action.Model;
 /**
  * 左右移動し、プレイヤーが近づくとジャンプする敵。左右移動の速度が0なら、
  * 左右移動せず制止する
- * 
+ *
  * @author kitahara
  *
  */
@@ -47,19 +47,19 @@ public class MoveEnemy extends AbstractEnemy {
 			// System.out.println("ジャンプ後 imageKind:" + imagekind);
 		}
 
-	
+
 
 	}
 
-	public int isHitPlayerChara(PlayerChara c) {
+	public HitPlayer isHitPlayerChara(PlayerChara c) {
 		// プレイヤーと接触しているとき
 		if (isHit(c)) {
 			if (Math.sin((Math.atan2(c.getyPosition() - ySpeed - yPosition, c.getxPosition() - xSpeed - xPosition))) <= -1
 					/ Math.sqrt(2.0)) {
 				death();
-				return HIT_TREAD;
+				return HitPlayer.Tread;
 			}
-			return HIT_MISS;
+			return HitPlayer.Miss;
 		}
 		// プレイヤーが近づいてきたとき
 		else if (Math.sqrt((xPosition - c.getxPosition() - c.getxSpeed()) * (xPosition - c.getxPosition() - c.getxSpeed())
@@ -72,7 +72,7 @@ public class MoveEnemy extends AbstractEnemy {
 		else {
 			setJump(false);
 		}
-		return HIT_NOT;
+		return HitPlayer.Not;
 	}
 
 	private void setJump(boolean b) {

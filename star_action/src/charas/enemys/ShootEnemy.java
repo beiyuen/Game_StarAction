@@ -1,6 +1,5 @@
 package charas.enemys;
 
-import static constants.CharaConstants.*;
 import static constants.ImageConstants.*;
 import static constants.MathConstants.*;
 import static constants.SoundCnstants.*;
@@ -16,10 +15,11 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import charas.PlayerChara;
 import charas.Shot;
 import charas.blocks.AbstractBlock;
+import enums.HitPlayer;
 import star_action.Model;
 /**
  * 弾を撃つ敵。打った球はこの敵が倒されても存在し続ける
- * 
+ *
  * @author kitahara
  *
  */
@@ -82,16 +82,16 @@ public class ShootEnemy extends AbstractEnemy {
 
 	}
 
-	public int isHitPlayerChara(PlayerChara c) {
+	public HitPlayer isHitPlayerChara(PlayerChara c) {
 		for (Shot s : bullet) {
-			if (s.isHitPlayerChara(c) == HIT_MISS) {
-				return HIT_MISS;
+			if (s.isHitPlayerChara(c) == HitPlayer.Miss) {
+				return HitPlayer.Miss;
 			}
 		}
 		if (!death2) {
 			return super.isHitPlayerChara(c);
 		}
-		return HIT_NOT;
+		return HitPlayer.Not;
 	}
 
 	@Override

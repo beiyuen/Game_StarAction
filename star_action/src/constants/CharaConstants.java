@@ -35,7 +35,8 @@ public class CharaConstants {
 	public static final int ENEMY_MOVE			=	105;
 	public static final int ENEMY_KING1			=	106;
 	public static final int ENEMY_KING2			=	107;
-	
+
+	// 看板
 	public static final int SIGNBOARD_1			=	200;
 	public static final int SIGNBOARD_2			=	201;
 	public static final int SIGNBOARD_3			=	202;
@@ -43,24 +44,20 @@ public class CharaConstants {
 	public static final int SIGNBOARD_5			=	204;
 	public static final int SIGNBOARD_6			=	205;
 
-
-	// 当たり判定
-	public static final int HIT_TREAD			= 	0;
-	public static final int HIT_MISS			=	1;
-	public static final int HIT_NOT				=	2;
-
+	// ボス1の状態
 	public static final int BOSS1_STATE_1		=	1;
 	public static final int BOSS1_STATE_2		=	2;
 	public static final int BOSS1_STATE_3		=	3;
-	
+
+	// ボス2の状態
 	public static final int BOSS2_STATE_1		=	1;
 	public static final int BOSS2_STATE_2		=	2;
 	public static final int BOSS2_STATE_3		=	3;
 	public static final int BOSS2_STATE_4		=	4;
 	public static final int BOSS2_STATE_5		=	5;
-	public static final int BOSS1_STATE_CHANGE	=	1;
-	
-	// 設置
+
+
+	// 左クリックによる設置を行うときのオブジェクト
 	public static final int PLACEMENT_BLOCK		=	0;
 	public static final int PLACEMENT_SLIME		=	1;
 	public static final int PLACEMENT_GHOST		=	2;

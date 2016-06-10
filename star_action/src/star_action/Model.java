@@ -16,6 +16,7 @@ import charas.enemys.AbstractEnemy;
 import charas.enemys.GhostEnemy;
 import charas.enemys.NomalEnemy;
 import charas.signboards.AbstractSignboard;
+import enums.GameStatus;
 import slide.EndingSlide;
 import slide.GameoverSlide;
 import slide.OpeningSlide;
@@ -38,7 +39,7 @@ public class Model {
 	public static ArrayList<AbstractEnemy> placeEnemyList = new ArrayList<AbstractEnemy>();
 	public static ArrayList<AbstractSignboard> signboardList = new ArrayList<AbstractSignboard>();
 
-	public static int gameStatus = GAMESTATUS_OPENING;
+	public static GameStatus gameStatus = GameStatus.Opening;
 
 	public static int stageNum = 1;
 	public static int worldNum = 1;
@@ -51,18 +52,18 @@ public class Model {
 	public static OpeningSlide openingSlide = null;
 	public static EndingSlide endingSlide = null;
 	public static GameoverSlide gameoverSlide = null;
-	
+
 	public static int[] clickableNum = null;
 	public static boolean scrollable = true;
 	public static int placementMode = 0;
-	public static ClickItem clickItem;
+	public static ClickItem clickItem = null;
 
 
 	/**
 	 * プレイヤーがやられた時のゲーム全体の処理
 	 */
 	public static void death() {
-		setGameStatus(GAMESTATUS_DIE);
+		setGameStatus(GameStatus.Die);
 		playerChara.death();
 	}
 
@@ -77,13 +78,14 @@ public class Model {
 		gameoverSlide = new GameoverSlide();
 		playerChara = new PlayerChara(40, 50);
 		debugShowText = new DebugShowText();
+		clickItem = new ClickItem();
 	}
 
 	/**
 	 * 全ステージをクリアしたときに呼ばれるメソッド。gameStatusを変更する
 	 */
 	public static void gameClear() {
-		setGameStatus(GAMESTATUS_ENDING);
+		setGameStatus(GameStatus.Ending);
 	}
 
 	/**
@@ -120,14 +122,14 @@ public class Model {
 		return gameoverSlide;
 	}
 
-	public static int getGameStatus() {
+	public static GameStatus getGameStatus() {
 		return gameStatus;
 	}
 
 	public static ArrayList<Needle> getNeedleList() {
 		return needleList;
 	}
-	
+
 	public static OpeningSlide getOpeningSlide() {
 		return openingSlide;
 	}
@@ -188,7 +190,7 @@ public class Model {
 		}
 		placeBlockList.clear();
 		placeEnemyList.clear();
-		setGameStatus(GAMESTATUS_PLAYING);
+		setGameStatus(GameStatus.Playing);
 		clickableNum = stage.getClickableNum();
 		scrollable = stage.getScrollable();
 		placementMode = 0;
@@ -206,7 +208,7 @@ public class Model {
 	public static void nextStage() {
 		setStageNum(stageNum + 1);
 		stageChangeSlide.setText(worldNum, stageNum);
-		setGameStatus(GAMESTATUS_STAGECHANGE);
+		setGameStatus(GameStatus.StageChange);
 		setStage();
 	}
 
@@ -230,7 +232,7 @@ public class Model {
 		worldClearSlide.init();
 		worldNum++;
 		setStageNum(0);
-		setGameStatus(GAMESTATUS_WORLDCHANGE);
+		setGameStatus(GameStatus.WorldChange);
 
 	}
 
@@ -306,7 +308,7 @@ public class Model {
 			playerChara.move();
 		}
 		scroll();
-		if (Model.getGameStatus() == GAMESTATUS_WORLDCHANGE) {
+		if (Model.getGameStatus() == GameStatus.WorldChange) {
 			worldClearSlide.calcAnimation();
 			worldClearSlide.move();
 		}
@@ -349,8 +351,8 @@ public class Model {
 		}
 	}
 
-	public static void setGameStatus(int i) {
-		gameStatus = i;
+	public static void setGameStatus(GameStatus status) {
+		gameStatus = status;
 	}
 
 	public static void setplacementMode(int i) {
@@ -372,10 +374,10 @@ public class Model {
 		playerChara.init();
 		clickableNum = stage.getClickableNum();
 		scrollable = stage.getScrollable();
-		clickItem = new ClickItem();
+		placementMode = 0;
+		clickItem.init();
 		placeBlockList.clear();
 		placeEnemyList.clear();
-		placementMode = 0;
 		clickItem.setText(clickableNum[placementMode]);
 	}
 

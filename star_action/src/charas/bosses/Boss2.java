@@ -16,10 +16,11 @@ import charas.PlayerChara;
 import charas.Shot;
 import charas.blocks.AbstractBlock;
 import charas.blocks.WorldClearBlock;
+import enums.HitPlayer;
 import star_action.Model;
 /**
  * ワールド2のボス。様々な行動をする
- * 
+ *
  * @author kitahara
  *
  */
@@ -83,10 +84,10 @@ public class Boss2 extends AbstractBoss {
 		death = true;
 	}
 
-	public int isHitPlayerChara(PlayerChara c) {
+	public HitPlayer isHitPlayerChara(PlayerChara c) {
 		for (Shot s : bullet) {
 			if (s.isHit(c)) {
-				return HIT_MISS;
+				return HitPlayer.Miss;
 			}
 		}
 		// プレイヤーが上から踏みつけたとき
@@ -121,7 +122,7 @@ public class Boss2 extends AbstractBoss {
 			goAway = true;// 走って壁に逃げる時
 			count = 0;
 			hitLeg = false;
-			return HIT_TREAD;
+			return HitPlayer.Tread;
 
 		} else {
 			return super.isHitPlayerChara(c);
@@ -266,7 +267,7 @@ public class Boss2 extends AbstractBoss {
 
 	/**
 	 * ボスの動きを定義した内部クラス。hitLegがtrueの時はy方向の動作に対し重力が発生せず、falseの時は重力が発生する
-	 * 
+	 *
 	 * @author kitahara
 	 *
 	 */
@@ -282,7 +283,7 @@ public class Boss2 extends AbstractBoss {
 
 		/**
 		 * 横移動をするのみ、床に降りたらhitLegを常にtrueにする
-		 * 
+		 *
 		 * @param c
 		 */
 		public void pattern1() {
@@ -295,7 +296,7 @@ public class Boss2 extends AbstractBoss {
 
 		/**
 		 * 地面を横移動し、一定時間経過したら飛び跳ねる。着地後の横移動後の向きはプレイヤーとの距離によって変化
-		 * 
+		 *
 		 * @param c
 		 */
 		public void pattern2() {
@@ -314,7 +315,7 @@ public class Boss2 extends AbstractBoss {
 
 		/**
 		 * 空中を横移動しながら主人公に向かって弾を撃つ。一定時間経過するか、プレイヤーのx座標がボスのx座標と近かったら落下
-		 * 
+		 *
 		 * @param c
 		 */
 		public void pattern3() {
@@ -366,7 +367,7 @@ public class Boss2 extends AbstractBoss {
 
 		/**
 		 * x方向、y方向に決められた動きで動き、一定時間ごとに６方向に弾を撃つ
-		 * 
+		 *
 		 * @param c
 		 */
 		public void pattern4() {// ショットを打つ
@@ -387,7 +388,7 @@ public class Boss2 extends AbstractBoss {
 
 		/**
 		 * 壁沿いで縦移動のみ行う
-		 * 
+		 *
 		 * @param c
 		 */
 		public void pattern5() {// 縦移動

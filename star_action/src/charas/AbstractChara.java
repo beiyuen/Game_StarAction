@@ -43,46 +43,6 @@ public abstract class AbstractChara extends JPanel {
 	
 	public AbstractChara() {}
 	/**
-	 * ステージ開始時の状態にする
-	 */
-	public void init() {
-		xPosition = initX;
-		yPosition = initY;
-		death = false;
-	}
-
-	/**
-	 * 対象キャラ(c)との当たり判定を返す。当たっていたらtrue,当たっていなかったらfalseを返す
-	 *
-	 * @param c
-	 * @return
-	 */
-	public boolean isHit(AbstractChara c) {
-		return Math.abs(c.getxPosition() - xPosition) <= c.getWidth() / 2 + width / 2
-				&& Math.abs(c.getyPosition() - yPosition) <= c.getHeight() / 2 + height / 2;
-	}
-
-	/**
-	 * 点との当たり判定を返す。当たっていたらtrue,当たっていなかったらfalseを返す
-	 *
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-	public boolean isHitPoint(double x, double y) {
-		return (x >= xPosition - width / 2 && x <= xPosition + width / 2 && y >= yPosition - height / 2
-				&& y <= yPosition + height / 2);
-	}
-
-	/**
-	 * 地面についていればジャンプする
-	 */
-	public void jump() {
-		if (hitLeg)
-			ySpeed = -YSPEED_MAX - Math.abs(xSpeed) / 5;
-	}
-
-	/**
 	 * 速度変更、当たり判定処理を行う
 	 */
 	public void calcAcceleration() {
@@ -132,6 +92,112 @@ public abstract class AbstractChara extends JPanel {
 		}
 	}
 
+	// 速度変更
+	public abstract void changeXSpeed();
+
+	public abstract void changeYSpeed();
+
+	// 描画
+	public void draw(Graphics g) {
+		double sx, sy;
+		if(xPosition < GAME_WIDTH + 100 && xPosition > -100){
+			sx = (imageKind % imageColumn) * imageDrawWidth;
+			sy = (imageKind / imageColumn) * imageDrawHeight;
+
+			g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2), (int) (xPosition + width / 2),
+					(int) (yPosition + height / 2), (int) (sx), (int) (sy), (int) (sx + imageDrawWidth),
+					(int) (sy + imageDrawHeight), this);
+		}
+
+	}
+
+	/**
+	 * heightを取得します。
+	 *
+	 * @return height
+	 */
+	public int getHeight() {
+		return height;
+	}
+
+	public double getMoveAngle() {
+		return moveAngle;
+	}
+
+	/**
+	 * widthを取得します。
+	 *
+	 * @return width
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * xPositionを取得します。
+	 *
+	 * @return xPosition
+	 */
+	public double getxPosition() {
+		return xPosition;
+	}
+
+	/**
+	 * xSpeedを取得します。
+	 *
+	 * @return xSpeed
+	 */
+	public double getxSpeed() {
+		return xSpeed;
+	}
+
+	/**
+	 * yPositionを取得します。
+	 *
+	 * @return yPosition
+	 */
+	public double getyPosition() {
+		return yPosition;
+	}
+
+	/**
+	 * ySpeedを取得します。
+	 *
+	 * @return ySpeed
+	 */
+	public double getySpeed() {
+		return ySpeed;
+	}
+
+	/**
+	 * ステージ開始時の状態にする
+	 */
+	public void init() {
+		xPosition = initX;
+		yPosition = initY;
+		death = false;
+	}
+
+	/**
+	 * deathを取得します。
+	 *
+	 * @return
+	 */
+	public boolean isDeath() {
+		return death;
+	}
+
+	/**
+	 * 対象キャラ(c)との当たり判定を返す。当たっていたらtrue,当たっていなかったらfalseを返す
+	 *
+	 * @param c
+	 * @return
+	 */
+	public boolean isHit(AbstractChara c) {
+		return Math.abs(c.getxPosition() - xPosition) <= c.getWidth() / 2 + width / 2
+				&& Math.abs(c.getyPosition() - yPosition) <= c.getHeight() / 2 + height / 2;
+	}
+
 	public void isHitBlock() {
 		int hitr = 0;
 		int hitl = 0;
@@ -139,7 +205,6 @@ public abstract class AbstractChara extends JPanel {
 		int hitd = 0;
 		int hitGoal = 0;
 		Dimension hx, hy;
-		int i = 0;
 		for (AbstractBlock b : Model.getBlockList()) {
 			if (b instanceof GoalBlock) {
 				if (((GoalBlock) b).hitGoal(this)) {
@@ -166,7 +231,6 @@ public abstract class AbstractChara extends JPanel {
 					hitd = 1;
 				}
 			}
-			i+=1;
 		}
 		for (AbstractBlock b : Model.getPlaceBlockList()) {
 			hx = b.hitx(this);
@@ -196,14 +260,46 @@ public abstract class AbstractChara extends JPanel {
 		}
 	}
 
-	public void scroll(double speed) {
-		xPosition -= speed;
+	public boolean isHitHead() {
+		return hitHead;
 	}
 
-	// 速度変更
-	public abstract void changeXSpeed();
+	public boolean isHitLeft() {
+		return hitLeft;
+	}
 
-	public abstract void changeYSpeed();
+	/**
+	 * hitLegを取得します。
+	 *
+	 * @return hitLeg
+	 */
+	public boolean isHitLeg() {
+		return hitLeg;
+	}
+
+	/**
+	 * 点との当たり判定を返す。当たっていたらtrue,当たっていなかったらfalseを返す
+	 *
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean isHitPoint(double x, double y) {
+		return (x >= xPosition - width / 2 && x <= xPosition + width / 2 && y >= yPosition - height / 2
+				&& y <= yPosition + height / 2);
+	}
+
+	public boolean isHitRight() {
+		return hitRight;
+	}
+
+	/**
+	 * 地面についていればジャンプする
+	 */
+	public void jump() {
+		if (hitLeg)
+			ySpeed = -YSPEED_MAX - Math.abs(xSpeed) / 5;
+	}
 
 	/**
 	 * 移動処理を行う。x,yのそれぞれの座標に速度を足す
@@ -212,28 +308,15 @@ public abstract class AbstractChara extends JPanel {
 		xPosition += xSpeed;
 		yPosition += ySpeed;
 	}
-
-	// 描画
-	public void draw(Graphics g) {
-		double sx, sy;
-		if(xPosition < GAME_WIDTH + 100 && xPosition > -100){
-			sx = (imageKind % imageColumn) * imageDrawWidth;
-			sy = (imageKind / imageColumn) * imageDrawHeight;
-
-			g.drawImage(image, (int) (xPosition - width / 2), (int) (yPosition - height / 2), (int) (xPosition + width / 2),
-					(int) (yPosition + height / 2), (int) (sx), (int) (sy), (int) (sx + imageDrawWidth),
-					(int) (sy + imageDrawHeight), this);
-		}
-
+	public void scroll(double speed) {
+		xPosition -= speed;
+	}
+	public void setDeath(boolean b) {
+		death = b;
 	}
 
-	/**
-	 * xPositionを取得します。
-	 *
-	 * @return xPosition
-	 */
-	public double getxPosition() {
-		return xPosition;
+	public void setMoveAngle(double moveAngle) {
+		this.moveAngle = moveAngle;
 	}
 
 	/**
@@ -247,12 +330,13 @@ public abstract class AbstractChara extends JPanel {
 	}
 
 	/**
-	 * yPositionを取得します。
+	 * xSpeedを設定します。
 	 *
-	 * @return yPosition
+	 * @param xSpeed
+	 *            xSpeed
 	 */
-	public double getyPosition() {
-		return yPosition;
+	public void setxSpeed(double xSpeed) {
+		this.xSpeed = xSpeed;
 	}
 
 	/**
@@ -266,34 +350,6 @@ public abstract class AbstractChara extends JPanel {
 	}
 
 	/**
-	 * xSpeedを取得します。
-	 *
-	 * @return xSpeed
-	 */
-	public double getxSpeed() {
-		return xSpeed;
-	}
-
-	/**
-	 * xSpeedを設定します。
-	 *
-	 * @param xSpeed
-	 *            xSpeed
-	 */
-	public void setxSpeed(double xSpeed) {
-		this.xSpeed = xSpeed;
-	}
-
-	/**
-	 * ySpeedを取得します。
-	 *
-	 * @return ySpeed
-	 */
-	public double getySpeed() {
-		return ySpeed;
-	}
-
-	/**
 	 * ySpeedを設定します。
 	 *
 	 * @param ySpeed
@@ -301,63 +357,5 @@ public abstract class AbstractChara extends JPanel {
 	 */
 	public void setySpeed(double ySpeed) {
 		this.ySpeed = ySpeed;
-	}
-
-	/**
-	 * widthを取得します。
-	 *
-	 * @return width
-	 */
-	public int getWidth() {
-		return width;
-	}
-
-	/**
-	 * heightを取得します。
-	 *
-	 * @return height
-	 */
-	public int getHeight() {
-		return height;
-	}
-
-	public double getMoveAngle() {
-		return moveAngle;
-	}
-	public void setMoveAngle(double moveAngle) {
-		this.moveAngle = moveAngle;
-	}
-	/**
-	 * hitLegを取得します。
-	 *
-	 * @return hitLeg
-	 */
-	public boolean isHitLeg() {
-		return hitLeg;
-	}
-
-	public boolean isHitHead() {
-		return hitHead;
-	}
-
-	public boolean isHitRight() {
-		return hitRight;
-	}
-
-	public boolean isHitLeft() {
-		return hitLeft;
-	}
-
-	/**
-	 * deathを取得します。
-	 *
-	 * @return
-	 */
-	public boolean isDeath() {
-		return death;
-	}
-
-	public void setDeath(boolean b) {
-		death = b;
 	}
 }

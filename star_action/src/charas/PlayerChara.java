@@ -1,9 +1,9 @@
 package charas;
 
-import static constants.CharaConstants.*;
 import static constants.MathConstants.*;
 
 import charas.enemys.AbstractEnemy;
+import enums.GameStatus;
 import star_action.Model;
 
 /**
@@ -46,17 +46,17 @@ public class PlayerChara extends AbstractChara {
 	public void calcAcceleration() {
 
 		// 敵との当たり判定を計算
-		if (Model.getGameStatus() != GAMESTATUS_WORLDCHANGE) {
+		if (Model.getGameStatus() != GameStatus.WorldChange) {
 			for (AbstractEnemy e : Model.getEnemyList()) {
 				if (!e.isDeath()) {
 					switch (e.isHitPlayerChara(this)) {
-					case HIT_TREAD:
+					case Tread:
 						tread();
 						break;
-					case HIT_MISS:
+					case Miss:
 						Model.death();
 						break;
-					case HIT_NOT:
+					case Not:
 						break;
 					}
 				}
@@ -64,18 +64,18 @@ public class PlayerChara extends AbstractChara {
 			for (AbstractEnemy e : Model.getPlaceEnemyList()) {
 				if (!e.isDeath()) {
 					switch (e.isHitPlayerChara(this)) {
-					case HIT_TREAD:
+					case Tread:
 						tread();
 						break;
-					case HIT_MISS:
+					case Miss:
 						Model.death();
 						break;
-					case HIT_NOT:
+					case Not:
 						break;
 					}
 				}
 			}
-			// トゲとの当たり判定			
+			// トゲとの当たり判定
 			for (Needle n : Model.getNeedleList()) {
 				if (!n.isDeath() && n.isHit(this)) {
 					Model.death();
@@ -95,7 +95,7 @@ public class PlayerChara extends AbstractChara {
 		}
 		if (hitHead || hitLeg) {
 			changeYSpeed();
-			
+
 		}
 
 	}
@@ -108,7 +108,7 @@ public class PlayerChara extends AbstractChara {
 		}
 	}
 
-	
+
 	public void calcXAcceleration() {
 		// 右を押していたとき
 		if (moveRight /*&& !hitRight*/) {
@@ -171,25 +171,25 @@ public class PlayerChara extends AbstractChara {
 			jump();
 			if (imageKind < 5){
 				imageKind = 4;
-			}		
+			}
 			else {
 				imageKind = 9;
 			}
 			hitLeg = false;
-		// ジャンプして地面についたとき	
+		// ジャンプして地面についたとき
 		} else if (!moveUp && hitLeg) {
 			changeYSpeed();
 		}
 
 	}
-	
+
 	@Override
 	public void move() {
 		xPosition += xSpeed;
 		if(!isHitLeg() || !isHitHead()){
 			yPosition += ySpeed;
 		}
-		
+
 	}
 
 	/**

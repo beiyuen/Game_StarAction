@@ -19,20 +19,25 @@ import star_action.Model;
  */
 public class ClickItem extends JPanel {
 	private Font font = new Font("serif", Font.BOLD, 32);
-	private Text text;
+	private Text text = null;
 	private Image image = null;
 	private int imageKind;
 	private int width, height;
 	private ReferenceItems referenceItems = ReferenceItems.getReferenceItems();
 
 	public ClickItem() {
-		int place[] = Model.getClickableNum();
-		int clickable = place[Model.getplacementMode()];
-		text = new Text(GAME_WIDTH - 55, 32, String.valueOf(clickable), font, Color.BLACK);
+		text = new Text(GAME_WIDTH - 55, 32, "", font, Color.BLACK);
 		image = referenceItems.getClickBoxImage();
 		imageKind = 0;
 		width = 150;
 		height = 50;
+	}
+	
+	public void init(){
+		int place[] = Model.getClickableNum();
+		int clickable = place[0];
+		text.setText(String.valueOf(clickable));
+		imageKind = 0;
 	}
 
 	public void setText(int i) {

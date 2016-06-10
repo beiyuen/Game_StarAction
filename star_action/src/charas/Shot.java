@@ -1,16 +1,16 @@
 package charas;
 
-import static constants.CharaConstants.*;
 import static constants.ImageConstants.*;
 import static constants.MathConstants.*;
 
 import java.awt.Graphics;
 
 import charas.enemys.AbstractEnemy;
+import enums.HitPlayer;
 
 /**
  * 敵が撃つ弾です
- * 
+ *
  * @author kitahara
  *
  */
@@ -26,11 +26,11 @@ public class Shot extends AbstractEnemy {
 	}
 
 	@Override
-	public int isHitPlayerChara(PlayerChara c) {
+	public HitPlayer isHitPlayerChara(PlayerChara c) {
 		if (isHit(c)) {
-			return HIT_MISS;
+			return HitPlayer.Miss;
 		} else {
-			return HIT_NOT;
+			return HitPlayer.Not;
 		}
 	}
 

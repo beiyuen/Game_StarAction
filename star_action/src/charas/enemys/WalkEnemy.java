@@ -1,6 +1,5 @@
 package charas.enemys;
 
-import static constants.CharaConstants.*;
 import static constants.ImageConstants.*;
 import static constants.MathConstants.*;
 import static constants.SoundCnstants.*;
@@ -13,12 +12,14 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import charas.Needle;
 import charas.PlayerChara;
 import charas.blocks.AbstractBlock;
+import enums.GameStatus;
+import enums.HitPlayer;
 import star_action.Model;
 
 /**
  * 地面を歩く敵。プレイヤーが触れると、その時にこの敵が触れているブロックとトゲを破壊する。この敵はy方向の移動をしないので、
  * ブロックが消えても落ちることはない。また、この敵をプレイヤーは倒せない
- * 
+ *
  * @author kitahara
  *
  */
@@ -37,18 +38,18 @@ public class WalkEnemy extends AbstractEnemy {
 	}
 
 	@Override
-	public int isHitPlayerChara(PlayerChara c) {
+	public HitPlayer isHitPlayerChara(PlayerChara c) {
 		if (isHit(c)) {
 			isHit = true;
 		} else {
 			isHit = false;
 		}
-		return HIT_NOT;
+		return HitPlayer.Not;
 	}
 
 	@Override
 	public void calcAcceleration() {
-		if (Model.getGameStatus() == GAMESTATUS_DIE) {
+		if (Model.getGameStatus() == GameStatus.Die) {
 			isHit = false;
 		}
 		calcXAcceleration();

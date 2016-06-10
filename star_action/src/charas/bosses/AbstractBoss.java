@@ -7,6 +7,7 @@ import java.awt.Graphics;
 
 import charas.PlayerChara;
 import charas.enemys.AbstractEnemy;
+import enums.HitPlayer;
 import star_action.Model;
 
 public abstract class AbstractBoss extends AbstractEnemy {
@@ -43,7 +44,7 @@ public abstract class AbstractBoss extends AbstractEnemy {
 	public void death() {
 	}
 
-	public int isHitPlayerChara(PlayerChara c) {
+	public HitPlayer isHitPlayerChara(PlayerChara c) {
 		return super.isHitPlayerChara(c);
 	}
 

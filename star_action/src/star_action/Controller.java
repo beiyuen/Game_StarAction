@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import charas.PlayerChara;
+import enums.GameStatus;
 /**
  * キー操作、マウス操作を行うためのコントローラです
  *
@@ -30,11 +31,11 @@ public class Controller {
 		public void mouseClicked(MouseEvent evt) {
 
 			int click = evt.getButton();
-			int gameStatus = Model.getGameStatus();
+			GameStatus gameStatus = Model.getGameStatus();
 			int mode = Model.getplacementMode();
 			int clickX = evt.getX();
 			int clickY = evt.getY() - 30;
-			if (click == MouseEvent.BUTTON1 && gameStatus == GAMESTATUS_PLAYING) {
+			if (click == MouseEvent.BUTTON1 && gameStatus == GameStatus.Playing) {
 				// モード変更
 				if (clickX > GAME_WIDTH - 65 && clickX < GAME_WIDTH - 15 && clickY < 50) {
 					Model.setplacementMode(mode + 1);
@@ -66,16 +67,16 @@ public class Controller {
 			int mod = evt.getModifiersEx();
 			switch (Model.getGameStatus()) {
 			// オープニング画面の時
-			case GAMESTATUS_OPENING:
+			case Opening:
 				switch (evt.getKeyCode()) {
 				case KeyEvent.VK_ENTER:
 					Model.gameInit();
-					Model.setGameStatus(GAMESTATUS_STAGECHANGE);
+					Model.setGameStatus(GameStatus.StageChange);
 					break;
 				}
 				break;
 			// プレイ画面の時
-			case GAMESTATUS_PLAYING:
+			case Playing:
 				switch (evt.getKeyCode()) {
 				case KeyEvent.VK_RIGHT:
 					if ((mod & InputEvent.SHIFT_DOWN_MASK) != 0) {
@@ -105,32 +106,32 @@ public class Controller {
 					break;
 				}
 				break;
-			// プレイヤーが死亡したとき	
-			case GAMESTATUS_DIE:
+			// プレイヤーが死亡したとき
+			case Die:
 				switch (evt.getKeyCode()) {
 				case 'r':
 				case 'R':
 					Model.init();
 				}
 				break;
-			// ゲームクリアのとき	
-			case GAMESTATUS_ENDING:
+			// ゲームクリアのとき
+			case Ending:
 				switch (evt.getKeyCode()) {
 				case KeyEvent.VK_ENTER:
-					Model.setGameStatus(GAMESTATUS_OPENING);
+					Model.setGameStatus(GameStatus.Opening);
 					break;
 				}
 				break;
 			// ステージ変更画面のとき
-			case GAMESTATUS_STAGECHANGE:
+			case StageChange:
 				switch (evt.getKeyCode()) {
 				case KeyEvent.VK_ENTER:
-					Model.setGameStatus(GAMESTATUS_PLAYING);
+					Model.setGameStatus(GameStatus.Playing);
 					break;
 				}
 				break;
-			// ボスを倒したとき	
-			case GAMESTATUS_WORLDCHANGE:
+			// ボスを倒したとき
+			case WorldChange:
 				switch (evt.getKeyCode()) {
 				case KeyEvent.VK_ENTER:
 					Model.nextStage();

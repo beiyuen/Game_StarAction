@@ -12,10 +12,11 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import charas.PlayerChara;
 import charas.blocks.AbstractBlock;
 import charas.blocks.WorldClearBlock;
+import enums.HitPlayer;
 import star_action.Model;
 /**
  * ワールド1のボス。踏みつけ攻撃のみ行う
- * 
+ *
  * @author kitahara
  *
  */
@@ -62,13 +63,13 @@ public class Boss1 extends AbstractBoss {
 		System.out.println("enemy.death");
 	}
 
-	public int isHitPlayerChara(PlayerChara c) {
+	public HitPlayer isHitPlayerChara(PlayerChara c) {
 
 		if (treadedNum < hp && Math.abs(c.getxPosition() + c.getxSpeed() - xPosition) < c.getWidth() / 2 + width / 2
 				&& Math.abs(c.getyPosition() + c.getySpeed() - yPosition) < c.getHeight() / 2 + height / 2
 				&& Math.sin((Math.atan2(c.getyPosition() - yPosition, c.getxPosition() - xPosition))) <= -1 / Math.sqrt(2.0)) {
 			if (jumping) {
-				return HIT_MISS;
+				return HitPlayer.Miss;
 			}
 			if (xPosition < 500) {
 				xSpeed = 15;
@@ -91,7 +92,7 @@ public class Boss1 extends AbstractBoss {
 			goAway = true;
 			setCount(0);
 			hitLeg = false;
-			return HIT_TREAD;
+			return HitPlayer.Tread;
 
 		} else {
 			return super.isHitPlayerChara(c);
@@ -150,7 +151,7 @@ public class Boss1 extends AbstractBoss {
 
 	/**
 	 * ボスの動きを定義した内部クラス。hitLegがtrueの時はy方向の動作に対し重力が発生せず、falseの時は重力が発生する
-	 * 
+	 *
 	 * @author kitahara
 	 *
 	 */
@@ -168,14 +169,14 @@ public class Boss1 extends AbstractBoss {
 
 		/**
 		 * 横移動をするのみ、床に降りたらhitLegを常にtrueにする
-		 * 
+		 *
 		 * @param c
 		 */
 		public void pattern1(double d) {
 			if (count == 0) {
 				jumping = true;
 				setySpeed(-15 * d);
-			} 
+			}
 			else if (count == 55) {
 				setxPosition(Model.getPlayerChara().getxPosition());
 				setyPosition(-100);
@@ -189,7 +190,7 @@ public class Boss1 extends AbstractBoss {
 						break;
 					}
 
-				
+
 				}
 				//System.out.println(ground + " y :" + yPosition + " ysp :" + ySpeed);
 				// 着地点が存在したら

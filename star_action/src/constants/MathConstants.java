@@ -5,25 +5,25 @@ package constants;
  *
  */
 public class MathConstants {
-
+	// 画面サイズ
 	public static final int WINDOW_WIDTH 			= 	900;
 	public static final int WINDOW_HEIGHT 			= 	630;
+	
+	// 描画範囲
 	public static final int GAME_WIDTH 				= 	900;
 	public static final int GAME_HEIGHT 			= 	600;
 
-	public static final int GAMESTATUS_OPENING 		= 	0;
-	public static final int GAMESTATUS_PLAYING 		= 	1;
-	public static final int GAMESTATUS_DIE 			= 	2;
-	public static final int GAMESTATUS_ENDING		= 	3;
-	public static final int GAMESTATUS_STAGECHANGE	= 	4;
-	public static final int GAMESTATUS_WORLDCHANGE	= 	5;
-
+	// ブロックサイズ
 	public static final int BLOCK_SIZE				=	50;
+	
+	// フレーム間の時間(ms)
 	public static final int DELAY 					=	20;
 	
+	// x方向、y方向の速さの最大
 	public static final double YSPEED_MAX			=	19.0;
 	public static final double XSPEED_MAX			=	14.0;
 	
+	// 最小の速さ。これ以下の速さになると速度が0になるようにする
 	public static final double DELTA_SPEED			=	0.7;
 	
 

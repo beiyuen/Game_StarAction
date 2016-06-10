@@ -1,6 +1,5 @@
 package charas.enemys;
 
-import static constants.CharaConstants.*;
 import static constants.MathConstants.*;
 import static constants.SoundCnstants.*;
 
@@ -12,6 +11,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import charas.AbstractChara;
 import charas.PlayerChara;
+import enums.HitPlayer;
 
 /**
  * 敵の抽象的なクラス。すべての敵はこのクラスのサブクラス。敵は基本的にプレイヤーが上から踏むことで倒すことができる。
@@ -33,7 +33,7 @@ public abstract class AbstractEnemy extends AbstractChara {
 		width = w;
 		height = h;
 		death = false;
-	
+
 	}
 
 	/**
@@ -90,23 +90,22 @@ public abstract class AbstractEnemy extends AbstractChara {
 	}
 
 	/**
-	 * PlayerCharaと敵の当たり判定。上から当たったらHIT_TREAD,それ以外の角度から当たったらHIT_MISS,
-	 * 当たっていなかったらHIT_NOT
+	 * PlayerCharaと敵の当たり判定。上から当たったらTread,それ以外の角度から当たったらMiss,
+	 * 当たっていなかったらNot
 	 *
 	 * @param c
 	 * @return
 	 */
-	public int isHitPlayerChara(PlayerChara c) {
-		boolean hit = super.isHit(c);
-		if (hit) {
+	public HitPlayer isHitPlayerChara(PlayerChara c) {
+		if (super.isHit(c)) {
 			if (Math.sin((Math.atan2(c.getyPosition() - yPosition, c.getxPosition() - xPosition))) <= Math.sin(-40 * Math.PI/180)) {
 				// ここから下を変える
 				death();
-				return HIT_TREAD;
+				return HitPlayer.Tread;
 			}
-			return HIT_MISS;
+			return HitPlayer.Miss;
 		}
-		return HIT_NOT;
+		return HitPlayer.Not;
 	}
 
 	// 移動定義
