@@ -24,6 +24,15 @@ public class Shot extends AbstractEnemy {
 		xSpeed = spd * Math.cos(angle);
 		ySpeed = spd * Math.sin(angle);
 	}
+	
+	public Shot init(int x, int y, double spd, double angle){
+		xPosition = x;
+		yPosition = y;
+		xSpeed = spd * Math.cos(angle);
+		ySpeed = spd * Math.sin(angle);
+		using = true;
+		return this;
+	}
 
 	@Override
 	public HitPlayer isHitPlayerChara(PlayerChara c) {

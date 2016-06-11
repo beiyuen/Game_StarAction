@@ -7,19 +7,10 @@ import java.util.ArrayList;
 
 import charas.Needle;
 import charas.blocks.AbstractBlock;
-import charas.blocks.ClearBlock;
-import charas.blocks.FakeBlock;
 import charas.blocks.GoalBlock;
-import charas.blocks.HardBlock;
-import charas.blocks.NomalBlock;
 import charas.bosses.Boss1;
 import charas.bosses.Boss2;
 import charas.enemys.AbstractEnemy;
-import charas.enemys.GhostEnemy;
-import charas.enemys.MoveEnemy;
-import charas.enemys.NomalEnemy;
-import charas.enemys.ShootEnemy;
-import charas.enemys.WalkEnemy;
 import charas.signboards.AbstractSignboard;
 import charas.signboards.SignBoard;
 /**
@@ -40,12 +31,16 @@ public class Stage {
 	private ArrayList<Needle> needleList = new ArrayList<Needle>();
 	private ArrayList<AbstractSignboard> signboardList = new ArrayList<AbstractSignboard>();
 	private GoalBlock goalBlock;
+	
+	private static Stage stage = null;
+	private MapItems mapItems;
 
 	private int[][] map;
 
 
 
-	public Stage(){
+	private Stage(){
+		mapItems = MapItems.getMapItems();
 	}
 
 	public void setStage(int stageNum){
@@ -60,72 +55,71 @@ public class Stage {
 				switch (map[i][j]) {
 					// ブロックの配置
 					case h:	//消せないブロック
-						blockList.add(new HardBlock(j, i));
+						blockList.add(mapItems.getHardBlocks().init(j,i));
 						break;
 					case n: //右クリックで消せるブロック
-						blockList.add(new NomalBlock(j, i));
+						blockList.add(mapItems.getNomalBlocks().init(j,i));
 						break;
 					case c: //敵のみが触れられる透明ブロック
-						blockList.add(new ClearBlock(j, i));
+						blockList.add(mapItems.getClearBlocks().init(j,i));
 						break;
 					case f: //プレイヤーが触れると消えるブロック
-						blockList.add(new FakeBlock(j, i, IMAGE_BLOCK_HARD));
+						blockList.add(mapItems.getFakeBlocks().init(j,i,IMAGE_BLOCK_HARD));
 						break;
 					case N: //プレイヤーが触れると消えるブロック
-						blockList.add(new FakeBlock(j, i, IMAGE_BLOCK_NOMAL));
+						blockList.add(mapItems.getFakeBlocks().init(j,i,IMAGE_BLOCK_NOMAL));
 						break;	
 					case g: // ゴール
-						blockList.add(new GoalBlock(j, i));
-						//goalBlock = new GoalBlock(j, i);
+						blockList.add(mapItems.getGoalBlocks().init(j,i));
 						break;
 
 					// とげの配置
 					case u: // とげ(上向き)
-						needleList.add(new Needle(j, i, 0));
+						needleList.add(mapItems.getNeedles().init(j,i,0));
 						break;
 					case r: // とげ(右向き)
-						needleList.add(new Needle(j, i, 1));
+						needleList.add(mapItems.getNeedles().init(j,i,1));
 						break;
 					case d: // とげ(下向き)
-						needleList.add(new Needle(j, i, 2));
+						needleList.add(mapItems.getNeedles().init(j,i,2));
 						break;
 					case l: // とげ(左向き)
-						needleList.add(new Needle(j, i, 3));
+						needleList.add(mapItems.getNeedles().init(j,i,3));
 						break;
 					case U: // とげ+ブロック(上向き)
-						blockList.add(new NomalBlock(j, i));
-						needleList.add(new Needle(j, i, 0));
+						blockList.add(mapItems.getNomalBlocks().init(j,i));
+						needleList.add(mapItems.getNeedles().init(j,i,0));
 						break;
 					case R: // とげ+ブロック(右向き)
-						blockList.add(new NomalBlock(j, i));
-						needleList.add(new Needle(j, i, 1));
+						blockList.add(mapItems.getNomalBlocks().init(j,i));
+						needleList.add(mapItems.getNeedles().init(j,i,1));
 						break;
 					case D: // とげ+ブロック(下向き)
-						blockList.add(new NomalBlock(j, i));
-						needleList.add(new Needle(j, i, 2));
+						blockList.add(mapItems.getNomalBlocks().init(j,i));
+						needleList.add(mapItems.getNeedles().init(j,i,2));
 						break;
 					case L: // とげ+ブロック(左向き)
-						blockList.add(new NomalBlock(j, i));
-						needleList.add(new Needle(j, i, 3));
+						blockList.add(mapItems.getNomalBlocks().init(j,i));
+						needleList.add(mapItems.getNeedles().init(j,i,3));
 						break;
 					// 敵の配置
 					case e: // 敵
-						enemyList.add(new NomalEnemy(j, i));
+						enemyList.add(mapItems.getNomalEnemies().init(j,i));
 						break;
 					case w: // 歩く敵
-						enemyList.add(new WalkEnemy(j, i));
+						enemyList.add(mapItems.getWalkEnemies().init(j,i));
 						break;
 					case G: // 幽霊の敵
-						enemyList.add(new GhostEnemy(j, i));
+						enemyList.add(mapItems.getGhostEnemies().init(j,i));
 						break;
 					case m: // 動いてジャンプする敵
-						enemyList.add(new MoveEnemy(j, i, 2));
+						enemyList.add(mapItems.getMoveEnemies().init(j,i,2));
 						break;
 					case s: // 弾を撃つ敵
-						enemyList.add(new ShootEnemy(j, i));
+						enemyList.add(mapItems.getShootEnemies().init(j,i));
 						break;
 					case J: // 静止してジャンプする敵
-						enemyList.add(new MoveEnemy(j, i, 0));
+						enemyList.add(mapItems.getMoveEnemies().init(j,i,0));
 						break;
 					case k1: // ボス
 						enemyList.add(new Boss1(j, i));
@@ -152,7 +146,7 @@ public class Stage {
 				}
 			}
 		}
-		System.out.println("Stage loaded");
+		//System.out.println("Stage loaded");
 		currentClickableNum = clickableNum[stageNum-1];
 		currentScrollable = scrollable[stageNum-1];
 	}
@@ -169,4 +163,11 @@ public class Stage {
 	public int[] getClickableNum(){return currentClickableNum.clone();}
 
 	public boolean getScrollable() {return currentScrollable;}
+	
+	public static Stage getStage(){
+		if (stage == null) {
+			stage = new Stage();
+		}
+		return stage;
+	}
 }

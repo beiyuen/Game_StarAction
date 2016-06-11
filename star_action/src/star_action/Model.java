@@ -10,11 +10,8 @@ import charas.AbstractChara;
 import charas.Needle;
 import charas.PlayerChara;
 import charas.blocks.AbstractBlock;
-import charas.blocks.HardBlock;
 import charas.blocks.WorldClearBlock;
 import charas.enemys.AbstractEnemy;
-import charas.enemys.GhostEnemy;
-import charas.enemys.NomalEnemy;
 import charas.signboards.AbstractSignboard;
 import enums.GameStatus;
 import slide.EndingSlide;
@@ -22,6 +19,7 @@ import slide.GameoverSlide;
 import slide.OpeningSlide;
 import slide.StageChangeSlide;
 import slide.WorldClearSlide;
+import stages.MapItems;
 import stages.Stage;
 import util.ClickItem;
 import util.DebugShowText;
@@ -43,7 +41,7 @@ public class Model {
 
 	public static int stageNum = 1;
 	public static int worldNum = 1;
-	public static Stage stage = new Stage();
+	public static Stage stage = null;
 	public static PlayerChara playerChara = null;
 	public static DebugShowText debugShowText = null;
 
@@ -58,6 +56,21 @@ public class Model {
 	public static int placementMode = 0;
 	public static ClickItem clickItem = null;
 
+	public static MapItems mapItems = null;
+
+	/**
+	 * 設置されたブロックと敵を未使用の状態にしたのちに、リストを初期化する
+	 */
+	public static void clearPlacement(){
+		for (AbstractBlock block : placeBlockList) {
+			block.setUsing(false);
+		}
+		for (AbstractEnemy enemy : placeEnemyList) {
+			enemy.setUsing(false);
+		}
+		placeBlockList.clear();
+		placeEnemyList.clear();
+	}
 
 	/**
 	 * プレイヤーがやられた時のゲーム全体の処理
@@ -79,6 +92,8 @@ public class Model {
 		playerChara = new PlayerChara(40, 50);
 		debugShowText = new DebugShowText();
 		clickItem = new ClickItem();
+		stage = Stage.getStage();
+		mapItems = MapItems.getMapItems();
 	}
 
 	/**
@@ -188,8 +203,7 @@ public class Model {
 		for (Needle n : needleList) {
 			n.init();
 		}
-		placeBlockList.clear();
-		placeEnemyList.clear();
+		clearPlacement();
 		setGameStatus(GameStatus.Playing);
 		clickableNum = stage.getClickableNum();
 		scrollable = stage.getScrollable();
@@ -209,6 +223,15 @@ public class Model {
 		setStageNum(stageNum + 1);
 		stageChangeSlide.setText(worldNum, stageNum);
 		setGameStatus(GameStatus.StageChange);
+		for (AbstractBlock block : blockList) {
+			block.setUsing(false);
+		}
+		for (AbstractEnemy enemy : enemyList) {
+			enemy.setUsing(false);
+		}
+		for (Needle needle : needleList) {
+			needle.setUsing(false);
+		}
 		setStage();
 	}
 
@@ -234,6 +257,15 @@ public class Model {
 		setStageNum(0);
 		setGameStatus(GameStatus.WorldChange);
 
+		for (AbstractBlock block : blockList) {
+			block.setUsing(false);
+		}
+		for (AbstractEnemy enemy : enemyList) {
+			enemy.setUsing(false);
+		}
+		for (Needle needle : needleList) {
+			needle.setUsing(false);
+		}
 	}
 
 	/**
@@ -257,13 +289,13 @@ public class Model {
 					return;
 				}
 			}
-			placeBlockList.add(new HardBlock(x, y));
+			placeBlockList.add(mapItems.getHardBlocks().init(x,y));
 			break;
 		case PLACEMENT_SLIME:
-			placeEnemyList.add(new NomalEnemy(x, y));
+			placeEnemyList.add(mapItems.getNomalEnemies().init(x,y));
 			break;
 		case PLACEMENT_GHOST:
-			placeEnemyList.add(new GhostEnemy(x, y));
+			placeEnemyList.add(mapItems.getGhostEnemies().init(x,y));
 			break;
 		}
 		clickableNum[placementMode] -= 1;
@@ -376,8 +408,7 @@ public class Model {
 		scrollable = stage.getScrollable();
 		placementMode = 0;
 		clickItem.init();
-		placeBlockList.clear();
-		placeEnemyList.clear();
+		clearPlacement();
 		clickItem.setText(clickableNum[placementMode]);
 	}
 

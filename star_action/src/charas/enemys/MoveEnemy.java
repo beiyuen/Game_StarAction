@@ -1,6 +1,7 @@
 package charas.enemys;
 
 import static constants.ImageConstants.*;
+import static constants.MathConstants.*;
 
 import charas.PlayerChara;
 import enums.HitPlayer;
@@ -13,7 +14,7 @@ import star_action.Model;
  *
  */
 public class MoveEnemy extends AbstractEnemy {
-	public boolean jump;
+	private boolean jump;
 
 	public MoveEnemy(int x, int y, double xs) {
 		super(x, y, 30, 40, IMAGE_ENEMY_MOVE);
@@ -24,6 +25,17 @@ public class MoveEnemy extends AbstractEnemy {
 		imageDrawHeight = 40;
 		jump = false;
 		hitLeg = true;
+	}
+	
+	public AbstractEnemy init(int x, int y, int xs){
+		xPosition = (x + 0.5) * BLOCK_SIZE;
+		yPosition = (y + 0.5) * BLOCK_SIZE;
+		initX = xPosition;
+		initY = yPosition;
+		xSpeed = xs;
+		death = false;
+		using = true;
+		return this;
 	}
 
 	// 呼び出され用
@@ -39,12 +51,9 @@ public class MoveEnemy extends AbstractEnemy {
 			changeXSpeed();
 		} else if (hitHead || hitLeg) {
 			changeYSpeed();
-			// System.out.println("changeXSpeed:" + ySpeed);
 		}
-		// System.out.println("ジャンプ前 imageKind:" + imagekind);
 		if (jump) {
 			jump();
-			// System.out.println("ジャンプ後 imageKind:" + imagekind);
 		}
 
 
@@ -76,7 +85,6 @@ public class MoveEnemy extends AbstractEnemy {
 	}
 
 	private void setJump(boolean b) {
-		// TODO 自動生成されたメソッド・スタブ
 		jump = b;
 	}
 
@@ -97,11 +105,6 @@ public class MoveEnemy extends AbstractEnemy {
 				}
 			}
 		}
-	}
-
-	public void calcYAcceleration() {
-		if (!hitLeg)
-			ySpeed += 1.3;
 	}
 
 	public void jump() {

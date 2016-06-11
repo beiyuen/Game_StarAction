@@ -13,9 +13,10 @@ import star_action.Model;
  *
  */
 public class PlayerChara extends AbstractChara {
-	private static final long serialVersionUID = 1L;
-
-	public boolean moveRight = false, moveLeft = false, moveUp = false, dash = false;
+	public boolean 	moveRight = false, 
+					moveLeft = false, 
+					moveUp = false, 
+					dash = false;
 
 	public PlayerChara(int w, int h) {
 		image = referenceItems.getPlayerCharaImage();

@@ -1,5 +1,6 @@
 package charas.blocks;
 
+import static constants.MathConstants.*;
 import static constants.SoundCnstants.*;
 
 import java.awt.Graphics;
@@ -24,6 +25,17 @@ public class FakeBlock extends AbstractBlock {
 		super(x, y, i);
 		removable = true;
 		// TODO 自動生成されたコンストラクター・スタブ
+	}
+	
+	public FakeBlock init(int x, int y, int i){
+		xPosition = x * BLOCK_SIZE + BLOCK_SIZE / 2;
+		yPosition = y * BLOCK_SIZE + BLOCK_SIZE / 2;
+		initX = xPosition;
+		initY = yPosition;
+		image = referenceItems.getBlockImage(i);
+		isHitx = false;
+		using = true;
+		return this;
 	}
 
 	void death() {

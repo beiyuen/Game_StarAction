@@ -11,10 +11,10 @@ import javax.swing.JPanel;
  *
  */
 public class Text extends JPanel {
-	int xpos, ypos;
-	String txt;
-	Font fn;
-	Color col;
+	private int xpos, ypos;
+	private String txt;
+	private Font fn;
+	private Color col;
 
 	// 座標、文字列、フォント
 	public Text(int x, int y, String t, Font f, Color c) {

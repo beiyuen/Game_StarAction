@@ -17,6 +17,7 @@ import charas.Shot;
 import charas.blocks.AbstractBlock;
 import charas.blocks.WorldClearBlock;
 import enums.HitPlayer;
+import stages.MapItems;
 import star_action.Model;
 /**
  * ワールド2のボス。様々な行動をする
@@ -26,12 +27,14 @@ import star_action.Model;
  */
 public class Boss2 extends AbstractBoss {
 
-	public ArrayList<Shot> bullet = new ArrayList<Shot>();
+	private ArrayList<Shot> bullet = new ArrayList<Shot>();
 	BossAction action = new BossAction();
+	private MapItems mapItems = null;
 
 	public Boss2(int x, int y) {
 		super(x, y);
 		hp = 5;
+		mapItems = MapItems.getMapItems();
 		init();
 	}
 
@@ -44,7 +47,7 @@ public class Boss2 extends AbstractBoss {
 		xSpeed = -6;
 		state = BOSS2_STATE_1;
 		hitLeg = false;
-		treadedNum = 0;
+		hp = 5;
 
 	}
 
@@ -68,12 +71,14 @@ public class Boss2 extends AbstractBoss {
 			s.calcAcceleration();
 			for (AbstractBlock b : Model.getPlaceBlockList()) {
 				if (b.isHit(s)) {
+					s.setUsing(false);
 					bulletIterator.remove();
 					break;
 				}
 			}
 
 			if (s.isOutOfFrame()) {
+				s.setUsing(false);
 				bulletIterator.remove();
 			}
 		}
@@ -90,43 +95,47 @@ public class Boss2 extends AbstractBoss {
 				return HitPlayer.Miss;
 			}
 		}
-		// プレイヤーが上から踏みつけたとき
-		if (treadedNum < hp
+		// 当たっていたら
+		if (hp > 0
 				&& Math.abs(c.getxPosition() + c.getxSpeed() - xPosition) < c.getWidth() / 2 + width / 2
-				&& Math.abs(c.getyPosition() + c.getySpeed() - yPosition) < c.getHeight() / 2 + height / 2
-				&& Math.sin((Math.atan2(c.getyPosition() - yPosition, c.getxPosition() - xPosition))) <= -1 / Math.sqrt(2.0)) {
-			// 横に逃げるために速度変化を行う
-			if (xPosition < 500) {
-				xSpeed = 15;
-			} else {
-				xSpeed = -15;
-			}
-			// 踏まれたのが逃げている途中でなければ
-			if (!goAway) {
-				nextState();
-				treadedNum++;// 踏まれた回数が1増える
-				// 踏まれた時の効果音
-				try {
-					sound.soundSE(SOUND_SE_TREAD, 0.6);
-				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
-					e.printStackTrace();
+				&& Math.abs(c.getyPosition() + c.getySpeed() - yPosition) < c.getHeight() / 2 + height / 2){
+			// かつ、プレイヤーが上から踏みつけたとき
+			if( Math.sin((Math.atan2(c.getyPosition() - yPosition, c.getxPosition() - xPosition))) <= -1 / Math.sqrt(2.0)) {
+				// 横に逃げるために速度変化を行う
+				if (xPosition < 500) {
+					xSpeed = 15;
+				} else {
+					xSpeed = -15;
 				}
-				if (state == BOSS2_STATE_4 || state == BOSS2_STATE_5) {
-					bullet.clear();
+				// 踏まれたのが逃げている途中でなければ
+				if (!goAway) {
+					nextState();
+					hp--;
+					// 踏まれた時の効果音
+					try {
+						sound.soundSE(SOUND_SE_TREAD, 0.6);
+					} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+						e.printStackTrace();
+					}
+					if (state == BOSS2_STATE_4 || state == BOSS2_STATE_5) {
+						bullet.clear();
+					}
+					// 踏まれた数 == HPなら死亡
+					if (hp == 0){
+						System.out.println("death");
+						death();
+					}
 				}
-				// 踏まれた数 == HPなら死亡
-				if (treadedNum == hp) {
-					death();
-				}
-			}
-			goAway = true;// 走って壁に逃げる時
-			count = 0;
-			hitLeg = false;
-			return HitPlayer.Tread;
+				goAway = true;// 走って壁に逃げる時
+				count = 0;
+				hitLeg = false;
+				return HitPlayer.Tread;
 
-		} else {
-			return super.isHitPlayerChara(c);
+			} else {
+				return HitPlayer.Miss;
+			}
 		}
+		return HitPlayer.Not;		
 
 	}
 
@@ -231,7 +240,6 @@ public class Boss2 extends AbstractBoss {
 					yPosition = GAME_HEIGHT - 87;
 					ySpeed = 0;
 					count = -40;
-					action.flag = 2;
 				}
 				break;
 			case BOSS2_STATE_4:
@@ -272,7 +280,7 @@ public class Boss2 extends AbstractBoss {
 	 *
 	 */
 	class BossAction {
-		public int flag = 0;
+		//public int flag = 0;
 
 		public BossAction() {
 		}
@@ -325,7 +333,7 @@ public class Boss2 extends AbstractBoss {
 				hitLeg = true;
 				setxSpeed(0.0);
 				setySpeed(-4.0);
-				flag = 0;
+			//	flag = 0;
 			}
 			// 空中に浮かんだあと、そのy座標上で横移動する
 			else if (count % 140 == 40) {
@@ -337,9 +345,9 @@ public class Boss2 extends AbstractBoss {
 				}
 			}
 			// 一定時間経過するか、プレイヤーのx座標がボスのx座標と近かったら落下
-			else if (flag == 0 && ((count % 140 > 40 && xPosition - 75 < px && xPosition + 75 > px) || count == 140)) {
+			else if (((count % 140 > 40 && xPosition - 75 < px && xPosition + 75 > px) || count == 140)) {
 				hitLeg = false;
-				flag = 1;// 落下
+			//	flag = 1;// 落下
 				setxSpeed(0.0);
 			}
 
@@ -349,13 +357,9 @@ public class Boss2 extends AbstractBoss {
 				setCount(-40);
 				changeYSpeed();
 			}
-			// 落下中
-			// else if(flag==1){
-			// c.ySpeed+=2.2;
-			// }
 
 			if (count > 0 && count % 40 == 35) {
-				bullet.add(new Shot((int) (xPosition), (int) (yPosition), 1.0,
+				bullet.add(mapItems.getShots().init((int) (xPosition), (int) (yPosition), 1.0,
 						Math.atan2(Model.getPlayerChara().getyPosition() - yPosition, px - xPosition)));
 				try {
 					sound.soundSE(SOUND_SE_SHOT, 0.3);
@@ -373,8 +377,9 @@ public class Boss2 extends AbstractBoss {
 		public void pattern4() {// ショットを打つ
 			hitLeg = true;
 			if (count % 35 == 20) {
-				for (int i = 0; i < 6; i++)
-					bullet.add(new Shot((int) (xPosition), (int) (yPosition), 3.0, (count + i * 60) * Math.PI / 180));
+				for (int i = 0; i < 6; i++){
+					bullet.add(mapItems.getShots().init((int) (xPosition), (int) (yPosition), 3.0, (count + i * 60) * Math.PI / 180));
+				}
 				try {
 					sound.soundSE(SOUND_SE_SHOT, 0.3);
 				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {

@@ -62,6 +62,13 @@ public class CharaConstants {
 	public static final int PLACEMENT_SLIME		=	1;
 	public static final int PLACEMENT_GHOST		=	2;
 
+
+	// マップ上に配置できる各オブジェクトの上限
+	public static final int PLACE_BLOCK_MAX		= 	200;
+	public static final int PLACE_ENEMY_MAX		= 	50;
+	public static final int PLACE_NEEDLE_MAX	= 	100;
+	public static final int PLACE_SHOT_MAX		= 	100;
+	
 	private CharaConstants(){
 	}
 }

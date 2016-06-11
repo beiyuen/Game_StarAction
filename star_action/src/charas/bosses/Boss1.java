@@ -39,7 +39,7 @@ public class Boss1 extends AbstractBoss {
 		xSpeed = 0;
 		state = BOSS1_STATE_1;
 		hitLeg = false;
-		treadedNum = 0;
+		hp = 3;
 		jumping = false;
 	}
 
@@ -60,43 +60,45 @@ public class Boss1 extends AbstractBoss {
 	public void death() {
 		Model.getBlockList().add(new WorldClearBlock(9, 5));
 		death = true;
-		System.out.println("enemy.death");
 	}
 
 	public HitPlayer isHitPlayerChara(PlayerChara c) {
 
-		if (treadedNum < hp && Math.abs(c.getxPosition() + c.getxSpeed() - xPosition) < c.getWidth() / 2 + width / 2
-				&& Math.abs(c.getyPosition() + c.getySpeed() - yPosition) < c.getHeight() / 2 + height / 2
-				&& Math.sin((Math.atan2(c.getyPosition() - yPosition, c.getxPosition() - xPosition))) <= -1 / Math.sqrt(2.0)) {
-			if (jumping) {
+		if ( hp > 0 && Math.abs(c.getxPosition() + c.getxSpeed() - xPosition) < c.getWidth() / 2 + width / 2
+				&& Math.abs(c.getyPosition() + c.getySpeed() - yPosition) < c.getHeight() / 2 + height / 2){
+			if( Math.sin((Math.atan2(c.getyPosition() - yPosition, c.getxPosition() - xPosition))) <= -1 / Math.sqrt(2.0)) {
+				if (jumping) {
+					return HitPlayer.Miss;
+				}
+				if (xPosition < 500) {
+					xSpeed = 15;
+				} else {
+					xSpeed = -15;
+				}
+				// 通常時にプレイヤーに踏まれたら
+				if (!goAway) {
+					nextState();
+					hp--;
+					try {
+						sound.soundSE(SOUND_SE_TREAD, 0.6);
+					} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+						e.printStackTrace();
+					}
+					if (hp == 0) {
+						death();
+					}
+				}
+				goAway = true;
+				setCount(0);
+				hitLeg = false;
+				return HitPlayer.Tread;
+
+			} else {
 				return HitPlayer.Miss;
 			}
-			if (xPosition < 500) {
-				xSpeed = 15;
-			} else {
-				xSpeed = -15;
-			}
-			// 通常時にプレイヤーに踏まれたら
-			if (!goAway) {
-				nextState();
-				treadedNum++;
-				try {
-					sound.soundSE(SOUND_SE_TREAD, 0.6);
-				} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
-					e.printStackTrace();
-				}
-				if (treadedNum == hp) {
-					death();
-				}
-			}
-			goAway = true;
-			setCount(0);
-			hitLeg = false;
-			return HitPlayer.Tread;
-
-		} else {
-			return super.isHitPlayerChara(c);
 		}
+		return HitPlayer.Not;	
+				
 
 	}
 

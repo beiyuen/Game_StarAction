@@ -30,6 +30,16 @@ public class Needle extends AbstractChara {
 		imageLine = 1;
 	}
 
+	public Needle init(int x, int y, int i){
+		xPosition = x * BLOCK_SIZE + BLOCK_SIZE / 2;
+		yPosition = y * BLOCK_SIZE + BLOCK_SIZE / 2;
+		initX = xPosition;
+		initY = yPosition;
+		imageKind = i;
+		using = true;
+		return this;
+	}
+	
 	public void death() {
 	}
 

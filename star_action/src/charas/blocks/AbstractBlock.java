@@ -7,6 +7,7 @@ import java.awt.Graphics;
 
 import charas.AbstractChara;
 import charas.bosses.Boss1;
+import charas.enemys.MoveEnemy;
 import charas.enemys.WalkEnemy;
 
 /**
@@ -20,33 +21,17 @@ public class AbstractBlock extends AbstractChara {
 	public boolean removable = false;
 	public Dimension hitX, hitY;
 	public boolean isHitx;
-	public int imageNum = 0;
 
 	public AbstractBlock(int x, int y, int i) {
-		width = BLOCK_SIZE;
-		height = BLOCK_SIZE;
-		xPosition = x * BLOCK_SIZE + BLOCK_SIZE / 2;
-		yPosition = y * BLOCK_SIZE + BLOCK_SIZE / 2;
-		initX = xPosition;
-		initY = yPosition;
-		imageNum = i;
+		this(x,y);
 		image = referenceItems.getBlockImage(i);
-		hitX = new Dimension(0, 0);
-		hitY = new Dimension(0, 0);
-		isHitx = false;
-		death = false;
 	}
 
 	public AbstractBlock(int x, int y, int w, int h, int i) {
+		this(x, y);
 		width = w;
 		height = h;
-		xPosition = x * BLOCK_SIZE + BLOCK_SIZE / 2;
-		yPosition = y * BLOCK_SIZE + BLOCK_SIZE / 2;
-		initX = xPosition;
-		initY = yPosition;
-		imageNum = i;
 		image = referenceItems.getBlockImage(i);
-		death = false;
 	}
 
 	public AbstractBlock(int x, int y) {
@@ -61,6 +46,17 @@ public class AbstractBlock extends AbstractChara {
 		hitY = new Dimension(0, 0);
 		isHitx = false;
 		death = false;
+	}
+
+	public AbstractBlock init(int x, int y){
+		xPosition = x * BLOCK_SIZE + BLOCK_SIZE / 2;
+		yPosition = y * BLOCK_SIZE + BLOCK_SIZE / 2;
+		initX = xPosition;
+		initY = yPosition;
+		isHitx = false;
+		death = false;
+		using = true;
+		return this;
 	}
 
 	public boolean isRemovable() {
@@ -167,13 +163,13 @@ public class AbstractBlock extends AbstractChara {
 			}
 
 		}
-
 		hitX.setSize(hitl, hitr);
 		return hitX;
 
 	}
 
 	public Dimension hity(AbstractChara c) {
+		int dore = 0;
 		boolean nowHit = isHit(c);
 		int hith = 0;
 		int hitl = 0;
@@ -191,18 +187,20 @@ public class AbstractBlock extends AbstractChara {
 			hitY.setSize(hith, hitl);
 			return hitY;
 		}
-		
+
 		// 近いときは当たり判定を計算
 		// 現フレームで床に触れており、かつ、現在触っている床を踏んでいたら、床の上に立っていることとする①
 		if(c.isHitLeg() && nowHit){
 			if(cy + chh == yPosition - height/2){
 				hitl = 1;
 				c.setyPosition(yPosition - (chh + BLOCK_SIZE / 2));
+				dore = 1;
 			}
 			// Boss1用
 			else if(c instanceof Boss1){
 				hitl = 1;
 			}
+			dore = 4;
 		}
 
 		// 現フレームでブロックとぶつかっていないとき
@@ -213,15 +211,16 @@ public class AbstractBlock extends AbstractChara {
 					hitl = 1;
 					c.setyPosition(yPosition - (chh + BLOCK_SIZE / 2));
 					c.changeYSpeed();
-
+					dore = 2;
 				}
 				// 空中で上方向に衝突するとき③
 				else if(cysp < 0 && (yPosition + height/2) - nextMinY < YSPEED_MAX+3 && (((cx + cwh != xPosition - width/2) && (cx - cwh != xPosition + width/2)) && Math.sin(angle) > Math.sin(55 * Math.PI / 180.0))){
 					hith = 1;
 					c.setyPosition(yPosition + (chh + BLOCK_SIZE / 2));
-
+					dore = 3;
 				}
 			}
+			dore = 5;
 		}
 
 		// Boss1用
@@ -230,7 +229,7 @@ public class AbstractBlock extends AbstractChara {
 				hitl = 1;
 			}
 		}
-
+		if(c instanceof MoveEnemy)			System.out.println(dore);
 		hitY.setSize(hith, hitl);
 		return hitY;
 	}

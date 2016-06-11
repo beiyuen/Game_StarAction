@@ -36,6 +36,17 @@ public class WalkEnemy extends AbstractEnemy {
 		imageDrawHeight = 40;
 		isHit = false;
 	}
+	
+	public WalkEnemy init(int x, int y){
+		xPosition = (x + 0.5) * BLOCK_SIZE;
+		yPosition = (y+1) * BLOCK_SIZE - height/2;
+		initX = xPosition;
+		initY = yPosition;
+		death = false;
+		isHit = false;
+		using = true;
+		return this;
+	}
 
 	@Override
 	public HitPlayer isHitPlayerChara(PlayerChara c) {

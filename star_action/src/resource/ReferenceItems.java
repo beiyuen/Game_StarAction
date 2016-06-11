@@ -55,14 +55,12 @@ public class ReferenceItems extends Thread{
 		try {
 			Load();
 		} catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 	}
 
 	public void Load() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
 		int count = 0;
-		System.out.println("load start");
 		enemyImage = new Image[IMAGE_ENEMY_MAX];
 		blockImage = new Image[IMAGE_BLOCK_MAX];
 		textImage = new Image[IMAGE_TEXT_MAX];
@@ -140,7 +138,6 @@ public class ReferenceItems extends Thread{
 		tracker.addImage(endingImage, count++);
 		tracker.addImage(gameoverImage, count++);
 		tracker.addImage(clickBoxImage, count++);
-		System.out.println("track start");
 		try {
 			  tracker.waitForAll();
 			} catch (InterruptedException e) {
@@ -168,9 +165,6 @@ public class ReferenceItems extends Thread{
 	}
 
 	public Image getOpeningImage() {
-		if(openingImage == null){
-			System.out.println("not resource");
-		}
 		return openingImage;
 	}
 
@@ -233,7 +227,6 @@ public class ReferenceItems extends Thread{
 	public URL getFileURL(String pass){
 		ClassLoader classLoader = getClass().getClassLoader();
 		URL url = classLoader.getResource(pass);
-		System.out.println(url.toString());
 		return url;
 
 	}

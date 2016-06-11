@@ -21,7 +21,9 @@ import enums.HitPlayer;
  */
 public abstract class AbstractEnemy extends AbstractChara {
 
-	public Random r;
+	protected Random r;
+	protected double initXSpeed;
+	protected double initYSpeed;
 	public AbstractEnemy(int x, int y, int w, int h) {
 		r = new Random();
 		xPosition = (x + 0.5) * BLOCK_SIZE;
@@ -30,6 +32,8 @@ public abstract class AbstractEnemy extends AbstractChara {
 		initY = yPosition;
 		xSpeed = (r.nextInt(5) - 2) * 2;
 		ySpeed = 0;
+		initXSpeed = xSpeed;
+		initYSpeed = ySpeed;
 		width = w;
 		height = h;
 		death = false;
@@ -57,9 +61,45 @@ public abstract class AbstractEnemy extends AbstractChara {
 		initY = yPosition;
 		xSpeed = (r.nextInt(5) - 2) * 2;
 		ySpeed = 0;
+		initXSpeed = xSpeed;
+		initYSpeed = ySpeed;
 		width = w;
 		height = h;
 		image = referenceItems.getEnemyImage(c);
+		death = false;
+	}
+	
+	public AbstractEnemy init(int x, int y){
+		xPosition = (x + 0.5) * BLOCK_SIZE;
+		yPosition = (y + 0.5) * BLOCK_SIZE;
+		initX = xPosition;
+		initY = yPosition;
+		death = false;
+		using = true;
+		return this;
+	}
+	
+	public AbstractEnemy init(int x, int y, int w, int h){
+		xPosition = (x + 0.5) * BLOCK_SIZE;
+		yPosition = (y + 0.5) * BLOCK_SIZE;
+		initX = xPosition;
+		initY = yPosition;
+		xSpeed = (r.nextInt(5) - 2) * 2;
+		ySpeed = 0;
+		initXSpeed = xSpeed;
+		initYSpeed = ySpeed;
+		width = w;
+		height = h;
+		death = false;
+		using = true;
+		return this;
+	}
+	
+	public void init() {
+		xPosition = initX;
+		yPosition = initY;
+		xSpeed = initXSpeed;
+		ySpeed = initYSpeed;
 		death = false;
 	}
 
@@ -81,7 +121,6 @@ public abstract class AbstractEnemy extends AbstractChara {
 	// enemyからこのオブジェクトを除去
 	public void death() {
 		death = true;
-		System.out.println("enemy.death");
 		try {
 			sound.soundSE(SOUND_SE_TREAD, 0.6);
 		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {

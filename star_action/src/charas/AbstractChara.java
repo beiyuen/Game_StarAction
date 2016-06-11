@@ -31,16 +31,17 @@ public abstract class AbstractChara extends JPanel {
 	protected boolean hitHead = false;		// キャラの上側がブロックに当たっているか
 	protected boolean hitLeg = false;		// キャラの下側がブロックに当たっているか
 	protected boolean death;				// 死亡判定
-	protected Image image; 				// 画像
+	protected boolean using = false;		// このインスタンスが使用されているか
+	protected Image image = null; 				// 画像
 	protected int imageDrawWidth = 1, imageDrawHeight = 1;	// 画像描画時のサイズ
 	protected int imageColumn = 1;			// 画像の行方向の分割数
 	protected int imageLine = 1;			// 画像の列方向の分割数
 	protected int imageKind = 0;			// 現在表示する画像番号
 	protected int imageCount = 0;			// 画像番号を計算するときに必要な値
-	
+
 	protected ReferenceItems referenceItems = ReferenceItems.getReferenceItems();
 	protected Sound sound = Sound.getSound();
-	
+
 	public AbstractChara() {}
 	/**
 	 * 速度変更、当たり判定処理を行う
@@ -85,7 +86,7 @@ public abstract class AbstractChara extends JPanel {
 	 */
 	public void calcYAcceleration() {
 		if (!hitLeg && ySpeed < YSPEED_MAX) {
-			ySpeed += 1.3;
+			ySpeed += GRAVITY;
 		}
 		if(ySpeed >= YSPEED_MAX){
 			ySpeed = YSPEED_MAX;
@@ -293,6 +294,10 @@ public abstract class AbstractChara extends JPanel {
 		return hitRight;
 	}
 
+	public boolean isUsing(){
+		return using;
+	}
+
 	/**
 	 * 地面についていればジャンプする
 	 */
@@ -357,5 +362,8 @@ public abstract class AbstractChara extends JPanel {
 	 */
 	public void setySpeed(double ySpeed) {
 		this.ySpeed = ySpeed;
+	}
+	public void setUsing(boolean using) {
+		this.using = using;
 	}
 }

@@ -12,17 +12,15 @@ import star_action.Model;
 
 public abstract class AbstractBoss extends AbstractEnemy {
 
-	int treadedNum; // 踏まれ数カウンター
-	int state = 0;
-	int count = 0; // 動きのタイミングを決める
-	int hp;
-	boolean goAway;
+	protected int state = 0;  // 敵の行動パターン
+	protected int count = 0;  // 動きのタイミングを決める
+	protected int hp;		  // HP
+	protected boolean goAway; // 逃げ状態かどうかを表す変数
 
 	public AbstractBoss(int x, int y) {
 		super(x, y - 1, 75, 75, IMAGE_ENEMY_KING);
 		goAway = false;
 		xSpeed = -6;
-		treadedNum = 1;
 		imageDrawWidth = 75;
 		imageDrawHeight = 75;
 		imageLine = 2;

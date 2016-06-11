@@ -7,7 +7,7 @@ package constants;
 public class MathConstants {
 	// 画面サイズ
 	public static final int WINDOW_WIDTH 			= 	900;
-	public static final int WINDOW_HEIGHT 			= 	630;
+	public static final int WINDOW_HEIGHT 			= 	625;
 	
 	// 描画範囲
 	public static final int GAME_WIDTH 				= 	900;
@@ -26,6 +26,8 @@ public class MathConstants {
 	// 最小の速さ。これ以下の速さになると速度が0になるようにする
 	public static final double DELTA_SPEED			=	0.7;
 	
+	// 重力の強さ。
+	public static final double GRAVITY				=	1.3;
 
 	private MathConstants(){
 	}
