@@ -27,7 +27,7 @@ public class WorldClearSlide extends AbstractSlide {
 		super();
 		imageWorld = referenceItems.getTexteImage(i);
 		imageClear = referenceItems.getTexteImage(IMAGE_TEXT_CLEAR);
-		text = new Text(250, 500, "Press 'Enter' Key to Go to the Next World", font, Color.BLACK);
+		text = new Text(270, 500, "Press 'Z' Key to Go to the Next World", font, Color.BLACK);
 		init();
 	}
 

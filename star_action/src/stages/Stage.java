@@ -31,7 +31,7 @@ public class Stage {
 	private ArrayList<Needle> needleList = new ArrayList<Needle>();
 	private ArrayList<AbstractSignboard> signboardList = new ArrayList<AbstractSignboard>();
 	private GoalBlock goalBlock;
-	
+
 	private static Stage stage = null;
 	private MapItems mapItems;
 
@@ -68,7 +68,7 @@ public class Stage {
 						break;
 					case N: //プレイヤーが触れると消えるブロック
 						blockList.add(mapItems.getFakeBlocks().init(j,i,IMAGE_BLOCK_NOMAL));
-						break;	
+						break;
 					case g: // ゴール
 						blockList.add(mapItems.getGoalBlocks().init(j,i));
 						break;
@@ -127,7 +127,7 @@ public class Stage {
 					case k2: // ボス
 						enemyList.add(new Boss2(j, i));
 						break;
-						
+
 					case s1: // 看板
 						signboardList.add(new SignBoard(j, i, IMAGE_SIGNBOARD_1));
 						break;
@@ -139,14 +139,13 @@ public class Stage {
 						break;
 					case s4: // 看板
 						signboardList.add(new SignBoard(j, i, IMAGE_SIGNBOARD_4));
-						break;	
+						break;
 					case s5: // 看板
 						signboardList.add(new SignBoard(j, i, IMAGE_SIGNBOARD_5));
-						break;		
+						break;
 				}
 			}
 		}
-		//System.out.println("Stage loaded");
 		currentClickableNum = clickableNum[stageNum-1];
 		currentScrollable = scrollable[stageNum-1];
 	}
@@ -163,7 +162,7 @@ public class Stage {
 	public int[] getClickableNum(){return currentClickableNum.clone();}
 
 	public boolean getScrollable() {return currentScrollable;}
-	
+
 	public static Stage getStage(){
 		if (stage == null) {
 			stage = new Stage();

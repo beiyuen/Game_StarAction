@@ -47,14 +47,9 @@ public class MainFrame extends JFrame {
 		viewPanel = ViewPanel.getViewPanel();
 		this.getContentPane().remove(loadingSlide);
 		this.getContentPane().add(viewPanel);
-		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-		this.setTitle("STAR ACTION");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addMouseListener(Controller.getMouseAdapter());
 		addKeyListener(Controller.getKeyAdapter());
 		requestFocus();
-		this.setResizable(false);
-		this.validate();
 		this.setVisible(true);
 		
 	}

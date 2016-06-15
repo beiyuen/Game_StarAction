@@ -420,4 +420,17 @@ public class Model {
 		Model.worldNum = worldNum;
 	}
 
+	public static void setPlayerMoveRight(boolean b){
+		playerChara.setMoveRight(b);
+	}
+	public static void setPlayerMoveLeft(boolean b){
+		playerChara.setMoveLeft(b);
+	}
+	public static void setPlayerMoveUp(boolean b){
+		playerChara.setMoveUp(b);
+	}
+	public static void setPlayerMoveDash(boolean b){
+		playerChara.setDash(b);
+	}
+
 }

@@ -17,7 +17,7 @@ public class OpeningSlide extends AbstractSlide {
 	public OpeningSlide() {
 		font = new Font("serif", Font.BOLD, 30);
 		image = referenceItems.getOpeningImage();
-		text = new Text(250, 400, "Press 'Enter' Key to Start Game", font, Color.BLACK);
+		text = new Text(270, 400, "Press 'Z' Key to Start Game", font, Color.BLACK);
 	}
 
 	public void draw(Graphics g) {

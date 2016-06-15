@@ -7,8 +7,8 @@ import java.awt.Graphics;
 
 import charas.AbstractChara;
 import charas.bosses.Boss1;
-import charas.enemys.MoveEnemy;
 import charas.enemys.WalkEnemy;
+import star_action.Model;
 
 /**
  * 通常ゲームでは普通のブロック。プレイヤーが触れても、敵が触れても消えることはない。また、このブロックは右クリックで消すことはできない。
@@ -111,13 +111,13 @@ public class AbstractBlock extends AbstractChara {
 			return hitX;
 		}
 		// 近いときは当たり判定を計算
-		// 現在のフレームでぶつかっておらず、次のフレームで壁とぶつかっているとき
+		// 次のフレームで壁とぶつかっているとき
 		if (isHitMove(c)){
 			// 座標角度と移動角度で判定
 			if (cos >= Math.cos(30 * Math.PI / 180.0) || cos <= Math.cos(150 * Math.PI / 180.0) || (Math.abs(Math.cos(c.getMoveAngle())) > Math.cos(35 * Math.PI / 180.0) &&  (int)cy + c.getHeight()/2 != (int)yPosition - BLOCK_SIZE/2 )) {
 				// 現在どの壁にもぶつかっていないとき
 					// 右方向に移動時(右側の壁にぶつかる)
-					if(cxsp > 0 && nextMaxX - (blockMinX) <= XSPEED_MAX){
+					if(cxsp > 0 && nextMaxX - (blockMinX) < XSPEED_MAX){
 						hitr = 1;
 						c.setxPosition(blockMinX - cwh);
 					}
@@ -169,7 +169,6 @@ public class AbstractBlock extends AbstractChara {
 	}
 
 	public Dimension hity(AbstractChara c) {
-		int dore = 0;
 		boolean nowHit = isHit(c);
 		int hith = 0;
 		int hitl = 0;
@@ -179,9 +178,9 @@ public class AbstractBlock extends AbstractChara {
 		double chh = c.getHeight() / 2;
 		double cxsp = c.getxSpeed();
 		double cysp = c.getySpeed();
-		double angle = Math.atan2(cy - yPosition, cx - xPosition);
 		double nextMaxY = cy + chh +  cysp;
 		double nextMinY = cy - chh +  cysp;
+		
 		// 対象キャラと離れすぎているとき,当たり判定を計算しない
 		if(Math.abs( cx + cxsp - xPosition ) > 100 || Math.abs(cy + cysp - yPosition) > 100){
 			hitY.setSize(hith, hitl);
@@ -194,13 +193,11 @@ public class AbstractBlock extends AbstractChara {
 			if(cy + chh == yPosition - height/2){
 				hitl = 1;
 				c.setyPosition(yPosition - (chh + BLOCK_SIZE / 2));
-				dore = 1;
 			}
 			// Boss1用
 			else if(c instanceof Boss1){
 				hitl = 1;
 			}
-			dore = 4;
 		}
 
 		// 現フレームでブロックとぶつかっていないとき
@@ -211,16 +208,29 @@ public class AbstractBlock extends AbstractChara {
 					hitl = 1;
 					c.setyPosition(yPosition - (chh + BLOCK_SIZE / 2));
 					c.changeYSpeed();
-					dore = 2;
 				}
 				// 空中で上方向に衝突するとき③
-				else if(cysp < 0 && (yPosition + height/2) - nextMinY < YSPEED_MAX+3 && (((cx + cwh != xPosition - width/2) && (cx - cwh != xPosition + width/2)) && Math.sin(angle) > Math.sin(55 * Math.PI / 180.0))){
-					hith = 1;
-					c.setyPosition(yPosition + (chh + BLOCK_SIZE / 2));
-					dore = 3;
-				}
+				else if(cysp < 0 && (yPosition + height/2) - nextMinY < YSPEED_MAX+3 && ((cx + cwh != xPosition - width/2) && (cx - cwh != xPosition + width/2)) && cy-chh > yPosition + BLOCK_SIZE/2 - 2){
+					boolean flag = false; 	// 現在のブロックの下にもブロックがあるか(衝突している対象が単一ブロックか壁か)の判定
+											// true の場合は壁の中間のブロックに上方向に衝突しているという判定なので、速度や位置の調整は行わない。
+											// false の場合は縦方向に単一のブロックに上方向に衝突しているという判定なので、速度や位置の調整を行う。
+					for (AbstractBlock b : Model.getBlockList()) {
+						if (b.isHitPoint(xPosition, yPosition + 50)) {
+							flag = true;
+						}
+					}
+					for (AbstractBlock b : Model.getPlaceBlockList()) {
+						if (b.isHitPoint(xPosition, yPosition + 50)) {
+							flag = true;
+						}
+					}
+					if(!flag){
+						hith = 1;
+						c.setyPosition(yPosition + (chh + BLOCK_SIZE / 2));
+						c.changeYSpeed();
+					}
+				}		
 			}
-			dore = 5;
 		}
 
 		// Boss1用
@@ -229,7 +239,6 @@ public class AbstractBlock extends AbstractChara {
 				hitl = 1;
 			}
 		}
-		if(c instanceof MoveEnemy)			System.out.println(dore);
 		hitY.setSize(hith, hitl);
 		return hitY;
 	}

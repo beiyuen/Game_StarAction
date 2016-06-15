@@ -16,7 +16,7 @@ public class GameoverSlide extends AbstractSlide {
 	public GameoverSlide() {
 		super();
 		image = referenceItems.getGameoverImage();
-		text = new Text(300, 350, "Press 'R' Key to Start Again", font, Color.BLACK);
+		text = new Text(320, 350, "Press 'R' Key to Start Again", font, Color.BLACK);
 	}
 
 	public void draw(Graphics g) {

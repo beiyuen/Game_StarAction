@@ -2,13 +2,11 @@ package star_action;
 
 import static constants.MathConstants.*;
 
-import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import charas.PlayerChara;
 import enums.GameStatus;
 /**
  * キー操作、マウス操作を行うためのコントローラです
@@ -57,19 +55,19 @@ public class Controller {
 	 *
 	 */
 	static class StarActionKeyAdapter extends KeyAdapter {
-		PlayerChara playerChara;
-		public StarActionKeyAdapter(PlayerChara c){
-			playerChara = c;
+		private StarActionKeyAdapter(){
 		}
 
+		/**
+		 * キーを押したときの処理
+		 */
 		public void keyPressed(KeyEvent evt) {
-
-			int mod = evt.getModifiersEx();
 			switch (Model.getGameStatus()) {
 			// オープニング画面の時
 			case Opening:
 				switch (evt.getKeyCode()) {
-				case KeyEvent.VK_ENTER:
+				case 'z':
+				case 'Z':	
 					Model.gameInit();
 					Model.setGameStatus(GameStatus.StageChange);
 					break;
@@ -79,26 +77,18 @@ public class Controller {
 			case Playing:
 				switch (evt.getKeyCode()) {
 				case KeyEvent.VK_RIGHT:
-					if ((mod & InputEvent.SHIFT_DOWN_MASK) != 0) {
-						playerChara.setMoveUp(true);
-					}
-					playerChara.setMoveRight(true);
+					Model.setPlayerMoveRight(true);
 					break;
 				case KeyEvent.VK_LEFT:
-					if ((mod & InputEvent.SHIFT_DOWN_MASK) != 0){
-						playerChara.setMoveUp(true);
-					}
-					playerChara.setMoveLeft(true);
-					break;
-				case KeyEvent.VK_SHIFT:
-					playerChara.setMoveUp(true);
+					Model.setPlayerMoveLeft(true);
 					break;
 				case 'z':
 				case 'Z':
-					if ((mod & InputEvent.SHIFT_DOWN_MASK) != 0){
-						playerChara.setMoveUp(true);
-					}
-					playerChara.setDash(true);
+					Model.setPlayerMoveUp(true);
+					break;
+				case 'x':
+				case 'X':
+					Model.setPlayerMoveDash(true);
 					break;
 				case 'r':// 自殺用
 				case 'R':
@@ -117,7 +107,8 @@ public class Controller {
 			// ゲームクリアのとき
 			case Ending:
 				switch (evt.getKeyCode()) {
-				case KeyEvent.VK_ENTER:
+				case 'z':
+				case 'Z':
 					Model.setGameStatus(GameStatus.Opening);
 					break;
 				}
@@ -125,7 +116,8 @@ public class Controller {
 			// ステージ変更画面のとき
 			case StageChange:
 				switch (evt.getKeyCode()) {
-				case KeyEvent.VK_ENTER:
+				case 'z':
+				case 'Z':
 					Model.setGameStatus(GameStatus.Playing);
 					break;
 				}
@@ -133,7 +125,8 @@ public class Controller {
 			// ボスを倒したとき
 			case WorldChange:
 				switch (evt.getKeyCode()) {
-				case KeyEvent.VK_ENTER:
+				case 'z':
+				case 'Z':
 					Model.nextStage();
 					break;
 				}
@@ -143,20 +136,24 @@ public class Controller {
 
 		}
 
+		/**
+		 * キーを離した時の処理
+		 */
 		public void keyReleased(KeyEvent evt) {
 			switch (evt.getKeyCode()) {
-			case KeyEvent.VK_SHIFT:
-				playerChara.setMoveUp(false);
-				break;
-			case KeyEvent.VK_RIGHT:
-				playerChara.setMoveRight(false);
-				break;
-			case KeyEvent.VK_LEFT:
-				playerChara.setMoveLeft(false);
-				break;
 			case 'z':
 			case 'Z':
-				playerChara.setDash(false);
+				Model.setPlayerMoveUp(false);
+				break;
+			case KeyEvent.VK_RIGHT:
+				Model.setPlayerMoveRight(false);
+				break;
+			case KeyEvent.VK_LEFT:
+				Model.setPlayerMoveLeft(false);
+				break;
+			case 'x':
+			case 'X':
+				Model.setPlayerMoveDash(false);
 				break;
 
 			}
@@ -175,7 +172,7 @@ public class Controller {
 
 	public static KeyAdapter getKeyAdapter() {
 		if (keyAdapter == null) {
-			keyAdapter = new StarActionKeyAdapter(Model.getPlayerChara());
+			keyAdapter = new StarActionKeyAdapter();
 		}
 		return keyAdapter;
 	}

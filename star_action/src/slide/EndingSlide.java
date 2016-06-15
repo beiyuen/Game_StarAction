@@ -16,7 +16,7 @@ public class EndingSlide extends AbstractSlide {
 	public EndingSlide() {
 		super();
 		image = referenceItems.getEndingImage();
-		text = new Text(300, 200, "Press 'Enter' Key to Back Title", font, Color.WHITE);
+		text = new Text(300, 200, "Press 'Z' Key to Back Title", font, Color.WHITE);
 	}
 
 	public void setText(int i) {
