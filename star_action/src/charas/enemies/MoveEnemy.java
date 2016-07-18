@@ -33,6 +33,8 @@ public class MoveEnemy extends AbstractEnemy {
 		initX = xPosition;
 		initY = yPosition;
 		xSpeed = xs;
+		initXSpeed = xs;
+		initYSpeed = 0;
 		death = false;
 		using = true;
 		return this;

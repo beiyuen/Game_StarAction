@@ -223,6 +223,7 @@ public class Model {
 		setStageNum(stageNum + 1);
 		stageChangeSlide.setText(worldNum, stageNum);
 		setGameStatus(GameStatus.StageChange);
+		// オブジェクトプール内での使用をなかったことにする
 		for (AbstractBlock block : blockList) {
 			block.setUsing(false);
 		}
@@ -398,7 +399,9 @@ public class Model {
 	 *
 	 */
 	public static void setStage() {
+		// stage インスタンスに新しいステージ情報を読み込む
 		stage.setStage((worldNum-1) * 5 + stageNum);
+		// stage インスタンスから情報を持ってくる
 		blockList = stage.getBlockList();
 		enemyList = stage.getEnemyList();
 		needleList = stage.getNeedleList();
