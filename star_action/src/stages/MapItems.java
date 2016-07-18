@@ -9,11 +9,11 @@ import charas.blocks.GoalBlock;
 import charas.blocks.HardBlock;
 import charas.blocks.NomalBlock;
 import charas.blocks.WorldClearBlock;
-import charas.enemys.GhostEnemy;
-import charas.enemys.MoveEnemy;
-import charas.enemys.NomalEnemy;
-import charas.enemys.ShootEnemy;
-import charas.enemys.WalkEnemy;
+import charas.enemies.GhostEnemy;
+import charas.enemies.MoveEnemy;
+import charas.enemies.NomalEnemy;
+import charas.enemies.ShootEnemy;
+import charas.enemies.WalkEnemy;
 
 /**
  * ステージごとにマップのアイテムをそれぞれnewしなおさなくて済むように、あらかじめオブジェクトプールを作っておくクラス

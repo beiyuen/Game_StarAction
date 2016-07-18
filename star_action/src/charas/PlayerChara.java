@@ -2,7 +2,7 @@ package charas;
 
 import static constants.MathConstants.*;
 
-import charas.enemys.AbstractEnemy;
+import charas.enemies.AbstractEnemy;
 import enums.GameStatus;
 import star_action.Model;
 

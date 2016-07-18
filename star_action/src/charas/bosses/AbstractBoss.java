@@ -6,7 +6,7 @@ import static constants.ImageConstants.*;
 import java.awt.Graphics;
 
 import charas.PlayerChara;
-import charas.enemys.AbstractEnemy;
+import charas.enemies.AbstractEnemy;
 import enums.HitPlayer;
 import star_action.Model;
 

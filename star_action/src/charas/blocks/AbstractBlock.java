@@ -7,7 +7,7 @@ import java.awt.Graphics;
 
 import charas.AbstractChara;
 import charas.bosses.Boss1;
-import charas.enemys.WalkEnemy;
+import charas.enemies.WalkEnemy;
 import star_action.Model;
 
 /**

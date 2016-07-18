@@ -2,7 +2,7 @@ package charas;
 
 import static constants.MathConstants.*;
 
-import charas.enemys.WalkEnemy;
+import charas.enemies.WalkEnemy;
 
 /**
  * プレイヤーが当たるとゲームオーバーになるトゲです

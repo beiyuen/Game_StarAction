@@ -5,7 +5,7 @@ import static constants.MathConstants.*;
 
 import java.awt.Graphics;
 
-import charas.enemys.AbstractEnemy;
+import charas.enemies.AbstractEnemy;
 import enums.HitPlayer;
 
 /**

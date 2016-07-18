@@ -11,7 +11,7 @@ import javax.swing.Timer;
 
 import charas.Needle;
 import charas.blocks.AbstractBlock;
-import charas.enemys.AbstractEnemy;
+import charas.enemies.AbstractEnemy;
 import charas.signboards.AbstractSignboard;
 import util.DebugShowText;
 /**

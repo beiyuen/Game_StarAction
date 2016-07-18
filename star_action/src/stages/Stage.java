@@ -10,7 +10,7 @@ import charas.blocks.AbstractBlock;
 import charas.blocks.GoalBlock;
 import charas.bosses.Boss1;
 import charas.bosses.Boss2;
-import charas.enemys.AbstractEnemy;
+import charas.enemies.AbstractEnemy;
 import charas.signboards.AbstractSignboard;
 import charas.signboards.SignBoard;
 /**

@@ -1,4 +1,4 @@
-package charas.enemys;
+package charas.enemies;
 
 import static constants.MathConstants.*;
 import static constants.SoundCnstants.*;

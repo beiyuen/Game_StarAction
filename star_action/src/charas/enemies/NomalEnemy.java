@@ -1,4 +1,4 @@
-package charas.enemys;
+package charas.enemies;
 
 import static constants.ImageConstants.*;
 

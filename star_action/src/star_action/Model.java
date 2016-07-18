@@ -11,7 +11,7 @@ import charas.Needle;
 import charas.PlayerChara;
 import charas.blocks.AbstractBlock;
 import charas.blocks.WorldClearBlock;
-import charas.enemys.AbstractEnemy;
+import charas.enemies.AbstractEnemy;
 import charas.signboards.AbstractSignboard;
 import enums.GameStatus;
 import slide.EndingSlide;
