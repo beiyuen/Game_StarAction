@@ -286,7 +286,7 @@ public abstract class AbstractChara extends JPanel {
 	 * @return
 	 */
 	public boolean isHitPoint(double x, double y) {
-		return (x >= xPosition - width / 2 && x <= xPosition + width / 2 && y >= yPosition - height / 2
+		return (!this.isDeath() && x >= xPosition - width / 2 && x <= xPosition + width / 2 && y >= yPosition - height / 2
 				&& y <= yPosition + height / 2);
 	}
 

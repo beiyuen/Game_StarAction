@@ -180,7 +180,7 @@ public class AbstractBlock extends AbstractChara {
 		double cysp = c.getySpeed();
 		double nextMaxY = cy + chh +  cysp;
 		double nextMinY = cy - chh +  cysp;
-		
+
 		// 対象キャラと離れすぎているとき,当たり判定を計算しない
 		if(Math.abs( cx + cxsp - xPosition ) > 100 || Math.abs(cy + cysp - yPosition) > 100){
 			hitY.setSize(hith, hitl);
@@ -202,6 +202,7 @@ public class AbstractBlock extends AbstractChara {
 
 		// 現フレームでブロックとぶつかっていないとき
 		else if(!c.isHitLeg() && !nowHit){
+
 			if(isHitMove(c)){
 				// 空中から着地するとき②
 				if(cysp > 1 && nextMaxY - (yPosition - height/2) <= YSPEED_MAX && (cx + cwh != xPosition - width/2) && (cx - cwh != xPosition + width/2) && cy+chh < yPosition- BLOCK_SIZE/2){
@@ -216,6 +217,7 @@ public class AbstractBlock extends AbstractChara {
 											// false の場合は縦方向に単一のブロックに上方向に衝突しているという判定なので、速度や位置の調整を行う。
 					for (AbstractBlock b : Model.getBlockList()) {
 						if (b.isHitPoint(xPosition, yPosition + 50)) {
+							System.out.println(xPosition + "  " +  (yPosition + 50));
 							flag = true;
 						}
 					}
@@ -229,7 +231,7 @@ public class AbstractBlock extends AbstractChara {
 						c.setyPosition(yPosition + (chh + BLOCK_SIZE / 2));
 						c.changeYSpeed();
 					}
-				}		
+				}
 			}
 		}
 

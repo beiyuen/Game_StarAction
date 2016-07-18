@@ -35,6 +35,7 @@ public class FakeBlock extends AbstractBlock {
 		image = referenceItems.getBlockImage(i);
 		isHitx = false;
 		using = true;
+		death = false;
 		return this;
 	}
 
