@@ -1,2 +1,2 @@
-# Game_StarAction
+# StarActionGame
 test
